@@ -21,7 +21,5 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function AuthHeader() {
-  return (
-    <Foundation style={styles.listIcon} name="list" color="939393" size={40} />
-  );
+  return <Foundation style={styles.listIcon} name="list" size={40} />;
 }
