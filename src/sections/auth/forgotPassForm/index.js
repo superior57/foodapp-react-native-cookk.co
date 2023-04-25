@@ -40,10 +40,7 @@ export default function ForgotPassForm() {
 
   return (
     <View style={styles.wrapper}>
-      <TextInput
-        style={styles.input}
-        placeholder="Phone Number / Email address"
-      />
+      <TextInput style={styles.input} placeholder="Email address" />
 
       <TouchableOpacity
         style={styles.button}

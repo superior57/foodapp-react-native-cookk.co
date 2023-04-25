@@ -18,8 +18,7 @@ export default function ForgotPass({navigation}) {
         Forgot your password?
       </Typography>
       <Typography variant={'body1'} color={'#ACACAC'} style={{marginTop: 20}}>
-        Please enter your mobile number or email address associated with your
-        account
+        Please enter your email address associated with your account
       </Typography>
       <ForgotPassForm />
     </AuthLayout>
