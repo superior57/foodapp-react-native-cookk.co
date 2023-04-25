@@ -22,12 +22,12 @@ const styles = StyleSheet.create({
 
   image: {
     position: 'absolute',
-    height: Dimensions.get('window').height,
+    height: '100%',
     width: '100%',
   },
 
   content: {
-    height: Dimensions.get('window').height,
+    height: '100%',
     width: '100%',
     // flexDirection: 'row',
     // alignItems: 'center',
@@ -43,18 +43,18 @@ const styles = StyleSheet.create({
 
 export default function AuthLayout({children}) {
   return (
-    <ScrollView>
+    <View>
       <Image
         style={styles.image}
         source={require('../../assets/images/auth_bg.png')}
       />
       <View style={styles.backdrop} />
-      <View style={styles.content}>
+      <ScrollView style={styles.content}>
         <Container>
           <AuthHeader />
           <View style={styles.children}>{children}</View>
         </Container>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
