@@ -25,31 +25,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  passwordInputGroup: {
-    backgroundColor: 'white',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  passwordInput: {
-    flex: 1,
-    padding: 0,
-  },
-
-  eyeIcon: {
-    backgroundColor: 'white',
-  },
-
-  link: {
-    fontSize: 18,
-    color: 'white',
-    textDecorationLine: 'underline',
-    width: 150,
-  },
-
   button: {
     backgroundColor: '#F5D37A',
     padding: 15,
@@ -60,38 +35,21 @@ const styles = StyleSheet.create({
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm() {
+export default function ForgotPassForm() {
   const navigation = useNavigation();
 
   return (
     <View style={styles.wrapper}>
-      <TextInput style={styles.input} placeholder="Email address" />
-
-      <View style={styles.passwordInputGroup}>
-        <TextInput
-          style={styles.passwordInput}
-          placeholder="Password"
-          secureTextEntry={true}
-        />
-        <Ionicons
-          style={styles.eyeIcon}
-          name="eye-outline"
-          color="#939393"
-          size={20}
-        />
-      </View>
-
-      <Typography
-        style={styles.link}
-        onPress={() => navigation.navigate('ForgotPass')}>
-        Forgot password
-      </Typography>
+      <TextInput
+        style={styles.input}
+        placeholder="Phone Number / Email address"
+      />
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Register')}>
+        onPress={() => navigation.navigate('CreatePass')}>
         <Typography color="white" variant="h6" style={{textAlign: 'center'}}>
-          Continue
+          Send
         </Typography>
       </TouchableOpacity>
     </View>

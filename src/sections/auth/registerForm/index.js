@@ -1,5 +1,4 @@
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
 
 // react-native
 import {View, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
@@ -60,11 +59,11 @@ const styles = StyleSheet.create({
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm() {
-  const navigation = useNavigation();
-
+export default function RegisterForm() {
   return (
     <View style={styles.wrapper}>
+      <TextInput style={styles.input} placeholder="First name" />
+      <TextInput style={styles.input} placeholder="Last name" />
       <TextInput style={styles.input} placeholder="Email address" />
 
       <View style={styles.passwordInputGroup}>
@@ -81,15 +80,21 @@ export default function LoginForm() {
         />
       </View>
 
-      <Typography
-        style={styles.link}
-        onPress={() => navigation.navigate('ForgotPass')}>
-        Forgot password
-      </Typography>
+      <View style={styles.passwordInputGroup}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Confirm password"
+          secureTextEntry={true}
+        />
+        <Ionicons
+          style={styles.eyeIcon}
+          name="eye-outline"
+          color="#939393"
+          size={20}
+        />
+      </View>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Register')}>
+      <TouchableOpacity style={styles.button} onPress={() => {}}>
         <Typography color="white" variant="h6" style={{textAlign: 'center'}}>
           Continue
         </Typography>
