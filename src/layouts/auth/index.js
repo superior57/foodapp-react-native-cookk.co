@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
 
   image: {
     position: 'absolute',
-    height: '100%',
+    top: 0,
+    height: Dimensions.get('window').height,
     width: '100%',
   },
 
