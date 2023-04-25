@@ -1,7 +1,7 @@
 import React from 'react';
 
 // react-native
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 // @mui
 // layouts
 // components
@@ -13,13 +13,17 @@ const styles = StyleSheet.create({
   listIcon: {
     color: 'white',
     position: 'absolute',
-    top: 20,
-    right: 20,
+    top: 0,
+    right: 0,
   },
 });
 
 // ----------------------------------------------------------------------
 
 export default function AuthHeader() {
-  return <Foundation style={styles.listIcon} name="list" size={40} />;
+  return (
+    <View>
+      <Foundation style={styles.listIcon} name="list" size={40} />
+    </View>
+  );
 }
