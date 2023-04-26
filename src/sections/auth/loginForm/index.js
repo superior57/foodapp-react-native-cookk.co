@@ -78,7 +78,7 @@ export default function LoginForm() {
       </View>
 
       <Typography
-        style={styles.link}
+        sx={styles.link}
         onPress={() => navigation.navigate(AUTH_ROUTES.forgotPass)}>
         Forgot password
       </Typography>

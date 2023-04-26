@@ -1,12 +1,11 @@
 import React from 'react';
 
 // react-native
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, Text} from 'react-native';
 // @mui
 // theme
 // layouts
 // components
-import Typography from '../typography';
 // sections
 //theme
 import {PRIMARY} from '../../theme';
@@ -36,14 +35,14 @@ export default function Button({
         ...style,
       }}
       {...other}>
-      <Typography
-        color="white"
-        textAlign="center"
-        sx={{
+      <Text
+        style={{
+          color: 'white',
+          textAlign: 'center',
           ...(variant === 'outlined' && {color: color}),
         }}>
         {children}
-      </Typography>
+      </Text>
     </TouchableOpacity>
   );
 }

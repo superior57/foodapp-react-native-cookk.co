@@ -14,18 +14,22 @@ export default function Typography({
   fontWeight = 'normal',
   color = 'black',
   variant = 'body2',
+  onPress = () => {},
   sx = {},
   children,
+  other,
 }) {
   return (
     <Text
+      onPress={onPress}
       variant={variant}
       color={color}
       style={{
         fontWeight: fontWeight,
         textAlign: textAlign,
         ...sx,
-      }}>
+      }}
+      {...other}>
       {children}
     </Text>
   );
