@@ -60,7 +60,7 @@ export default function Drawer() {
         Sign Up
       </Button>
       <Button
-        variant="outlined"
+        variant="contained"
         padding={8}
         style={{borderRadius: 5}}
         onPress={() => navigation.navigate(AUTH_ROUTES.login)}>

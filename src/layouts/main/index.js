@@ -6,7 +6,6 @@ import {View, StyleSheet, Dimensions, ScrollView} from 'react-native';
 import MainHeader from './header';
 import MainFooter from './footer';
 // mui
-import {Stack} from '@react-native-material/core';
 // screens
 // components
 // sections

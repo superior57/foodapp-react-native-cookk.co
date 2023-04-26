@@ -1,7 +1,13 @@
 import React from 'react';
 
 // react-native
-import {View, StyleSheet, ScrollView, ImageBackground} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  ImageBackground,
+  Dimensions,
+} from 'react-native';
 // @mui
 // layouts
 // components
@@ -37,6 +43,7 @@ export default function AuthLayout({children}) {
     <View>
       <ImageBackground
         source={require('../../assets/images/auth/auth_bg.png')}
+        style={{height: Dimensions.get('window').height}}
         resizeMode="contain">
         <View style={styles.backdrop} />
         <ScrollView style={styles.content}>
