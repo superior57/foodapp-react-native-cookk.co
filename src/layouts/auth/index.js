@@ -1,7 +1,7 @@
 import React from 'react';
 
 // react-native
-import {View, StyleSheet, Dimensions, Image, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, ImageBackground} from 'react-native';
 // @mui
 // layouts
 // components
@@ -20,23 +20,13 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
-  image: {
-    position: 'absolute',
-    top: 0,
-    height: Dimensions.get('window').height,
-    width: '100%',
-  },
-
   content: {
     height: '100%',
     width: '100%',
-    // flexDirection: 'row',
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
 
   children: {
-    marginTop: 50,
+    marginTop: 20,
   },
 });
 
@@ -45,17 +35,15 @@ const styles = StyleSheet.create({
 export default function AuthLayout({children}) {
   return (
     <View>
-      <Image
-        style={styles.image}
-        source={require('../../assets/images/auth_bg.png')}
-      />
-      <View style={styles.backdrop} />
-      <ScrollView style={styles.content}>
-        <Container>
-          <AuthHeader />
-          <View style={styles.children}>{children}</View>
-        </Container>
-      </ScrollView>
+      <ImageBackground source={require('../../assets/images/auth_bg.png')}>
+        <View style={styles.backdrop} />
+        <ScrollView style={styles.content}>
+          <Container>
+            <AuthHeader />
+            <View style={styles.children}>{children}</View>
+          </Container>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 }

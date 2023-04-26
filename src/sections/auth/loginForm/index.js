@@ -10,6 +10,8 @@ import Button from '../../../components/button';
 import Typography from '../../../components/typography';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // sections
+// routes
+import {AUTH_ROUTES} from '../../../routes/paths';
 
 // ----------------------------------------------------------------------
 const styles = StyleSheet.create({
@@ -77,11 +79,13 @@ export default function LoginForm() {
 
       <Typography
         style={styles.link}
-        onPress={() => navigation.navigate('ForgotPass')}>
+        onPress={() => navigation.navigate(AUTH_ROUTES.forgotPass)}>
         Forgot password
       </Typography>
 
-      <Button onPress={() => navigation.navigate('Register')}>Continue</Button>
+      <Button onPress={() => navigation.navigate(AUTH_ROUTES.login)}>
+        Continue
+      </Button>
     </View>
   );
 }

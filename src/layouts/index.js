@@ -17,7 +17,6 @@ Layout.propTypes = {
 };
 
 export default function Layout({variant = 'auth', children}) {
-  console.log('variant: ', variant);
   if (variant === 'main') {
     return <MainLayout>{children}</MainLayout>;
   }

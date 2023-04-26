@@ -10,6 +10,7 @@ import {Text} from '@react-native-material/core';
 // ----------------------------------------------------------------------
 
 export default function Typography({
+  textAlign = 'left',
   children,
   color,
   variant,
@@ -21,7 +22,7 @@ export default function Typography({
     <Text
       variant={variant}
       color={color}
-      style={{fontWeight: fontWeight, ...style}}
+      style={{fontWeight: fontWeight, textAlign: textAlign, ...style}}
       {...other}>
       {children}
     </Text>

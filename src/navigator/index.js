@@ -8,15 +8,18 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 // @mui
 // layouts
-// components
 import AuthHeader from '../layouts/auth/authHeader';
+// screens
 import Login from '../screens/auth/login';
 import Register from '../screens/auth/register';
 import ForgotPass from '../screens/auth/forgotPass';
 import CreatePass from '../screens/auth/createPass';
+import Home from '../screens/main/home';
+// components
 // sections
+import DrawerView from './drawer';
 // routes
-import {AUTH_ROUTES} from '../routes/paths';
+import {AUTH_ROUTES, SCREEN_ROUTES} from '../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -28,30 +31,17 @@ export default function Navigator() {
   return (
     <NavigationContainer independent={true}>
       <Drawer.Navigator
+        initialRouteName={SCREEN_ROUTES.home}
+        drawerContent={() => <DrawerView />}
         screenOptions={{
           headerLeft: <AuthHeader />,
           headerShown: false,
         }}>
-        <Drawer.Screen
-          name={AUTH_ROUTES.login}
-          options={{drawerLabel: 'Log in'}}
-          component={Login}
-        />
-        <Drawer.Screen
-          name={AUTH_ROUTES.register}
-          options={{drawerLabel: 'Register'}}
-          component={Register}
-        />
-        <Drawer.Screen
-          name={AUTH_ROUTES.forgotPass}
-          options={{drawerLabel: 'Forgot Password'}}
-          component={ForgotPass}
-        />
-        <Drawer.Screen
-          name={AUTH_ROUTES.createPass}
-          options={{drawerLabel: 'Create Password'}}
-          component={CreatePass}
-        />
+        <Drawer.Screen name={AUTH_ROUTES.login} component={Login} />
+        <Drawer.Screen name={AUTH_ROUTES.register} component={Register} />
+        <Drawer.Screen name={AUTH_ROUTES.forgotPass} component={ForgotPass} />
+        <Drawer.Screen name={AUTH_ROUTES.createPass} component={CreatePass} />
+        <Drawer.Screen name={SCREEN_ROUTES.home} component={Home} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

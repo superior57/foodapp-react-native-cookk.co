@@ -1,4 +1,5 @@
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 // react-native
 import {View, TextInput, StyleSheet} from 'react-native';
@@ -8,6 +9,8 @@ import {View, TextInput, StyleSheet} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Button from '../../../components/button';
 // sections
+//routes
+import {AUTH_ROUTES} from '../../../routes/paths';
 
 // ----------------------------------------------------------------------
 const styles = StyleSheet.create({
@@ -53,6 +56,8 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.wrapper}>
       <TextInput style={styles.input} placeholder="First name" />
@@ -87,7 +92,12 @@ export default function RegisterForm() {
         />
       </View>
 
-      <Button onPress={() => {}}>Continue</Button>
+      <Button
+        onPress={() => {
+          navigation.navigate(AUTH_ROUTES.login);
+        }}>
+        Continue
+      </Button>
     </View>
   );
 }

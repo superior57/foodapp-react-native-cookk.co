@@ -8,15 +8,18 @@ import {TouchableOpacity} from 'react-native';
 // components
 import Typography from '../typography';
 // sections
+//theme
+import {PRIMARY} from '../../theme';
 
 // ----------------------------------------------------------------------
 
 export default function Button({
+  variant = 'contained',
   onPress,
-  color = '#F5D37A',
+  color = PRIMARY.main,
   children,
   style,
-  padding = 10,
+  padding = 13,
   borderRadius = 10,
   width = 'auto',
   ...other
@@ -25,14 +28,20 @@ export default function Button({
     <TouchableOpacity
       onPress={onPress}
       style={{
-        backgroundColor: color,
+        ...(variant === 'contained' && {backgroundColor: color}),
+        ...(variant === 'outlined' && {borderColor: color, borderWidth: 0.5}),
         padding: padding,
         borderRadius: borderRadius,
         width: width,
         ...style,
       }}
       {...other}>
-      <Typography color="white" variant="h6" style={{textAlign: 'center'}}>
+      <Typography
+        color="white"
+        style={{
+          textAlign: 'center',
+          ...(variant === 'outlined' && {color: color}),
+        }}>
         {children}
       </Typography>
     </TouchableOpacity>

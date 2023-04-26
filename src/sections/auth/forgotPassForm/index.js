@@ -7,6 +7,7 @@ import {View, TextInput, StyleSheet} from 'react-native';
 // layouts
 // components
 import Button from '../../../components/button';
+import {AUTH_ROUTES} from '../../../routes/paths';
 // sections
 
 // ----------------------------------------------------------------------
@@ -34,7 +35,9 @@ export default function ForgotPassForm() {
     <View style={styles.wrapper}>
       <TextInput style={styles.input} placeholder="Email address" />
 
-      <Button onPress={() => navigation.navigate('CreatePass')}>Send</Button>
+      <Button onPress={() => navigation.navigate(AUTH_ROUTES.createPass)}>
+        Send
+      </Button>
     </View>
   );
 }

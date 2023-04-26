@@ -6,3 +6,15 @@ export const AUTH_ROUTES = {
   createPass: 'CreatePassword',
   forgotPass: 'ForgotPassword',
 };
+
+// ----------------------------------------------------------------------
+
+export const SCREEN_ROUTES = {
+  home: 'Home',
+  cart: 'Cart',
+  contactUs: 'ContactUs',
+};
+
+// ----------------------------------------------------------------------
+
+export const DASHBOARD_ROUTES = {};
