@@ -44,7 +44,7 @@ export default function MainHeader() {
     <View style={styles.wrapper}>
       <TouchableOpacity onPress={() => navigation.navigate(SCREEN_ROUTES.home)}>
         <Image
-          source={require('../../../assets/images/logo-transperent.png')}
+          source={require('../../../assets/images/logo/logo_transperent.png')}
           style={styles.logo}
         />
       </TouchableOpacity>

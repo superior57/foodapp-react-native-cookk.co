@@ -63,7 +63,7 @@ export default function MainFooter() {
         <TouchableOpacity
           onPress={() => navigation.navigate(SCREEN_ROUTES.home)}>
           <Image
-            source={require('../../../assets/images/logo-transperent.png')}
+            source={require('../../../assets/images/logo/logo_transperent.png')}
             style={styles.logo}
           />
         </TouchableOpacity>
