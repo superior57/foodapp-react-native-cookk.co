@@ -1,12 +1,12 @@
 import React from 'react';
 
 // react-native
-import {View, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, TextInput, StyleSheet} from 'react-native';
 // @mui
 // layouts
 // components
-import Typography from '../../../components/typography';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Button from '../../../components/button';
 // sections
 
 // ----------------------------------------------------------------------
@@ -48,13 +48,6 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     width: 150,
   },
-
-  button: {
-    backgroundColor: '#F5D37A',
-    padding: 15,
-    width: 200,
-    borderRadius: 10,
-  },
 });
 
 // ----------------------------------------------------------------------
@@ -94,11 +87,7 @@ export default function RegisterForm() {
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => {}}>
-        <Typography color="white" variant="h6" style={{textAlign: 'center'}}>
-          Continue
-        </Typography>
-      </TouchableOpacity>
+      <Button onPress={() => {}}>Continue</Button>
     </View>
   );
 }

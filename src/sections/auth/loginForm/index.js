@@ -2,10 +2,11 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 // react-native
-import {View, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, TextInput, StyleSheet} from 'react-native';
 // @mui
 // layouts
 // components
+import Button from '../../../components/button';
 import Typography from '../../../components/typography';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // sections
@@ -49,13 +50,6 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     width: 150,
   },
-
-  button: {
-    backgroundColor: '#F5D37A',
-    padding: 15,
-    width: 200,
-    borderRadius: 10,
-  },
 });
 
 // ----------------------------------------------------------------------
@@ -87,13 +81,7 @@ export default function LoginForm() {
         Forgot password
       </Typography>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Register')}>
-        <Typography color="white" variant="h6" style={{textAlign: 'center'}}>
-          Continue
-        </Typography>
-      </TouchableOpacity>
+      <Button onPress={() => navigation.navigate('Register')}>Continue</Button>
     </View>
   );
 }

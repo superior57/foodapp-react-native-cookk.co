@@ -18,7 +18,11 @@ export default function Typography({
   ...other
 }) {
   return (
-    <Text variant={variant} color={color} style={{...style}} {...other}>
+    <Text
+      variant={variant}
+      color={color}
+      style={{fontWeight: fontWeight, ...style}}
+      {...other}>
       {children}
     </Text>
   );
