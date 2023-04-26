@@ -5,6 +5,7 @@ import {View, StyleSheet, Dimensions, ScrollView} from 'react-native';
 // layouts
 import MainHeader from './header';
 import MainFooter from './footer';
+import DialogProvider from './dialogProvider';
 // mui
 // screens
 // components
@@ -31,11 +32,13 @@ const styles = StyleSheet.create({
 export default function MainLayout({children}) {
   return (
     <View style={styles.wrapper}>
-      <MainHeader />
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <View style={styles.content}>{children}</View>
-        <MainFooter />
-      </ScrollView>
+      <DialogProvider>
+        <MainHeader />
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <View style={styles.content}>{children}</View>
+          <MainFooter />
+        </ScrollView>
+      </DialogProvider>
     </View>
   );
 }
