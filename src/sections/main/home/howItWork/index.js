@@ -1,7 +1,7 @@
 import React from 'react';
 
 // react-native
-import {View, StyleSheet, Image} from 'react-native';
+import {StyleSheet, Image} from 'react-native';
 // mui
 // layouts
 // screens

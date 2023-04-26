@@ -35,13 +35,11 @@ const styles = StyleSheet.create({
   },
 
   vegetable: {
-    width: 150,
-    height: 90,
+    width: 220,
   },
 
   delicious: {
-    width: 90,
-    height: 30,
+    width: 100,
   },
 });
 
@@ -50,9 +48,17 @@ export default function HomeHero() {
     <View style={styles.wrapper}>
       <Container>
         <Stack style={styles.content}>
-          <Typography variant={'h5'} color={'white'} textAlign="center">
-            Delicious homemade food delivered to your door
-          </Typography>
+          <View paddingVertical={40}>
+            <Typography variant={'h4'} color={'white'} textAlign="center">
+              Delicious homemade
+            </Typography>
+            <Typography variant={'h4'} color={'white'} textAlign="center">
+              food delivered to
+            </Typography>
+            <Typography variant={'h4'} color={'white'} textAlign="center">
+              your door
+            </Typography>
+          </View>
           <View>
             <Button style={{borderRadius: 100}} width={230}>
               Find Home Chefs
@@ -61,10 +67,12 @@ export default function HomeHero() {
           <Stack direction="row" style={styles.footer}>
             <Image
               source={require('../../../../assets/images/home/delicious.png')}
+              resizeMode="contain"
               style={styles.delicious}
             />
             <Image
               source={require('../../../../assets/images/home/vegetable.png')}
+              resizeMode="contain"
               style={styles.vegetable}
             />
           </Stack>
