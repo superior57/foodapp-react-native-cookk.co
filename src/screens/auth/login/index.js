@@ -1,14 +1,14 @@
 import React from 'react';
 
 // react-native
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 // @mui
 // layouts
 // components
 import Typography from '../../../components/typography';
 // sections
 import LoginForm from '../../../sections/auth/loginForm';
-import AuthLayout from '../../../layouts/auth';
+import Layout from '../../../layouts';
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 
 export default function Login({navigation}) {
   return (
-    <AuthLayout>
+    <Layout variant="auth">
       <Typography variant={'h4'} color={'white'} style={{fontWeight: 900}}>
         Log in
       </Typography>
@@ -48,6 +48,6 @@ export default function Login({navigation}) {
           Sign up!
         </Typography>
       </View>
-    </AuthLayout>
+    </Layout>
   );
 }

@@ -6,10 +6,23 @@
  */
 
 import React from 'react';
-import StackNavigator from './src/stackNavigator';
+// react-navigation
+import {NavigationContainer} from '@react-navigation/native';
+//navigator
+import Navigator from './src/navigator';
+// @mui
+// layouts
+// components
+// sections
+
+// ----------------------------------------------------------------------
 
 function App() {
-  return <StackNavigator />;
+  return (
+    <NavigationContainer>
+      <Navigator />
+    </NavigationContainer>
+  );
 }
 
 export default App;

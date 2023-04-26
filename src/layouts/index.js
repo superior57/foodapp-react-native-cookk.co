@@ -1,10 +1,13 @@
 import React from 'react';
-import {View} from 'react-native';
 import PropTypes from 'prop-types';
+// react-native
+// @mui
 // layouts
 import MainLayout from './main';
-import AuthLayout from './auth';
 import DashboardLayout from './dashboard';
+import AuthLayout from './auth';
+// components
+// sections
 
 // ----------------------------------------------------------------------
 
@@ -13,25 +16,14 @@ Layout.propTypes = {
   variant: PropTypes.oneOf(['dashboard', 'main', 'auth']),
 };
 
-export default function Layout({variant = 'dashboard', children}) {
+export default function Layout({variant = 'auth', children}) {
+  console.log('variant: ', variant);
   if (variant === 'main') {
-    return (
-      <View>
-        <MainLayout>{children}</MainLayout>
-      </View>
-    );
+    return <MainLayout>{children}</MainLayout>;
   }
   if (variant === 'auth') {
-    return (
-      <View>
-        <AuthLayout>{children}</AuthLayout>
-      </View>
-    );
+    return <AuthLayout>{children}</AuthLayout>;
   }
 
-  return (
-    <View>
-      <DashboardLayout>{children}</DashboardLayout>
-    </View>
-  );
+  return <DashboardLayout>{children}</DashboardLayout>;
 }
