@@ -33,8 +33,7 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    height: 45,
-    width: 160,
+    height: 50,
   },
 
   IconButton: {
@@ -64,6 +63,7 @@ export default function MainFooter() {
           onPress={() => navigation.navigate(SCREEN_ROUTES.home)}>
           <Image
             source={require('../../../assets/images/logo/logo_transperent.png')}
+            resizeMode="contain"
             style={styles.logo}
           />
         </TouchableOpacity>

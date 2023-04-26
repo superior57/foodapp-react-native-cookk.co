@@ -41,6 +41,7 @@ export default function Drawer() {
       <TouchableOpacity onPress={() => navigation.navigate(SCREEN_ROUTES.home)}>
         <Image
           source={require('../../assets/images/logo/logo_transperent.png')}
+          resizeMode="contain"
           style={styles.logo}
         />
       </TouchableOpacity>

@@ -35,7 +35,9 @@ const styles = StyleSheet.create({
 export default function AuthLayout({children}) {
   return (
     <View>
-      <ImageBackground source={require('../../assets/images/auth/auth_bg.png')}>
+      <ImageBackground
+        source={require('../../assets/images/auth/auth_bg.png')}
+        resizeMode="contain">
         <View style={styles.backdrop} />
         <ScrollView style={styles.content}>
           <Container>

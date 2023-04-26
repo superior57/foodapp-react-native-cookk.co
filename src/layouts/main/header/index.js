@@ -20,7 +20,7 @@ import {SCREEN_ROUTES} from '../../../routes/paths';
 
 const styles = StyleSheet.create({
   wrapper: {
-    paddingVertical: 5,
+    paddingVertical: 10,
     paddingHorizontal: 20,
     display: 'flex',
     flexDirection: 'row',
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 110,
-    height: 30,
+    height: 50,
+    width: 150,
   },
 });
 
@@ -45,6 +45,7 @@ export default function MainHeader() {
       <TouchableOpacity onPress={() => navigation.navigate(SCREEN_ROUTES.home)}>
         <Image
           source={require('../../../assets/images/logo/logo_transperent.png')}
+          resizeMode="contain"
           style={styles.logo}
         />
       </TouchableOpacity>
