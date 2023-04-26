@@ -15,6 +15,8 @@ import Register from '../screens/auth/register';
 import ForgotPass from '../screens/auth/forgotPass';
 import CreatePass from '../screens/auth/createPass';
 // sections
+// routes
+import {AUTH_ROUTES} from '../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -31,22 +33,22 @@ export default function Navigator() {
           headerShown: false,
         }}>
         <Drawer.Screen
-          name="Login"
+          name={AUTH_ROUTES.login}
           options={{drawerLabel: 'Log in'}}
           component={Login}
         />
         <Drawer.Screen
-          name="Register"
+          name={AUTH_ROUTES.register}
           options={{drawerLabel: 'Register'}}
           component={Register}
         />
         <Drawer.Screen
-          name="ForgotPass"
+          name={AUTH_ROUTES.forgotPass}
           options={{drawerLabel: 'Forgot Password'}}
           component={ForgotPass}
         />
         <Drawer.Screen
-          name="CreatePass"
+          name={AUTH_ROUTES.createPass}
           options={{drawerLabel: 'Create Password'}}
           component={CreatePass}
         />
