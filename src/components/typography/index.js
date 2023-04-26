@@ -11,19 +11,21 @@ import {Text} from '@react-native-material/core';
 
 export default function Typography({
   textAlign = 'left',
+  fontWeight = 'normal',
+  color = 'black',
+  variant = 'body2',
+  sx = {},
   children,
-  color,
-  variant,
-  fontWeight,
-  style,
-  ...other
 }) {
   return (
     <Text
       variant={variant}
       color={color}
-      style={{fontWeight: fontWeight, textAlign: textAlign, ...style}}
-      {...other}>
+      style={{
+        fontWeight: fontWeight,
+        textAlign: textAlign,
+        ...sx,
+      }}>
       {children}
     </Text>
   );

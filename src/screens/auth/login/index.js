@@ -30,10 +30,10 @@ const styles = StyleSheet.create({
 export default function Login({navigation}) {
   return (
     <Layout variant="auth">
-      <Typography variant={'h4'} color={'white'} style={{fontWeight: 900}}>
+      <Typography variant={'h4'} color={'white'} sx={{fontWeight: 900}}>
         Log in
       </Typography>
-      <Typography variant={'body1'} color={'#ACACAC'} style={{marginTop: 20}}>
+      <Typography variant={'body1'} color={'#ACACAC'} sx={{marginTop: 20}}>
         Welcome back! Please enter your details...
       </Typography>
       <LoginForm />
@@ -42,7 +42,7 @@ export default function Login({navigation}) {
           Don’t have the account?
         </Typography>
         <Typography
-          style={styles.signup}
+          sx={styles.signup}
           variant="h6"
           onPress={() => navigation.navigate('Register')}>
           Sign up!

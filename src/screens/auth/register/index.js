@@ -14,10 +14,10 @@ import AuthLayout from '../../../layouts/auth';
 export default function Register({navigation, route}) {
   return (
     <AuthLayout>
-      <Typography variant={'h4'} color={'white'} style={{fontWeight: 900}}>
+      <Typography variant={'h4'} color={'white'} sx={{fontWeight: 900}}>
         Sign up!
       </Typography>
-      <Typography variant={'body1'} color={'#ACACAC'} style={{marginTop: 20}}>
+      <Typography variant={'body1'} color={'#ACACAC'} sx={{marginTop: 20}}>
         Welcome back! Please enter your details...
       </Typography>
       <RegisterForm />

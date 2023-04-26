@@ -38,8 +38,8 @@ export default function Button({
       {...other}>
       <Typography
         color="white"
-        style={{
-          textAlign: 'center',
+        textAlign="center"
+        sx={{
           ...(variant === 'outlined' && {color: color}),
         }}>
         {children}
