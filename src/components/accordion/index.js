@@ -2,14 +2,16 @@ import React from 'react';
 import {List} from 'react-native-paper';
 
 // react-native
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 // mui
 // layouts
 // screens
 // components
+import Typography from '../typography';
 // sections
 // routes
 // theme
+import {GREY} from '../../theme';
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +38,7 @@ export default function Accordion({accordions}) {
           expanded={expanded === _i}
           onPress={() => handlePress(_i)}>
           <View style={styles.answer}>
-            <Text style={{lineHeight: 20}}>{item.answer}</Text>
+            <Typography sx={{lineHeight: 20}}>{item.answer}</Typography>
           </View>
         </List.Accordion>
       ))}

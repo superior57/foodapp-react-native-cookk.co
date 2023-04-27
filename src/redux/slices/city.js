@@ -62,16 +62,19 @@ const slice = createSlice({
 
     //
     getCuisine(state, action) {
-      state.cuisine = state.cuisines.find(({id}) => id == action.payload);
+      state.loading = false;
+      state.cuisine = state.cuisines.find(({id}) => id === action.payload);
     },
 
     //
     getChef(state, action) {
-      state.chef = state.chefs.find(item => item.chef.id == action.payload);
+      state.loading = false;
+      state.chef = state.chefs.find(item => item.chef.id === action.payload);
     },
 
     //
     setFaqs(state, action) {
+      state.loading = false;
       state.faqs = action.payload;
     },
   },
@@ -94,9 +97,7 @@ export function getCities() {
   return async dispatch => {
     dispatch(startLoading());
     try {
-      const response = await axios.get(
-        `/api/${process.env.API_VERSION}/cities`,
-      );
+      const response = await axios.get(`/api/${API_VERSION}/cities`);
       dispatch(slice.actions.getCitiesSuccess(response.data.cities));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -125,7 +126,7 @@ export function getChefs(cityId = null, cuisineId = null, chefId = null) {
     dispatch(startLoading());
     try {
       const response = await axios.get(
-        `/api/${process.env.API_VERSION}/cities/${cityId}/cuisines/${cuisineId}`,
+        `/api/${API_VERSION}/cities/${cityId}/cuisines/${cuisineId}`,
       );
       dispatch(slice.actions.getChefsSuccess(response.data));
       if (cuisineId) dispatch(slice.actions.getCuisine(cuisineId));
@@ -141,9 +142,7 @@ export function getCity(cityId) {
   return async dispatch => {
     dispatch(startLoading());
     try {
-      const response = await axios.get(
-        `/api/${process.env.API_VERSION}/cities`,
-      );
+      const response = await axios.get(`/api/${API_VERSION}/cities`);
       const city = response.data.cities.find(({id}) => id == cityId);
       dispatch(slice.actions.getCitySuccess(city));
     } catch (error) {
@@ -159,6 +158,7 @@ export function getFaqs() {
     try {
       const response = await axios.get(`/api/${API_VERSION}/faqs`);
       dispatch(slice.actions.setFaqs(response.data.faqs));
+      return response.data;
     } catch (error) {
       dispatch(slice.actions.setError(error));
     }

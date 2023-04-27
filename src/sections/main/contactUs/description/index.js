@@ -1,27 +1,31 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 // react-native
+import {View} from 'react-native';
 // mui
 // layouts
 // screens
 // components
 import Accordion from '../../../../components/accordion';
+import Typography from '../../../../components/typography';
 // sections
 // routes
 // theme
 // redux
-import {useDispatch, useSelector} from '../../../../redux/store';
-import {CITYCUISINE_SELECTOR, getFaqs} from '../../../../redux/slices/city';
+import {useSelector} from '../../../../redux/store';
+import {CITYCUISINE_SELECTOR} from '../../../../redux/slices/city';
 
 // ----------------------------------------------------------------------
 
 export default function ContactUsDescription() {
-  const dispatch = useDispatch();
   const {faqs} = useSelector(CITYCUISINE_SELECTOR);
 
-  useEffect(() => {
-    dispatch(getFaqs());
-  }, [dispatch]);
-
-  return <Accordion accordions={faqs} />;
+  return (
+    <View marginTop={20}>
+      <View padding={10}>
+        <Typography variant="h5">General questions</Typography>
+      </View>
+      <Accordion accordions={faqs} />
+    </View>
+  );
 }
