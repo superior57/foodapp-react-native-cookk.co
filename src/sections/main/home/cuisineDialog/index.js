@@ -1,9 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
-// import {SvgUri} from 'react-native-svg';
 
 // react-native
-import {Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  ActivityIndicator,
+} from 'react-native';
 // mui
 import {
   Dialog,
@@ -12,7 +17,7 @@ import {
   Stack,
 } from '@react-native-material/core';
 // redux
-import {useDispatch, useSelector} from '../../../../redux/store';
+import {dispatch, useSelector} from '../../../../redux/store';
 import {closeDialog} from '../../../../redux/slices/dialog';
 import {CITYCUISINE_SELECTOR, getCuisines} from '../../../../redux/slices/city';
 // layouts
@@ -22,6 +27,7 @@ import Typography from '../../../../components/typography';
 // sections
 // routes
 // theme
+import {PRIMARY} from '../../../../theme';
 
 // ----------------------------------------------------------------------
 
@@ -54,13 +60,18 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function CuisineDialog({isOpen}) {
-  const dispatch = useDispatch();
-
   const {cuisines} = useSelector(CITYCUISINE_SELECTOR);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(getCuisines());
-  }, [dispatch]);
+    async function fetch() {
+      setIsLoading(true);
+      await dispatch(getCuisines());
+      setIsLoading(false);
+    }
+
+    fetch();
+  }, []);
 
   const close = () => {
     dispatch(closeDialog());
@@ -78,21 +89,24 @@ export default function CuisineDialog({isOpen}) {
           enjoy.
         </Typography>
         <Stack style={styles.content}>
-          {cuisines?.map((item, _i) => (
-            <TouchableOpacity
-              key={_i}
-              onPress={close}
-              style={styles.cuisineItem}>
-              {/* <SvgUri width={250} height={250} uri={item?.image} /> */}
-              <Image
-                source={{
-                  uri: item?.image,
-                }}
-                style={styles.image}
-              />
-              <Text>{item?.name}</Text>
-            </TouchableOpacity>
-          ))}
+          {isLoading ? (
+            <ActivityIndicator size="large" color={PRIMARY.main} />
+          ) : (
+            cuisines?.map((item, _i) => (
+              <TouchableOpacity
+                key={_i}
+                onPress={close}
+                style={styles.cuisineItem}>
+                <Image
+                  source={{
+                    uri: item?.image,
+                  }}
+                  style={styles.image}
+                />
+                <Text>{item?.name}</Text>
+              </TouchableOpacity>
+            ))
+          )}
         </Stack>
       </DialogContent>
     </Dialog>
