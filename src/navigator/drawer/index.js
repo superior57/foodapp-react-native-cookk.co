@@ -2,7 +2,7 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 // react-native
-import {View, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
 // @mui
 // layouts
 // components
@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
     height: 60,
     marginBottom: 20,
   },
+
+  mainItem: {marginVertical: 10, textAlign: 'center', color: 'white'},
 });
 
 export default function Drawer() {
@@ -45,13 +47,10 @@ export default function Drawer() {
           style={styles.logo}
         />
       </TouchableOpacity>
-      <Typography
-        textAlign="center"
-        color={'white'}
-        style={{marginVertical: 10}}
+      <TouchableOpacity
         onPress={() => navigation.navigate(SCREEN_ROUTES.contactUs)}>
-        Contact Us
-      </Typography>
+        <Text style={styles.mainItem}>Contact Us</Text>
+      </TouchableOpacity>
       <Button
         variant="outlined"
         padding={8}

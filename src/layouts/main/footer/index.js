@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
 
-  IconButton: {
+  iconButton: {
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: 'white',
@@ -73,21 +73,21 @@ export default function MainFooter() {
         <Stack direction="row" gap={10}>
           <IconButton
             icon={
-              <Stack style={styles.IconButton}>
+              <Stack style={styles.iconButton}>
                 <Icon name="twitter" size={20} color="white" />
               </Stack>
             }
           />
           <IconButton
             icon={
-              <Stack style={styles.IconButton}>
+              <Stack style={styles.iconButton}>
                 <Icon name="instagram" size={20} color="white" />
               </Stack>
             }
           />
           <IconButton
             icon={
-              <Stack style={styles.IconButton}>
+              <Stack style={styles.iconButton}>
                 <Icon name="facebook-f" size={20} color="white" />
               </Stack>
             }

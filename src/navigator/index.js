@@ -15,6 +15,7 @@ import Register from '../screens/auth/register';
 import ForgotPass from '../screens/auth/forgotPass';
 import CreatePass from '../screens/auth/createPass';
 import Home from '../screens/main/home';
+import ContactUs from '../screens/main/contactUs';
 // components
 // sections
 import DrawerView from './drawer';
@@ -42,6 +43,7 @@ export default function Navigator() {
         <Drawer.Screen name={AUTH_ROUTES.forgotPass} component={ForgotPass} />
         <Drawer.Screen name={AUTH_ROUTES.createPass} component={CreatePass} />
         <Drawer.Screen name={SCREEN_ROUTES.home} component={Home} />
+        <Drawer.Screen name={SCREEN_ROUTES.contactUs} component={ContactUs} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

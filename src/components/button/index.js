@@ -18,7 +18,9 @@ export default function Button({
   color = PRIMARY.main,
   children,
   style,
-  padding = 13,
+  paddingHorizontal = 13,
+  fontWeight = 'normal',
+  paddingVertical = 13,
   borderRadius = 10,
   width = 'auto',
   ...other
@@ -29,7 +31,8 @@ export default function Button({
       style={{
         ...(variant === 'contained' && {backgroundColor: color}),
         ...(variant === 'outlined' && {borderColor: color, borderWidth: 0.5}),
-        padding: padding,
+        paddingHorizontal: paddingHorizontal,
+        paddingVertical: paddingVertical,
         borderRadius: borderRadius,
         width: width,
         ...style,
@@ -37,6 +40,7 @@ export default function Button({
       {...other}>
       <Text
         style={{
+          fontWeight: fontWeight,
           color: 'white',
           textAlign: 'center',
           ...(variant === 'outlined' && {color: color}),

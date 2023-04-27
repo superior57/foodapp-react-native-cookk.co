@@ -157,7 +157,7 @@ export function getFaqs() {
   return async dispatch => {
     dispatch(startLoading());
     try {
-      const response = await axios.get(`/api/${process.env.API_VERSION}/faqs`);
+      const response = await axios.get(`/api/${API_VERSION}/faqs`);
       dispatch(slice.actions.setFaqs(response.data.faqs));
     } catch (error) {
       dispatch(slice.actions.setError(error));
