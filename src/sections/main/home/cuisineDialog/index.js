@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
   content: {
     gap: 20,
     marginTop: 10,
+    padding: 5,
   },
 
   cuisineItem: {
     gap: 5,
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
   },
 
@@ -74,7 +74,7 @@ export default function CuisineDialog({isOpen}) {
               onPress={close}
               style={styles.cuisineItem}>
               <Image
-                source={require('../../../../assets/images/logo/logo_transperent.png')}
+                source={require('../../../../assets/images/home/vegetable.png')}
                 style={styles.image}
                 resizeMode="contain"
               />

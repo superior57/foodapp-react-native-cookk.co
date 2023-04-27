@@ -43,8 +43,7 @@ export default function AuthLayout({children}) {
     <View>
       <ImageBackground
         source={require('../../assets/images/auth/auth_bg.png')}
-        style={{height: Dimensions.get('window').height}}
-        resizeMode="contain">
+        style={{height: Dimensions.get('window').height}}>
         <View style={styles.backdrop} />
         <ScrollView style={styles.content}>
           <Container>
