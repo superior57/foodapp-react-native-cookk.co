@@ -1,4 +1,6 @@
 import React, {useEffect} from 'react';
+import Icon from 'react-native-vector-icons/AntDesign';
+// import {SvgUri} from 'react-native-svg';
 
 // react-native
 import {Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
@@ -7,8 +9,6 @@ import {
   Dialog,
   DialogHeader,
   DialogContent,
-  DialogActions,
-  Button,
   Stack,
 } from '@react-native-material/core';
 // redux
@@ -33,14 +33,21 @@ const styles = StyleSheet.create({
   },
 
   cuisineItem: {
-    gap: 5,
+    gap: 20,
     flexDirection: 'row',
     alignItems: 'center',
   },
 
   image: {
-    width: 100,
-    height: 50,
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+  },
+
+  closeButton: {
+    position: 'absolute',
+    right: -10,
+    top: -50,
   },
 });
 
@@ -63,6 +70,9 @@ export default function CuisineDialog({isOpen}) {
     <Dialog visible={isOpen} onDismiss={close}>
       <DialogHeader title="Select cuisine" />
       <DialogContent style={styles.content}>
+        <TouchableOpacity onPress={close}>
+          <Icon name="close" size={20} style={styles.closeButton} />
+        </TouchableOpacity>
         <Typography>
           With our diverse range of cuisines, there's something for everyone to
           enjoy.
@@ -73,41 +83,18 @@ export default function CuisineDialog({isOpen}) {
               key={_i}
               onPress={close}
               style={styles.cuisineItem}>
+              {/* <SvgUri width={250} height={250} uri={item?.image} /> */}
               <Image
-                source={require('../../../../assets/images/home/vegetable.png')}
+                source={{
+                  uri: item?.image,
+                }}
                 style={styles.image}
-                resizeMode="contain"
               />
               <Text>{item?.name}</Text>
             </TouchableOpacity>
-            // <Button
-            //   key={_i}
-            //   onClick={async () => {
-            //     dispatch(closeDialog());
-            //   }}
-            //   direction={'row'}
-            //   sx={{width: '100%', justifyContent: 'left', px: {sm: 5}}}>
-            //   <View
-            //     style={{
-            //       minWidth: 70,
-            //       height: 70,
-            //       marginRight: 3,
-            //       borderRadius: '100%',
-            //       overflow: 'hidden',
-            //       position: 'relative',
-            //     }}>
-            //     <Image source={require(item?.image)} resizeMode="contain" />
-            //   </View>
-            //   <Typography variant="subtitle1" color={'black'}>
-            //     {item?.name}
-            //   </Typography>
-            // </Button>
           ))}
         </Stack>
       </DialogContent>
-      <DialogActions>
-        <Button title="Cancel" compact variant="text" onPress={close} />
-      </DialogActions>
     </Dialog>
   );
 }
