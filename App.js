@@ -10,6 +10,10 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 //navigator
 import Navigator from './src/navigator';
+// redux
+import {store} from './src/redux/store';
+import {Provider as ReduxProvider} from 'react-redux';
+import {Provider} from '@react-native-material/core';
 // @mui
 // layouts
 // components
@@ -19,9 +23,13 @@ import Navigator from './src/navigator';
 
 function App() {
   return (
-    <NavigationContainer>
-      <Navigator />
-    </NavigationContainer>
+    <ReduxProvider store={store}>
+      <Provider>
+        <NavigationContainer>
+          <Navigator />
+        </NavigationContainer>
+      </Provider>
+    </ReduxProvider>
   );
 }
 

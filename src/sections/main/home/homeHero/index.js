@@ -14,6 +14,9 @@ import Typography from '../../../../components/typography';
 // theme
 import {SECONDARY} from '../../../../theme';
 import Button from '../../../../components/button';
+// redux
+import {useDispatch} from '../../../../redux/store';
+import {openDialog} from '../../../../redux/slices/dialog';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +47,8 @@ const styles = StyleSheet.create({
 });
 
 export default function HomeHero() {
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.wrapper}>
       <Container>
@@ -60,7 +65,10 @@ export default function HomeHero() {
             </Typography>
           </View>
           <View>
-            <Button style={{borderRadius: 100}} width={230}>
+            <Button
+              style={{borderRadius: 100}}
+              width={230}
+              onPress={() => dispatch(openDialog('choose_cuisine_dialog'))}>
               Find Home Chefs
             </Button>
           </View>
