@@ -1,5 +1,6 @@
 // axios
 import axios from '../../utils/axios';
+import {API_VERSION} from '@env';
 
 // ----------------------------------------------------------------------
 
@@ -109,9 +110,7 @@ export function getCuisines() {
   return async dispatch => {
     dispatch(startLoading());
     try {
-      const response = await axios.get(
-        `/api/${process.env.API_VERSION}/find_local_chefs`,
-      );
+      const response = await axios.get(`/api/${API_VERSION}/find_local_chefs`);
       dispatch(slice.actions.getCuisinesSuccess(response.data.cuisines));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
