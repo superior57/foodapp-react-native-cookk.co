@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 
 // ----------------------------------------------------------------------
 
-const loginValidationSchema = yup.object().shape({
+const contactUsValidationSchema = yup.object().shape({
   full_name: yup.string().required('Full name is required'),
   email: yup
     .string()
@@ -96,7 +96,7 @@ export default function ContactUsForm() {
     <ImageBackground
       source={require('../../../../assets/images/contactUs/form.png')}>
       <Formik
-        validationSchema={loginValidationSchema}
+        validationSchema={contactUsValidationSchema}
         initialValues={{full_name: '', email: '', message: ''}}
         onSubmit={onSubmit}>
         {({handleChange, handleBlur, handleSubmit, values, errors}) => (
@@ -104,43 +104,49 @@ export default function ContactUsForm() {
             <Typography variant="h5" color={SECONDARY.main}>
               Ask a question
             </Typography>
-            <TextInput
-              name="full_name"
-              placeholder="Full name"
-              style={styles.input}
-              onChangeText={handleChange('full_name')}
-              onBlur={handleBlur('string')}
-              value={values.full_name}
-            />
-            {errors.full_name && (
-              <Typography color={ERROR.main}>{errors.full_name}</Typography>
-            )}
-            <TextInput
-              name="email"
-              placeholder="Email address"
-              style={styles.input}
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-              keyboardType="email-address"
-            />
-            {errors.email && (
-              <Typography color={ERROR.main}>{errors.email}</Typography>
-            )}
-            <TextInput
-              name="message"
-              multiline
-              style={styles.multilineInput}
-              textAlignVertical="top"
-              numberOfLines={8}
-              placeholder="Your message"
-              onChangeText={handleChange('message')}
-              onBlur={handleBlur('string')}
-              value={values.message}
-            />
-            {errors.message && (
-              <Typography color={ERROR.main}>{errors.message}</Typography>
-            )}
+            <Stack>
+              <TextInput
+                name="full_name"
+                placeholder="Full name"
+                style={styles.input}
+                onChangeText={handleChange('full_name')}
+                onBlur={handleBlur('string')}
+                value={values.full_name}
+              />
+              {errors.full_name && (
+                <Typography color={ERROR.main}>{errors.full_name}</Typography>
+              )}
+            </Stack>
+            <Stack>
+              <TextInput
+                name="email"
+                placeholder="Email address"
+                style={styles.input}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                keyboardType="email-address"
+              />
+              {errors.email && (
+                <Typography color={ERROR.main}>{errors.email}</Typography>
+              )}
+            </Stack>
+            <Stack>
+              <TextInput
+                name="message"
+                multiline
+                style={styles.multilineInput}
+                textAlignVertical="top"
+                numberOfLines={8}
+                placeholder="Your message"
+                onChangeText={handleChange('message')}
+                onBlur={handleBlur('string')}
+                value={values.message}
+              />
+              {errors.message && (
+                <Typography color={ERROR.main}>{errors.message}</Typography>
+              )}
+            </Stack>
             <Stack direction="row" justify="between">
               <Button
                 isLoading={isLoading}

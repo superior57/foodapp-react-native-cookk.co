@@ -22,6 +22,7 @@ import {Provider} from '@react-native-material/core';
 // sections
 // theme
 import {ThemeProvider} from 'styled-components';
+import {AuthProvider} from './src/contexts/JWTContext';
 
 // ----------------------------------------------------------------------
 
@@ -43,17 +44,19 @@ const theme = {
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <ToastProvider>
-        <ReduxProvider store={store}>
-          <Provider>
-            <NavigationContainer>
-              <Navigator />
-            </NavigationContainer>
-          </Provider>
-        </ReduxProvider>
-      </ToastProvider>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <ToastProvider>
+          <ReduxProvider store={store}>
+            <Provider>
+              <NavigationContainer>
+                <Navigator />
+              </NavigationContainer>
+            </Provider>
+          </ReduxProvider>
+        </ToastProvider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

@@ -157,6 +157,7 @@ export function getFaqs() {
     dispatch(startLoading());
     try {
       const response = await axios.get(`/api/${API_VERSION}/faqs`);
+      response.data.faqs.sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
       dispatch(slice.actions.setFaqs(response.data.faqs));
       return response.data;
     } catch (error) {

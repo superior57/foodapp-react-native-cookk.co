@@ -1,7 +1,7 @@
 import React from 'react';
 
 // react-native
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 // @mui
 // layouts
 // components
@@ -41,12 +41,11 @@ export default function Login({navigation}) {
         <Typography variant="h6" color="white">
           Don’t have the account?
         </Typography>
-        <Typography
-          sx={styles.signup}
-          variant="h6"
-          onPress={() => navigation.navigate('Register')}>
-          Sign up!
-        </Typography>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <Typography sx={styles.signup} variant="h6">
+            Sign up!
+          </Typography>
+        </TouchableOpacity>
       </View>
     </Layout>
   );
