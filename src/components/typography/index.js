@@ -10,15 +10,26 @@ import {Text} from '@react-native-material/core';
 // ----------------------------------------------------------------------
 
 export default function Typography({
+  textAlign = 'left',
+  fontWeight = 'normal',
+  color = 'black',
+  variant = 'body2',
+  onPress = () => {},
+  sx = {},
   children,
-  color,
-  variant,
-  fontWeight,
-  style,
-  ...other
+  other,
 }) {
   return (
-    <Text variant={variant} color={color} style={{...style}} {...other}>
+    <Text
+      onPress={onPress}
+      variant={variant}
+      color={color}
+      style={{
+        fontWeight: fontWeight,
+        textAlign: textAlign,
+        ...sx,
+      }}
+      {...other}>
       {children}
     </Text>
   );

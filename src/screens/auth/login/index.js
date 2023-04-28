@@ -1,82 +1,53 @@
 import React from 'react';
 
 // react-native
-import {Image, View, StyleSheet, Dimensions, Linking} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 // @mui
 // layouts
 // components
-import Screen from '../../../components/screen';
-import Container from '../../../components/container';
 import Typography from '../../../components/typography';
 // sections
 import LoginForm from '../../../sections/auth/loginForm';
-import AuthHeader from '../../../layouts/auth/authHeader';
+import Layout from '../../../layouts';
 
 // ----------------------------------------------------------------------
 
 const styles = StyleSheet.create({
-  image: {
-    height: Dimensions.get('window').height,
-    width: '100%',
-  },
-
-  content: {
-    height: Dimensions.get('window').height,
+  footer: {
     flexDirection: 'row',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0 ,0, 0.5)',
-    position: 'absolute',
+    justifyContent: 'space-between',
+    marginTop: 60,
   },
 
   signup: {
     color: '#F5D37A',
     textDecorationLine: 'underline',
   },
-
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 60,
-  },
 });
 
 // ----------------------------------------------------------------------
 
-export default function Login() {
+export default function Login({navigation}) {
   return (
-    <Screen>
-      <Image
-        style={styles.image}
-        source={require('../../../assets/images/auth_bg.png')}
-      />
-      <View style={styles.content}>
-        <AuthHeader />
-        <Container>
-          <Typography variant={'h4'} color={'white'} style={{fontWeight: 900}}>
-            Log in
-          </Typography>
-          <Typography
-            variant={'body1'}
-            color={'#ACACAC'}
-            style={{marginTop: 20}}>
-            Welcome back! Please enter your details...
-          </Typography>
-          <LoginForm />
-          <View style={styles.footer}>
-            <Typography variant="h6" color="white">
-              Don’t have the account?
-            </Typography>
-            <Typography
-              style={styles.signup}
-              variant="h6"
-              onPress={() => Linking.openURL('https://www.example.com')}>
-              Sign up!
-            </Typography>
-          </View>
-        </Container>
+    <Layout variant="auth">
+      <Typography variant={'h4'} color={'white'} sx={{fontWeight: 900}}>
+        Log in
+      </Typography>
+      <Typography variant={'body1'} color={'#ACACAC'} sx={{marginTop: 20}}>
+        Welcome back! Please enter your details...
+      </Typography>
+      <LoginForm />
+      <View style={styles.footer}>
+        <Typography variant="h6" color="white">
+          Don’t have the account?
+        </Typography>
+        <Typography
+          sx={styles.signup}
+          variant="h6"
+          onPress={() => navigation.navigate('Register')}>
+          Sign up!
+        </Typography>
       </View>
-    </Screen>
+    </Layout>
   );
 }

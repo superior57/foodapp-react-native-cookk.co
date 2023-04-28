@@ -1,19 +1,17 @@
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 // react-native
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Linking,
-  TouchableOpacity,
-} from 'react-native';
+import {View, TextInput, StyleSheet} from 'react-native';
 // @mui
 // layouts
 // components
+import Button from '../../../components/button';
 import Typography from '../../../components/typography';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // sections
+// routes
+import {AUTH_ROUTES} from '../../../routes/paths';
 
 // ----------------------------------------------------------------------
 const styles = StyleSheet.create({
@@ -54,18 +52,13 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     width: 150,
   },
-
-  button: {
-    backgroundColor: '#F5D37A',
-    padding: 15,
-    width: 200,
-    borderRadius: 10,
-  },
 });
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.wrapper}>
       <TextInput style={styles.input} placeholder="Email address" />
@@ -85,16 +78,14 @@ export default function LoginForm() {
       </View>
 
       <Typography
-        style={styles.link}
-        onPress={() => Linking.openURL('https://www.example.com')}>
+        sx={styles.link}
+        onPress={() => navigation.navigate(AUTH_ROUTES.forgotPass)}>
         Forgot password
       </Typography>
 
-      <TouchableOpacity style={styles.button} onPress={() => {}}>
-        <Typography color="white" variant="h6" style={{textAlign: 'center'}}>
-          Continue
-        </Typography>
-      </TouchableOpacity>
+      <Button onPress={() => navigation.navigate(AUTH_ROUTES.login)}>
+        Continue
+      </Button>
     </View>
   );
 }
