@@ -142,6 +142,7 @@ const AuthContext = React.createContext({
   addAddress: () => Promise.resolve(),
   updatePersonalInfo: () => Promise.resolve(),
   forgotPass: () => Promise.resolve(),
+  createPass: () => Promise.resolve(),
 });
 
 // ----------------------------------------------------------------------
@@ -233,7 +234,6 @@ function AuthProvider({children}) {
   };
 
   const forgotPass = async data => {
-    console.log('data: ', data);
     const response = await axios.post(
       `/api/${API_VERSION}/forgot_password`,
       data,
@@ -241,6 +241,10 @@ function AuthProvider({children}) {
     const {auth_token} = response.data;
 
     AsyncStorage.setItem('accessToken', auth_token);
+  };
+
+  const createPass = async data => {
+    await axios.post(`/api/${API_VERSION}/reset_password`, data);
   };
 
   const logout = async () => {
@@ -360,6 +364,7 @@ function AuthProvider({children}) {
         updatePassword,
         changeAddress,
         forgotPass,
+        createPass,
       }}>
       {children}
     </AuthContext.Provider>

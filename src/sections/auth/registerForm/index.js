@@ -113,7 +113,13 @@ export default function RegisterForm() {
     <View style={styles.wrapper}>
       <Formik
         validationSchema={registerValidationSchema}
-        initialValues={{email: '', password: ''}}
+        initialValues={{
+          first_name: '',
+          last_name: '',
+          email: '',
+          password: '',
+          password_confirmation: '',
+        }}
         onSubmit={onSubmit}>
         {({handleChange, handleSubmit, values, errors}) => (
           <Stack style={styles.form}>
