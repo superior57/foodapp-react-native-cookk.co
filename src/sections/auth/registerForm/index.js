@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 
 // ----------------------------------------------------------------------
 
-const loginValidationSchema = yup.object().shape({
+const registerValidationSchema = yup.object().shape({
   first_name: yup.string().required('First name is required'),
   last_name: yup.string().required('First name is required'),
   email: yup
@@ -112,7 +112,7 @@ export default function RegisterForm() {
   return (
     <View style={styles.wrapper}>
       <Formik
-        validationSchema={loginValidationSchema}
+        validationSchema={registerValidationSchema}
         initialValues={{email: '', password: ''}}
         onSubmit={onSubmit}>
         {({handleChange, handleSubmit, values, errors}) => (
