@@ -3,8 +3,8 @@ import * as yup from 'yup';
 import {Formik} from 'formik';
 import {useToast} from 'react-native-styled-toast';
 import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // react-native
 import {View, TextInput, StyleSheet} from 'react-native';

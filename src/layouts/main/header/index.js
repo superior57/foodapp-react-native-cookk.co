@@ -5,23 +5,26 @@ import Icon from 'react-native-vector-icons/AntDesign';
 // react-native
 import {View, Image, StyleSheet, TouchableOpacity} from 'react-native';
 // mui
-import {IconButton, Stack} from '@react-native-material/core';
+import {IconButton} from '@react-native-material/core';
 // layouts
 // screens
 // components
+import Avatar from '../../../components/avatar';
 // sections
 import NavIcon from '../../../navigator/navIcon';
 // theme
 import {SECONDARY} from '../../../theme';
 // routes
 import {SCREEN_ROUTES} from '../../../routes/paths';
+// hook
+import useAuth from '../../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
 const styles = StyleSheet.create({
   wrapper: {
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingLeft: 10,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -38,6 +41,7 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function MainHeader() {
+  const {user, isAuthenticated} = useAuth();
   const navigation = useNavigation();
 
   return (
@@ -49,7 +53,7 @@ export default function MainHeader() {
           style={styles.logo}
         />
       </TouchableOpacity>
-      <View display="flex" flexDirection="row" alignItems="center" gap={10}>
+      <View flexDirection="row" alignItems="center" gap={-10}>
         <IconButton
           icon={
             <Icon
@@ -61,6 +65,18 @@ export default function MainHeader() {
           }
           onPress={() => navigation.navigate(SCREEN_ROUTES.cart)}
         />
+        {isAuthenticated && user?.user && (
+          <IconButton
+            icon={
+              <Avatar
+                image={user?.image}
+                firstName={user?.user?.first_name}
+                lastName={user?.user?.last_name}
+              />
+            }
+            onPress={() => navigation.navigate(SCREEN_ROUTES.cart)}
+          />
+        )}
         <NavIcon />
       </View>
     </View>

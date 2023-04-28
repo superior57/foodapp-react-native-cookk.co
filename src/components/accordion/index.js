@@ -11,7 +11,6 @@ import Typography from '../typography';
 // sections
 // routes
 // theme
-import {GREY} from '../../theme';
 
 // ----------------------------------------------------------------------
 

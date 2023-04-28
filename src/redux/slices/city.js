@@ -1,8 +1,10 @@
 // axios
 import axios from '../../utils/axios';
-import {API_VERSION} from '@env';
+// import {API_VERSION} from '@env';
 
 // ----------------------------------------------------------------------
+
+const API_VERSION = 'v1';
 
 const {createSlice} = require('@reduxjs/toolkit');
 

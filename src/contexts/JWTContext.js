@@ -1,10 +1,12 @@
-import * as React from 'react';
-import {API_VERSION} from '@env';
+import React, {useEffect} from 'react';
 import {isValidToken, setSession} from '../utils/jwt';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../utils/axios';
+// import {API_VERSION} from '@env';
 
 // ----------------------------------------------------------------------
+
+const API_VERSION = 'v1';
 
 const initialState = {
   isAuthenticated: false,
@@ -150,23 +152,20 @@ const AuthContext = React.createContext({
 function AuthProvider({children}) {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const initialize = async () => {
       try {
-        const accessToken = await AsyncStorage.getItem('accessToken');
+        const accessToken =
+          typeof window !== 'undefined'
+            ? await AsyncStorage.getItem('accessToken')
+            : '';
+        console.log('accessToken: ', accessToken);
 
         if (accessToken && isValidToken(accessToken)) {
           setSession(accessToken);
 
-          const response = await fetch(
-            `https://your-api-url/api/${API_VERSION}/users/profile`,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            },
-          );
-          const user = await response.json();
+          const response = await axios.get(`/api/${API_VERSION}/users/profile`);
+          const user = response.data;
 
           dispatch({
             type: 'INITIALIZE',
@@ -197,7 +196,7 @@ function AuthProvider({children}) {
     };
 
     initialize();
-  }, []);
+  }, [state.isAuthenticated]);
 
   const login = async data => {
     const response = await axios.post(`/api/${API_VERSION}/login`, data);

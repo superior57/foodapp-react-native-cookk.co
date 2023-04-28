@@ -30,10 +30,6 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-
-  children: {
-    marginTop: 20,
-  },
 });
 
 // ----------------------------------------------------------------------
@@ -46,10 +42,8 @@ export default function AuthLayout({children}) {
         style={{height: Dimensions.get('window').height}}>
         <View style={styles.backdrop} />
         <ScrollView style={styles.content}>
-          <Container>
-            <AuthHeader />
-            <View style={styles.children}>{children}</View>
-          </Container>
+          <AuthHeader />
+          <Container>{children}</Container>
         </ScrollView>
       </ImageBackground>
     </View>
