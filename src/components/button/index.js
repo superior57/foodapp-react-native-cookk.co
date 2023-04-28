@@ -1,7 +1,7 @@
 import React from 'react';
 
 // react-native
-import {TouchableOpacity, Text} from 'react-native';
+import {TouchableOpacity, Text, View, ActivityIndicator} from 'react-native';
 // @mui
 // theme
 // layouts
@@ -13,6 +13,7 @@ import {PRIMARY} from '../../theme';
 // ----------------------------------------------------------------------
 
 export default function Button({
+  isLoading = false,
   variant = 'contained',
   onPress,
   color = PRIMARY.main,
@@ -27,8 +28,14 @@ export default function Button({
 }) {
   return (
     <TouchableOpacity
+      disabled={isLoading}
       onPress={onPress}
       style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 5,
+        ...(isLoading && {opacity: 0.8}),
         ...(variant === 'contained' && {backgroundColor: color}),
         ...(variant === 'outlined' && {borderColor: color, borderWidth: 0.5}),
         paddingHorizontal: paddingHorizontal,
@@ -38,6 +45,9 @@ export default function Button({
         ...style,
       }}
       {...other}>
+      {isLoading && (
+        <ActivityIndicator color={variant === 'contained' ? 'white' : color} />
+      )}
       <Text
         style={{
           fontWeight: fontWeight,

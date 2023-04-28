@@ -1,5 +1,6 @@
 // axios
 import axios from '../../utils/axios';
+import {API_VERSION} from '@env';
 
 // ----------------------------------------------------------------------
 
@@ -42,10 +43,11 @@ export function contactUs(data) {
   return async dispatch => {
     dispatch(startLoading());
     try {
-      const response = axios.post(
-        `/api/${process.env.API_VERSION}/ask_question`,
+      const response = await axios.post(
+        `/api/${API_VERSION}/ask_question`,
         data,
       );
+      return response.data;
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

@@ -6,6 +6,8 @@
  */
 
 import React from 'react';
+import {ToastProvider} from 'react-native-styled-toast';
+import {DefaultTheme} from 'react-native-paper';
 // react-navigation
 import {NavigationContainer} from '@react-navigation/native';
 //navigator
@@ -18,18 +20,40 @@ import {Provider} from '@react-native-material/core';
 // layouts
 // components
 // sections
+// theme
+import {ThemeProvider} from 'styled-components';
+
+// ----------------------------------------------------------------------
+
+const theme = {
+  ...DefaultTheme,
+  space: [0, 4, 8, 12, 16, 20, 24, 32, 40, 48],
+  colors: {
+    text: '#0A0A0A',
+    background: '#FFF',
+    border: '#E2E8F0',
+    muted: '#F0F1F3',
+    success: '#7DBE31',
+    error: '#FC0021',
+    info: '#00FFFF',
+  },
+};
 
 // ----------------------------------------------------------------------
 
 function App() {
   return (
-    <ReduxProvider store={store}>
-      <Provider>
-        <NavigationContainer>
-          <Navigator />
-        </NavigationContainer>
-      </Provider>
-    </ReduxProvider>
+    <ThemeProvider theme={theme}>
+      <ToastProvider>
+        <ReduxProvider store={store}>
+          <Provider>
+            <NavigationContainer>
+              <Navigator />
+            </NavigationContainer>
+          </Provider>
+        </ReduxProvider>
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
 

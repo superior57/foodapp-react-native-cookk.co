@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import * as yup from 'yup';
 import {Formik} from 'formik';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {useToast} from 'react-native-styled-toast';
 
 // react-native
 import {
@@ -22,6 +23,8 @@ import Button from '../../../../components/button';
 // routes
 // theme
 import {ERROR, PRIMARY, SECONDARY} from '../../../../theme';
+import {contactUs} from '../../../../redux/slices/contact-us';
+import {dispatch} from '../../../../redux/store';
 // redux
 
 // ----------------------------------------------------------------------
@@ -74,13 +77,28 @@ export default function ContactUsForm() {
     Linking.openURL('tel:+19299285292');
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const {toast} = useToast();
+
+  const onSubmit = async data => {
+    try {
+      setIsLoading(true);
+      const response = await dispatch(contactUs(data));
+      toast({message: response.success, intent: 'SUCCESS'});
+    } catch (error) {
+      toast({message: error.message, intent: 'ERROR'});
+    }
+    setIsLoading(false);
+  };
+
   return (
     <ImageBackground
       source={require('../../../../assets/images/contactUs/form.png')}>
       <Formik
         validationSchema={loginValidationSchema}
         initialValues={{full_name: '', email: '', message: ''}}
-        onSubmit={values => console.log(values)}>
+        onSubmit={onSubmit}>
         {({handleChange, handleBlur, handleSubmit, values, errors}) => (
           <Stack style={styles.form}>
             <Typography variant="h5" color={SECONDARY.main}>
@@ -125,8 +143,9 @@ export default function ContactUsForm() {
             )}
             <Stack direction="row" justify="between">
               <Button
+                isLoading={isLoading}
                 onPress={handleSubmit}
-                paddingHorizontal={40}
+                width={180}
                 fontWeight={900}
                 borderRadius={100}>
                 Ask a question
