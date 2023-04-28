@@ -9,6 +9,7 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 // mui
 import {IconButton, Stack} from '@react-native-material/core';
@@ -69,6 +70,10 @@ const loginValidationSchema = yup.object().shape({
 // ----------------------------------------------------------------------
 
 export default function ContactUsForm() {
+  const handleCall = () => {
+    Linking.openURL('tel:+19299285292');
+  };
+
   return (
     <ImageBackground
       source={require('../../../../assets/images/contactUs/form.png')}>
@@ -128,7 +133,7 @@ export default function ContactUsForm() {
               </Button>
               <IconButton
                 icon={
-                  <TouchableOpacity onPress={() => {}}>
+                  <TouchableOpacity onPress={handleCall}>
                     <Stack style={styles.iconButton}>
                       <Icon name="phone" size={15} color={'white'} />
                     </Stack>
