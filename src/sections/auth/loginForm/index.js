@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import {Formik} from 'formik';
 import {useToast} from 'react-native-styled-toast';
 import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 // react-native
 import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
@@ -12,7 +13,6 @@ import {IconButton, Stack} from '@react-native-material/core';
 // components
 import Button from '../../../components/button';
 import Typography from '../../../components/typography';
-import Icon from 'react-native-vector-icons/Ionicons';
 // sections
 // routes
 import {AUTH_ROUTES, SCREEN_ROUTES} from '../../../routes/paths';
@@ -65,8 +65,6 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     width: 150,
   },
-
-  inputGroup: {},
 });
 
 // ----------------------------------------------------------------------
@@ -85,8 +83,6 @@ const loginValidationSchema = yup.object().shape({
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
-  // const {reset} = useForm();
-
   const {login} = useAuth();
 
   const navigation = useNavigation();
@@ -100,12 +96,11 @@ export default function LoginForm() {
   const onSubmit = async (data, {resetForm}) => {
     setIsLoading(true);
     try {
-      await login(data.email, data.password);
+      await login(data);
       navigation.navigate(SCREEN_ROUTES.home);
     } catch (error) {
       toast({message: error.message, intent: 'ERROR'});
       resetForm();
-      // reset();
     }
     setIsLoading(false);
   };

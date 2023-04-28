@@ -35,7 +35,6 @@ export default function Button({
         justifyContent: 'center',
         alignItems: 'center',
         gap: 5,
-        ...(isLoading && {opacity: 0.8}),
         ...(variant === 'contained' && {backgroundColor: color}),
         ...(variant === 'outlined' && {borderColor: color, borderWidth: 0.5}),
         paddingHorizontal: paddingHorizontal,

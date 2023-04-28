@@ -197,11 +197,8 @@ function AuthProvider({children}) {
     initialize();
   }, []);
 
-  const login = async (email, password) => {
-    const response = await axios.post(`/api/${API_VERSION}/login`, {
-      email,
-      password,
-    });
+  const login = async data => {
+    const response = await axios.post(`/api/${API_VERSION}/login`, data);
 
     const {auth_token, user} = response.data;
 
@@ -216,20 +213,10 @@ function AuthProvider({children}) {
     return {auth_token, user};
   };
 
-  const register = async (
-    first_name,
-    last_name,
-    email,
-    password,
-    password_confirmation,
-  ) => {
+  const register = async data => {
     const response = await axios.post(`/api/${API_VERSION}/sign_up`, {
       users: {
-        first_name,
-        last_name,
-        email,
-        password,
-        password_confirmation,
+        ...data,
         user_type: 'end_user',
       },
     });
