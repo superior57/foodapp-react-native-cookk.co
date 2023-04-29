@@ -20,9 +20,10 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
-  content: {
-    height: '100%',
+  backgroundImg: {
+    height: Dimensions.get('window').height,
     width: '100%',
+    position: 'absolute',
   },
 });
 
@@ -33,13 +34,9 @@ export default function AuthLayout({children}) {
     <View>
       <Image
         source={require('../../assets/images/auth/auth_bg.png')}
-        style={{
-          height: Dimensions.get('window').height,
-          width: '100%',
-          position: 'absolute',
-        }}
+        style={styles.backgroundImg}
       />
-      <ScrollView style={styles.content}>
+      <ScrollView>
         <View style={styles.backdrop} />
         <AuthHeader />
         <Container>{children}</Container>

@@ -155,14 +155,10 @@ function AuthProvider({children}) {
   useEffect(() => {
     const initialize = async () => {
       try {
-        const accessToken =
-          typeof window !== 'undefined'
-            ? await AsyncStorage.getItem('accessToken')
-            : '';
-        console.log('accessToken: ', accessToken);
+        const accessToken = await AsyncStorage.getItem('accessToken');
 
-        if (accessToken && isValidToken(accessToken)) {
-          setSession(accessToken);
+        if (accessToken) {
+          await setSession(accessToken);
 
           const response = await axios.get(`/api/${API_VERSION}/users/profile`);
           const user = response.data;
@@ -184,7 +180,6 @@ function AuthProvider({children}) {
           });
         }
       } catch (err) {
-        console.error(err);
         dispatch({
           type: 'INITIALIZE',
           payload: {
@@ -224,6 +219,7 @@ function AuthProvider({children}) {
     const {user, auth_token} = response.data;
 
     AsyncStorage.setItem('accessToken', auth_token);
+    setSession(auth_token);
     dispatch({
       type: 'REGISTER',
       payload: {
