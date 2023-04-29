@@ -1,12 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, Image, Dimensions} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {SECONDARY} from '../../theme';
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: SECONDARY.main,
-    height: Dimensions.get('window').height,
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },

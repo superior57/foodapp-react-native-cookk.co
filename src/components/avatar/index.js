@@ -15,10 +15,10 @@ import {Avatar as AvatarImage} from 'react-native-paper';
 
 export default function Avatar({image, firstName, lastName}) {
   return image ? (
-    <AvatarImage.Image size={25} source={{uri: image}} />
+    <AvatarImage.Image size={28} source={{uri: image}} />
   ) : (
     <AvatarImage.Text
-      size={25}
+      size={28}
       label={`${createAvatar(firstName).name}${createAvatar(lastName).name}`}
     />
   );
