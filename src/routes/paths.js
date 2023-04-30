@@ -13,6 +13,7 @@ export const SCREEN_ROUTES = {
   home: 'Home',
   cart: 'Cart',
   chefs: 'Chefs',
+  singleChef: 'SingleChef',
   contactUs: 'ContactUs',
 };
 

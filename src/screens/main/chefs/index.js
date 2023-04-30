@@ -37,7 +37,10 @@ export default function Chefs() {
       SetIsLoading(false);
       dispatch(getCity(cityId));
     }
-    fetch();
+
+    if (cityId != null && cuisineId != null) {
+      fetch();
+    }
   }, [cityId, cuisineId]);
 
   return loading ? (

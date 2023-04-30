@@ -59,7 +59,7 @@ const slice = createSlice({
     //
     getChefsSuccess(state, action) {
       state.loading = false;
-      state.chefs = action.payload.data;
+      state.chefs = action.payload;
     },
 
     //
@@ -131,11 +131,11 @@ export function getChefs(cityId = null, cuisineId = null, chefId = null) {
       const response = await axios.get(
         `/api/${API_VERSION}/cities/${cityId}/cuisines/${cuisineId}`,
       );
-      console.log(
-        'response.data: ',
-        `/api/${API_VERSION}/cities/${cityId}/cuisines/${cuisineId}`,
+      let data = response.data.data;
+      data.sort((a, b) =>
+        a.chef.can_sell === b.chef.can_sell ? 0 : a.chef.can_sell ? -1 : 1,
       );
-      dispatch(slice.actions.getChefsSuccess(response.data));
+      dispatch(slice.actions.getChefsSuccess(data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
