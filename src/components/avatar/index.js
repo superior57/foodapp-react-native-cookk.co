@@ -13,12 +13,12 @@ import {Avatar as AvatarImage} from 'react-native-paper';
 
 // ----------------------------------------------------------------------
 
-export default function Avatar({image, firstName, lastName}) {
+export default function Avatar({image, firstName, lastName, size}) {
   return image ? (
-    <AvatarImage.Image size={28} source={{uri: image}} />
+    <AvatarImage.Image size={size} source={{uri: image}} />
   ) : (
     <AvatarImage.Text
-      size={28}
+      size={size}
       label={`${createAvatar(firstName).name}${createAvatar(lastName).name}`}
     />
   );

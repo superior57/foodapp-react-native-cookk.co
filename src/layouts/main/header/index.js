@@ -24,7 +24,7 @@ import useAuth from '../../../hooks/useAuth';
 const styles = StyleSheet.create({
   wrapper: {
     paddingVertical: 10,
-    paddingLeft: 10,
+    paddingLeft: 20,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -69,12 +69,13 @@ export default function MainHeader() {
           <IconButton
             icon={
               <Avatar
+                size={30}
                 image={user?.image}
                 firstName={user?.user?.first_name}
                 lastName={user?.user?.last_name}
               />
             }
-            onPress={() => navigation.navigate(SCREEN_ROUTES.cart)}
+            onPress={() => {}}
           />
         )}
         <NavIcon />

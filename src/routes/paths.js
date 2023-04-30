@@ -12,6 +12,7 @@ export const AUTH_ROUTES = {
 export const SCREEN_ROUTES = {
   home: 'Home',
   cart: 'Cart',
+  chefs: 'Chefs',
   contactUs: 'ContactUs',
 };
 

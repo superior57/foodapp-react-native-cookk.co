@@ -9,6 +9,7 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 // mui
 import {
   Dialog,
@@ -19,7 +20,12 @@ import {
 // redux
 import {dispatch, useSelector} from '../../../../redux/store';
 import {closeDialog} from '../../../../redux/slices/dialog';
-import {CITYCUISINE_SELECTOR, getCuisines} from '../../../../redux/slices/city';
+import {
+  CITYCUISINE_SELECTOR,
+  getCuisines,
+  getCuisine,
+  getCity,
+} from '../../../../redux/slices/city';
 // layouts
 // screens
 // components
@@ -28,6 +34,7 @@ import Typography from '../../../../components/typography';
 // routes
 // theme
 import {PRIMARY} from '../../../../theme';
+import {SCREEN_ROUTES} from '../../../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -60,8 +67,10 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function CuisineDialog({isOpen}) {
-  const {cuisines} = useSelector(CITYCUISINE_SELECTOR);
+  const navigation = useNavigation();
+  const {cuisines, cities} = useSelector(CITYCUISINE_SELECTOR);
   const [isLoading, setIsLoading] = useState(false);
+  const cityId = cities?.[0]?.id;
 
   useEffect(() => {
     async function fetch() {
@@ -72,6 +81,13 @@ export default function CuisineDialog({isOpen}) {
 
     fetch();
   }, []);
+
+  const onSubmit = cuisineId => {
+    close();
+    dispatch(getCuisine(cuisineId));
+    dispatch(getCity(cityId));
+    navigation.navigate(SCREEN_ROUTES.chefs);
+  };
 
   const close = () => {
     dispatch(closeDialog());
@@ -95,7 +111,7 @@ export default function CuisineDialog({isOpen}) {
             cuisines?.map((item, _i) => (
               <TouchableOpacity
                 key={_i}
-                onPress={close}
+                onPress={() => onSubmit(item?.id)}
                 style={styles.cuisineItem}>
                 <Image
                   source={{

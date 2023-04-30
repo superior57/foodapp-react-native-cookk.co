@@ -86,7 +86,8 @@ const slice = createSlice({
 export default slice.reducer;
 
 // Actions
-export const {startLoading} = slice.actions;
+// Actions
+export const {startLoading, getCuisine, getChef} = slice.actions;
 
 // Selector
 export const CITYCUISINE_SELECTOR = state => state.cityCuisine;
@@ -130,9 +131,11 @@ export function getChefs(cityId = null, cuisineId = null, chefId = null) {
       const response = await axios.get(
         `/api/${API_VERSION}/cities/${cityId}/cuisines/${cuisineId}`,
       );
+      console.log(
+        'response.data: ',
+        `/api/${API_VERSION}/cities/${cityId}/cuisines/${cuisineId}`,
+      );
       dispatch(slice.actions.getChefsSuccess(response.data));
-      if (cuisineId) dispatch(slice.actions.getCuisine(cuisineId));
-      if (chefId) dispatch(slice.actions.getChef(chefId));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -145,7 +148,7 @@ export function getCity(cityId) {
     dispatch(startLoading());
     try {
       const response = await axios.get(`/api/${API_VERSION}/cities`);
-      const city = response.data.cities.find(({id}) => id == cityId);
+      const city = response.data.cities.find(({id}) => id === cityId);
       dispatch(slice.actions.getCitySuccess(city));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

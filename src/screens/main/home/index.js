@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 // react-native
 // @mui
@@ -8,10 +8,16 @@ import Layout from '../../../layouts';
 // sections
 import HomeHero from '../../../sections/main/home/homeHero';
 import HowItWork from '../../../sections/main/home/howItWork';
+// redux
+import {dispatch} from '../../../redux/store';
+import {getCities} from '../../../redux/slices/city';
 
 // ----------------------------------------------------------------------
 
 export default function Home() {
+  useEffect(() => {
+    dispatch(getCities());
+  }, []);
   return (
     <Layout variant="main">
       <HomeHero />

@@ -15,6 +15,8 @@ import Register from '../screens/auth/register';
 import ForgotPass from '../screens/auth/forgotPass';
 import CreatePass from '../screens/auth/createPass';
 import Home from '../screens/main/home';
+import Chefs from '../screens/main/chefs';
+import Cart from '../screens/main/cart';
 import ContactUs from '../screens/main/contactUs';
 // components
 // sections
@@ -43,6 +45,8 @@ export default function Navigator() {
         <Drawer.Screen name={AUTH_ROUTES.forgotPass} component={ForgotPass} />
         <Drawer.Screen name={AUTH_ROUTES.createPass} component={CreatePass} />
         <Drawer.Screen name={SCREEN_ROUTES.home} component={Home} />
+        <Drawer.Screen name={SCREEN_ROUTES.chefs} component={Chefs} />
+        <Drawer.Screen name={SCREEN_ROUTES.cart} component={Cart} />
         <Drawer.Screen name={SCREEN_ROUTES.contactUs} component={ContactUs} />
       </Drawer.Navigator>
     </NavigationContainer>
