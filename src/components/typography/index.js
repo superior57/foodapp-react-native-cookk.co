@@ -6,13 +6,15 @@ import {Text} from '@react-native-material/core';
 // layouts
 // components
 // sections
+// theme
+import {GREY} from '../../theme';
 
 // ----------------------------------------------------------------------
 
 export default function Typography({
   textAlign = 'left',
   fontWeight = 'normal',
-  color = 'black',
+  color = GREY[800],
   variant = 'body2',
   sx = {},
   children,

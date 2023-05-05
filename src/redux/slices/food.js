@@ -2,6 +2,8 @@ import {createSlice} from '@reduxjs/toolkit';
 // axios
 import axios from '../../utils/axios';
 
+const API_VERSION = 'v1';
+
 // ----------------------------------------------------------------------
 
 const initialState = {
@@ -184,16 +186,13 @@ export function createOrders(data) {
 
     dispatch(startLoading());
     try {
-      const response = await axios.post(
-        `/api/${process.env.API_VERSION}/orders/create`,
-        {
-          order: {
-            chef_id: data.chefId,
-            status: 'initiated',
-            items_attributes: oreders,
-          },
+      const response = await axios.post(`/api/${API_VERSION}/orders/create`, {
+        order: {
+          chef_id: data.chefId,
+          status: 'initiated',
+          items_attributes: oreders,
         },
-      );
+      });
       dispatch(slice.actions.setOrderId(response.data.success.id));
     } catch (error) {
       dispatch(slice.actions.setError(error));
@@ -206,7 +205,7 @@ export function getFoodsByChef(cityId, cuisineId, chefId) {
     dispatch(startLoading());
     try {
       const response = await axios.get(
-        `/api/${process.env.API_VERSION}/cities/${cityId}/cuisines/${cuisineId}/chefs/${chefId}`,
+        `/api/${API_VERSION}/cities/${cityId}/cuisines/${cuisineId}/chefs/${chefId}`,
       );
       dispatch(slice.actions.getFoodsSuccess(response.data.data));
     } catch (error) {
@@ -220,7 +219,7 @@ export function getOrderDetail(orderId) {
     dispatch(startLoading());
     try {
       const response = await axios.get(
-        `/api/${process.env.API_VERSION}/orders/${orderId}/details`,
+        `/api/${API_VERSION}/orders/${orderId}/details`,
       );
       dispatch(slice.actions.setOrderDetail(response.data));
     } catch (error) {
@@ -233,9 +232,7 @@ export function getOrders() {
   return async dispatch => {
     dispatch(startLoading());
     try {
-      const response = await axios.get(
-        `/api/${process.env.API_VERSION}/orders`,
-      );
+      const response = await axios.get(`/api/${API_VERSION}/orders`);
       dispatch(slice.actions.setOrders(response.data.orders_data));
     } catch (error) {
       dispatch(slice.actions.setError(error));
@@ -248,7 +245,7 @@ export function deleteCart(orderId, foodId) {
     dispatch(startLoading());
     try {
       const response = await axios.delete(
-        `/api/${process.env.API_VERSION}/orders/${orderId}/items/${foodId}/delete`,
+        `/api/${API_VERSION}/orders/${orderId}/items/${foodId}/delete`,
       );
       return response;
     } catch (error) {
@@ -262,7 +259,7 @@ export function addTips(data) {
     dispatch(startLoading());
     try {
       const response = await axios.post(
-        `/api/${process.env.API_VERSION}/orders/${data.orderId}/add_tips`,
+        `/api/${API_VERSION}/orders/${data.orderId}/add_tips`,
         {
           tips: data.tips,
         },
@@ -277,7 +274,7 @@ export function updateScheduleTime(orderId, scheduleTime) {
   return async dispatch => {
     dispatch(startLoading());
     const response = await axios.post(
-      `/api/${process.env.API_VERSION}/orders/${orderId}/update_schedule_time`,
+      `/api/${API_VERSION}/orders/${orderId}/update_schedule_time`,
       {
         schedule_time: scheduleTime,
       },
@@ -292,7 +289,7 @@ export function updateDeliveryInstructions(data) {
     dispatch(startLoading());
     try {
       const response = await axios.post(
-        `/api/${process.env.API_VERSION}/orders/${data.orderId}/update_delivery_instructions`,
+        `/api/${API_VERSION}/orders/${data.orderId}/update_delivery_instructions`,
         {
           leave_at_door: data.status,
           delivery_instructions: data.note,
@@ -311,7 +308,7 @@ export function getPopularFoods() {
   return async dispatch => {
     dispatch(startLoading());
     try {
-      const response = await axios.get(`/api/${process.env.API_VERSION}/foods`);
+      const response = await axios.get(`/api/${API_VERSION}/foods`);
       dispatch(
         slice.actions.getPopularFoodsSuccess(
           response.data?.sort(() => Math.random() - 0.5),
@@ -328,9 +325,7 @@ export function getSavedCards() {
   return async dispatch => {
     dispatch(startLoading());
     try {
-      const response = await axios.get(
-        `/api/${process.env.API_VERSION}/users/saved_cards`,
-      );
+      const response = await axios.get(`/api/${API_VERSION}/users/saved_cards`);
       dispatch(
         slice.actions.setSavedCards(response.data ? [response.data] : []),
       );
@@ -346,7 +341,7 @@ export function updateCart(type, orderId, foodId) {
     dispatch(startLoading());
     try {
       const response = await axios.post(
-        `/api/${process.env.API_VERSION}/orders/${orderId}/items/${foodId}/add_or_remove`,
+        `/api/${API_VERSION}/orders/${orderId}/items/${foodId}/add_or_remove`,
         {
           operation_type: type,
         },
@@ -364,7 +359,7 @@ export function getOrderConfirmInfo(orderId) {
     dispatch(startLoading());
     try {
       const response = await axios.get(
-        `/api/${process.env.API_VERSION}/orders/${orderId}/confirm_order`,
+        `/api/${API_VERSION}/orders/${orderId}/confirm_order`,
       );
       dispatch(slice.actions.setOrderConfirmInfo(response.data));
     } catch (error) {
@@ -380,7 +375,7 @@ export function updateIsPickup(isPickup, orderId) {
     try {
       dispatch(slice.actions.setIsPickup(isPickup));
       const response = await axios.post(
-        `/api/${process.env.API_VERSION}/orders/${orderId}/update_is_pickup`,
+        `/api/${API_VERSION}/orders/${orderId}/update_is_pickup`,
         {
           is_pickup: isPickup,
         },
@@ -396,7 +391,7 @@ export function deleteCard() {
     dispatch(startLoading());
     try {
       const response = await axios.delete(
-        `/api/${process.env.API_VERSION}/payments/delete_card`,
+        `/api/${API_VERSION}/payments/delete_card`,
       );
       return response;
     } catch (error) {

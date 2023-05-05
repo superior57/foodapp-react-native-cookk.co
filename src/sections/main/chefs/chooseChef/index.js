@@ -96,7 +96,11 @@ export default function ChooseChef() {
       {chefs?.map(item => (
         <TouchableOpacity
           key={item?.chef?.id}
-          onPress={() => chooseChef(item?.chef?.id)}>
+          onPress={() => {
+            if (item?.chef?.can_sell) {
+              chooseChef(item?.chef?.id);
+            }
+          }}>
           <View style={{position: 'relative'}}>
             <Stack style={styles.chef}>
               <Stack direction="row" style={styles.header}>

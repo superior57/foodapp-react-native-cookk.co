@@ -124,7 +124,7 @@ export function getCuisines() {
 
 // ----------------------------------------------------------------------
 
-export function getChefs(cityId = null, cuisineId = null, chefId = null) {
+export function getChefs(cityId = null, cuisineId = null) {
   return async dispatch => {
     dispatch(startLoading());
     try {
