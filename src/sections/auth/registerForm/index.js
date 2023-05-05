@@ -1,0 +1,212 @@
+import React, {useState} from 'react';
+import * as yup from 'yup';
+import {Formik} from 'formik';
+import {useToast} from 'react-native-styled-toast';
+import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+// react-native
+import {View, TextInput, StyleSheet} from 'react-native';
+// @mui
+import {IconButton, Stack} from '@react-native-material/core';
+// layouts
+// components
+import Button from '../../../components/button';
+import Typography from '../../../components/typography';
+// sections
+//routes
+import {SCREEN_ROUTES} from '../../../routes/paths';
+// hook
+import useAuth from '../../../hooks/useAuth';
+// theme
+import {ERROR} from '../../../theme';
+
+// ----------------------------------------------------------------------
+
+const styles = StyleSheet.create({
+  wrapper: {
+    marginTop: 50,
+    width: '100%',
+  },
+
+  form: {
+    gap: 40,
+  },
+
+  input: {
+    paddingHorizontal: 20,
+    width: '100%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+  },
+
+  passwordInputGroup: {
+    backgroundColor: 'white',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  passwordInput: {
+    flex: 1,
+    padding: 0,
+  },
+
+  eyeIcon: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    right: 0,
+  },
+
+  link: {
+    fontSize: 18,
+    color: 'white',
+    textDecorationLine: 'underline',
+    width: 150,
+  },
+});
+
+// ----------------------------------------------------------------------
+
+const registerValidationSchema = yup.object().shape({
+  first_name: yup.string().required('First name is required'),
+  last_name: yup.string().required('First name is required'),
+  email: yup
+    .string()
+    .email('Please enter valid email')
+    .required('Email address is required'),
+  password: yup
+    .string()
+    .min(8, ({min}) => `Password must be at least ${min} characters`)
+    .required('Password is required'),
+  password_confirmation: yup
+    .string()
+    .min(8, ({min}) => `Confirm password must be at least ${min} characters`)
+    .required('Confirm password is required'),
+});
+
+// ----------------------------------------------------------------------
+
+export default function RegisterForm() {
+  const {register} = useAuth();
+  const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const {toast} = useToast();
+
+  const onSubmit = async data => {
+    setIsLoading(true);
+    try {
+      await register(data);
+      navigation.navigate(SCREEN_ROUTES.home);
+      toast({message: ' Register Successfully', intent: 'SUCCESS'});
+    } catch (error) {
+      toast({message: error.message, intent: 'ERROR'});
+    }
+    setIsLoading(false);
+  };
+
+  return (
+    <View style={styles.wrapper}>
+      <Formik
+        validationSchema={registerValidationSchema}
+        initialValues={{
+          first_name: '',
+          last_name: '',
+          email: '',
+          password: '',
+          password_confirmation: '',
+        }}
+        onSubmit={onSubmit}>
+        {({handleChange, handleSubmit, values, errors}) => (
+          <Stack style={styles.form}>
+            <Stack>
+              <TextInput
+                name="first_name"
+                placeholder="First name"
+                style={styles.input}
+                onChangeText={handleChange('first_name')}
+                value={values.first_name}
+              />
+              {errors.first_name && (
+                <Typography color={ERROR.main}>{errors.first_name}</Typography>
+              )}
+            </Stack>
+            <Stack>
+              <TextInput
+                name="last_name"
+                placeholder="Last name"
+                style={styles.input}
+                onChangeText={handleChange('last_name')}
+                value={values.last_name}
+              />
+              {errors.last_name && (
+                <Typography color={ERROR.main}>{errors.last_name}</Typography>
+              )}
+            </Stack>
+            <Stack>
+              <TextInput
+                name="email"
+                placeholder="Email address"
+                style={styles.input}
+                onChangeText={handleChange('email')}
+                value={values.email}
+              />
+              {errors.email && (
+                <Typography color={ERROR.main}>{errors.email}</Typography>
+              )}
+            </Stack>
+            <Stack>
+              <Stack style={styles.passwordInputGroup}>
+                <TextInput
+                  name="password"
+                  style={styles.passwordInput}
+                  placeholder="Password"
+                  secureTextEntry={!showPassword}
+                  onChangeText={handleChange('password')}
+                  value={values.password}
+                />
+                <IconButton
+                  onPress={() => setShowPassword(!showPassword)}
+                  style={styles.eyeIcon}
+                  icon={<Icon name="eye-outline" size={20} color="#939393" />}
+                />
+              </Stack>
+              {errors.password && (
+                <Typography color={ERROR.main}>{errors.password}</Typography>
+              )}
+            </Stack>
+            <Stack>
+              <Stack style={styles.passwordInputGroup}>
+                <TextInput
+                  name="password_confirmation"
+                  style={styles.passwordInput}
+                  placeholder="Confirm password"
+                  secureTextEntry={!showConfirmPassword}
+                  onChangeText={handleChange('password_confirmation')}
+                  value={values.password_confirmation}
+                />
+                <IconButton
+                  onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+                  style={styles.eyeIcon}
+                  icon={<Icon name="eye-outline" size={20} color="#939393" />}
+                />
+              </Stack>
+              {errors.password_confirmation && (
+                <Typography color={ERROR.main}>
+                  {errors.password_confirmation}
+                </Typography>
+              )}
+            </Stack>
+            <Button isLoading={isLoading} onPress={handleSubmit}>
+              Continue
+            </Button>
+          </Stack>
+        )}
+      </Formik>
+    </View>
+  );
+}

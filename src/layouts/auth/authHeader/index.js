@@ -1,25 +1,28 @@
 import React from 'react';
 
 // react-native
-import {StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 // @mui
 // layouts
 // components
-import Foundation from 'react-native-vector-icons/Foundation';
 // sections
+import NavIcon from '../../../navigator/navIcon';
 
 // ----------------------------------------------------------------------
+
 const styles = StyleSheet.create({
-  listIcon: {
-    color: 'white',
-    position: 'absolute',
-    top: 20,
-    right: 20,
+  wrapper: {
+    padding: 10,
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'flex-end',
   },
 });
 
-// ----------------------------------------------------------------------
-
 export default function AuthHeader() {
-  return <Foundation style={styles.listIcon} name="list" size={40} />;
+  return (
+    <View style={styles.wrapper}>
+      <NavIcon />
+    </View>
+  );
 }

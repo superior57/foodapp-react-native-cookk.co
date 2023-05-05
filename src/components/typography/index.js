@@ -6,19 +6,30 @@ import {Text} from '@react-native-material/core';
 // layouts
 // components
 // sections
+// theme
+import {GREY} from '../../theme';
 
 // ----------------------------------------------------------------------
 
 export default function Typography({
+  textAlign = 'left',
+  fontWeight = 'normal',
+  color = GREY[800],
+  variant = 'body2',
+  sx = {},
   children,
-  color,
-  variant,
-  fontWeight,
-  style,
-  ...other
+  other,
 }) {
   return (
-    <Text variant={variant} color={color} style={{...style}} {...other}>
+    <Text
+      variant={variant}
+      color={color}
+      style={{
+        fontWeight: fontWeight,
+        textAlign: textAlign,
+        ...sx,
+      }}
+      {...other}>
       {children}
     </Text>
   );
