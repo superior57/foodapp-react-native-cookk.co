@@ -1,6 +1,8 @@
 import jwtDecode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from './axios';
+import {dispatch} from '../redux/store';
+import {updateFoodCart} from '../redux/slices/food';
 
 const isValidToken = async accessToken => {
   if (!accessToken) {
@@ -23,6 +25,7 @@ const handleTokenExpired = exp => {
 
   expiredTimer = setTimeout(() => {
     alert('Token expired');
+    dispatch(updateFoodCart({actionType: 'clear'}));
     AsyncStorage.removeItem('accessToken');
   }, timeLeft);
 };

@@ -2,7 +2,9 @@ import React, {useEffect, useState} from 'react';
 import Layout from '../../../layouts';
 
 // react-native
+import {Divider} from 'react-native-paper';
 // mui
+import {Stack} from '@react-native-material/core';
 // layouts
 // screens
 // components
@@ -10,9 +12,11 @@ import Container from '../../../components/container';
 import LoadingScreen from '../../../components/loadingScreen';
 // sections
 import ChefHeader from '../../../sections/main/singleChef/chefHeader';
+import Foods from '../../../sections/main/singleChef/foods';
+import NewCartDialog from '../../../sections/main/singleChef/chefHeader/newCartDialog';
 // routes
 // redux
-import {getFoodsByChef} from '../../../redux/slices/food';
+import {getFoodsByChef, updateFoodCart} from '../../../redux/slices/food';
 import {dispatch, useSelector} from '../../../redux/store';
 import {CITYCUISINE_SELECTOR, getChefs} from '../../../redux/slices/city';
 // theme
@@ -22,8 +26,10 @@ import {CITYCUISINE_SELECTOR, getChefs} from '../../../redux/slices/city';
 
 export default function SingleChef() {
   const [selectedCategory, setSelectedCategory] = useState();
+  const [newCartDialogIsOpen, setNewCartDialogIsOpen] = useState(false);
+  const [selectedData, setSelectedData] = useState();
   const {city, cuisine, chef} = useSelector(CITYCUISINE_SELECTOR);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const cityId = city?.id;
   const cuisineId = cuisine?.id;
   const chefId = chef?.chef?.id;
@@ -41,16 +47,45 @@ export default function SingleChef() {
     }
   }, [cityId, cuisineId, chefId]);
 
+  const newCart = () => {
+    dispatch(updateFoodCart({actionType: 'clear'}));
+    dispatch(
+      updateFoodCart({
+        data: selectedData,
+        actionType: 'add',
+      }),
+    );
+    setNewCartDialogIsOpen(false);
+  };
+
   return isLoading ? (
     <LoadingScreen />
   ) : (
-    <Layout variant="main">
-      <Container>
-        <ChefHeader
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-        />
-      </Container>
-    </Layout>
+    <>
+      <NewCartDialog
+        onSubmit={newCart}
+        visible={newCartDialogIsOpen}
+        onDismiss={() => setNewCartDialogIsOpen(false)}
+      />
+      <Layout variant="main">
+        <Container>
+          <Stack gap={30}>
+            <ChefHeader
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+              selectedData={selectedData}
+              setSelectedData={setSelectedData}
+            />
+            <Divider />
+            <Foods
+              selectedData={selectedData}
+              setSelectedData={setSelectedData}
+              setNewCartDialogIsOpen={setNewCartDialogIsOpen}
+              selectedCategory={selectedCategory}
+            />
+          </Stack>
+        </Container>
+      </Layout>
+    </>
   );
 }

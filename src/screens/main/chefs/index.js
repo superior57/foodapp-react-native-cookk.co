@@ -28,13 +28,13 @@ export default function Chefs() {
   const {city, cuisine} = useSelector(CITYCUISINE_SELECTOR);
   const cityId = city?.id;
   const cuisineId = cuisine?.id;
-  const [loading, SetIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function fetch() {
-      SetIsLoading(true);
+      setIsLoading(true);
       await dispatch(getChefs(cityId, cuisineId));
-      SetIsLoading(false);
+      setIsLoading(false);
       dispatch(getCity(cityId));
     }
 
@@ -43,7 +43,7 @@ export default function Chefs() {
     }
   }, [cityId, cuisineId]);
 
-  return loading ? (
+  return isLoading ? (
     <LoadingScreen />
   ) : (
     <Layout variant="main">

@@ -13,9 +13,7 @@ import NavIcon from '../../../navigator/navIcon';
 const styles = StyleSheet.create({
   wrapper: {
     padding: 10,
-    flexDirection: 'row',
     width: '100%',
-    justifyContent: 'flex-end',
   },
 });
 

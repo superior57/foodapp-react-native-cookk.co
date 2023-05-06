@@ -31,20 +31,18 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function FoodCard(props) {
-  const {image, title, price, measurement, quantity} = props;
+  const {image, title} = props;
 
   return (
     <Stack style={styles.wrapper}>
       <Avatar image={image} size={80} />
-      <Typography textAlign="center" sx={styles.title}>
+      <Typography
+        textAlign="center"
+        color={SECONDARY.main}
+        sx={styles.title}
+        fontWeight="bold">
         {title}
       </Typography>
-      <Typography
-        color={SECONDARY.main}
-        fontWeight="bold"
-        textAlign="center">{`$${price} /${quantity} ${
-        measurement || ''
-      }`}</Typography>
     </Stack>
   );
 }

@@ -82,15 +82,15 @@ export default function CuisineDialog({isOpen}) {
     fetch();
   }, []);
 
-  const onSubmit = cuisineId => {
-    close();
-    dispatch(getCuisine(cuisineId));
-    dispatch(getCity(cityId));
-    navigation.navigate(SCREEN_ROUTES.chefs);
+  const close = async () => {
+    dispatch(closeDialog());
   };
 
-  const close = () => {
-    dispatch(closeDialog());
+  const onSubmit = async cuisineId => {
+    await dispatch(getCity(cityId));
+    dispatch(getCuisine(cuisineId));
+    await close();
+    navigation.navigate(SCREEN_ROUTES.chefs);
   };
 
   return (
@@ -108,8 +108,12 @@ export default function CuisineDialog({isOpen}) {
           {isLoading ? (
             <ActivityIndicator size="large" color={PRIMARY.main} />
           ) : (
-            cuisines?.map((item, _i) => (
+            [
+              cuisines?.find(item => item?.name === 'Explore All'),
+              ...(cuisines?.filter(item => item?.name !== 'Explore All') || []),
+            ]?.map((item, _i) => (
               <TouchableOpacity
+                isLoading
                 key={_i}
                 onPress={() => onSubmit(item?.id)}
                 style={styles.cuisineItem}>

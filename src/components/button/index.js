@@ -19,10 +19,11 @@ export default function Button({
   color = PRIMARY.main,
   children,
   style,
+  sx,
   paddingHorizontal = 13,
   fontWeight = 'normal',
-  paddingVertical = 13,
-  borderRadius = 10,
+  paddingVertical = 10,
+  borderRadius = 5,
   width = 'auto',
   ...other
 }) {
@@ -36,12 +37,12 @@ export default function Button({
         alignItems: 'center',
         gap: 5,
         ...(variant === 'contained' && {backgroundColor: color}),
-        ...(variant === 'outlined' && {borderColor: color, borderWidth: 0.5}),
+        ...(variant === 'outlined' && {borderColor: color, borderWidth: 1}),
         paddingHorizontal: paddingHorizontal,
         paddingVertical: paddingVertical,
         borderRadius: borderRadius,
         width: width,
-        ...style,
+        ...sx,
       }}
       {...other}>
       {isLoading && (
@@ -50,6 +51,7 @@ export default function Button({
       <Text
         style={{
           fontWeight: fontWeight,
+          fontSize: 16,
           color: 'white',
           textAlign: 'center',
           ...(variant === 'outlined' && {color: color}),

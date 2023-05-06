@@ -20,14 +20,15 @@ import {openDialog} from '../../../../redux/slices/dialog';
 
 const styles = StyleSheet.create({
   wrapper: {
+    paddingVertical: 10,
     width: '100%',
-    gap: 10,
+    gap: 30,
   },
 
   image: {
     width: '100%',
     backgroundColor: 'white',
-    height: 100,
+    height: 150,
   },
 });
 

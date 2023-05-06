@@ -1,0 +1,114 @@
+import React, {useEffect, useState} from 'react';
+import Icon from 'react-native-vector-icons/AntDesign';
+
+// react-native
+import {TouchableOpacity, StyleSheet} from 'react-native';
+import {useToast} from 'react-native-styled-toast';
+import SelectDropdown from 'react-native-select-dropdown';
+// mui
+import {Dialog, Stack} from '@react-native-material/core';
+// layouts
+// screens
+// components
+import Container from '../../../../../components/container';
+import Typography from '../../../../../components/typography';
+import Button from '../../../../../components/button';
+// sections
+// routes
+// redux
+import {dispatch, useSelector} from '../../../../../redux/store';
+import {
+  FOOD_SELECTOR,
+  getOrderDetail,
+  updateScheduleTime,
+} from '../../../../../redux/slices/food';
+// theme
+import {SECONDARY} from '../../../../../theme';
+import {addHours, format, getHours, isTomorrow} from 'date-fns';
+
+// ----------------------------------------------------------------------
+
+const styles = StyleSheet.create({
+  closeButton: {
+    position: 'absolute',
+    zIndex: 1,
+    right: 5,
+    top: 5,
+  },
+});
+
+// ----------------------------------------------------------------------
+
+export default function TimeScheduleDialog({...other}) {
+  const {toast} = useToast();
+  const {checkout} = useSelector(FOOD_SELECTOR);
+  const {orderId} = checkout;
+  const [isLoading, setIsLoading] = useState(false);
+  const scheduleTime = checkout?.orderDetail?.schedule_time;
+  const slots = checkout?.orderDetail?.schedule_slots;
+  const isDateTomorrow = isTomorrow(
+    new Date(checkout?.orderDetail?.item?.[0]?.selected_day),
+  );
+  const handleChange = value => {
+    setSelectedTime(value);
+  };
+
+  const times = isDateTomorrow
+    ? slots?.filter(time => {
+        const timeString = time;
+        const date = new Date(`2000-01-01 ${timeString}`);
+        const formattedTime = format(date, 'HH');
+        const currentDate = new Date();
+        const futureDate = addHours(currentDate, 17);
+        const hourAfter17Hours = getHours(futureDate);
+        return formattedTime > hourAfter17Hours;
+      })
+    : slots;
+
+  const [selectedTime, setSelectedTime] = useState(scheduleTime);
+
+  useEffect(() => {
+    if (!selectedTime) {
+      setSelectedTime(times?.[0]);
+    }
+  }, [selectedTime, times]);
+
+  const onSubmit = async () => {
+    try {
+      setIsLoading(true);
+      const response = await dispatch(
+        updateScheduleTime(orderId, selectedTime),
+      );
+      await dispatch(getOrderDetail(orderId));
+      setIsLoading(false);
+      toast({message: response.success, intent: 'SUCCESS'});
+      other.onDismiss();
+    } catch (error) {
+      toast({message: error.message, intent: 'ERROR'});
+    }
+  };
+
+  return (
+    <Dialog {...other}>
+      <TouchableOpacity onPress={other.onDismiss} style={styles.closeButton}>
+        <Icon name="close" color={SECONDARY.main} size={20} />
+      </TouchableOpacity>
+      <Container>
+        <Stack gap={10}>
+          <Typography variant="h6" fontWeight={500}>
+            Select a time
+          </Typography>
+          <SelectDropdown
+            defaultValue={scheduleTime ?? times?.[0]}
+            data={times}
+            onSelect={handleChange}
+            buttonStyle={{width: '100%'}}
+          />
+          <Button onPress={onSubmit} isLoading={isLoading}>
+            Save
+          </Button>
+        </Stack>
+      </Container>
+    </Dialog>
+  );
+}

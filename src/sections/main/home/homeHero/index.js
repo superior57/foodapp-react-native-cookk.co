@@ -66,7 +66,7 @@ export default function HomeHero() {
           </View>
           <View>
             <Button
-              style={{borderRadius: 100}}
+              sx={{borderRadius: 100}}
               width={230}
               onPress={() => dispatch(openDialog('choose_cuisine_dialog'))}>
               Find Home Chefs

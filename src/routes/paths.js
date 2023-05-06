@@ -14,6 +14,7 @@ export const SCREEN_ROUTES = {
   cart: 'Cart',
   chefs: 'Chefs',
   singleChef: 'SingleChef',
+  checkout: 'Checkout',
   contactUs: 'ContactUs',
 };
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 // react-native
@@ -26,7 +26,7 @@ import {CITYCUISINE_SELECTOR, getChef} from '../../../../redux/slices/city';
 const styles = StyleSheet.create({
   wrapper: {
     paddingVertical: 20,
-    gap: 10,
+    gap: 30,
   },
 
   chef: {
@@ -79,8 +79,7 @@ const styles = StyleSheet.create({
 
 export default function ChooseChef() {
   const navigation = useNavigation();
-  const [currentPage, setCurrentPage] = useState(1);
-  const {cities, cusiine, chefs, error} = useSelector(CITYCUISINE_SELECTOR);
+  const {cities, chefs} = useSelector(CITYCUISINE_SELECTOR);
   const city = cities[0];
 
   const chooseChef = chefId => {
@@ -130,7 +129,7 @@ export default function ChooseChef() {
                     lastName={item?.chef?.last_name}
                   />
                   <Stack gap={10} justify="center">
-                    <Typography variant="subtitle1">
+                    <Typography variant="subtitle1" fontWeight={600}>
                       {item?.chef?.company_name}
                     </Typography>
                     <Typography variant="caption">
