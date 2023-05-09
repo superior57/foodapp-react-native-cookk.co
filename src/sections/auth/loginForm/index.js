@@ -84,13 +84,9 @@ const loginValidationSchema = yup.object().shape({
 
 export default function LoginForm() {
   const {login} = useAuth();
-
   const navigation = useNavigation();
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [showPassword, setShowPassword] = useState(false);
-
   const {toast} = useToast();
 
   const onSubmit = async (data, {resetForm}) => {

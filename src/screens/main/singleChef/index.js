@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import Layout from '../../../layouts';
 
 // react-native
-import {Divider} from 'react-native-paper';
 // mui
 import {Stack} from '@react-native-material/core';
 // layouts
@@ -18,7 +17,7 @@ import NewCartDialog from '../../../sections/main/singleChef/chefHeader/newCartD
 // redux
 import {getFoodsByChef, updateFoodCart} from '../../../redux/slices/food';
 import {dispatch, useSelector} from '../../../redux/store';
-import {CITYCUISINE_SELECTOR, getChefs} from '../../../redux/slices/city';
+import {CITYCUISINE_SELECTOR} from '../../../redux/slices/city';
 // theme
 // hook
 
@@ -37,7 +36,6 @@ export default function SingleChef() {
   useEffect(() => {
     async function fetch() {
       setIsLoading(true);
-      await dispatch(getChefs(cityId, cuisineId));
       await dispatch(getFoodsByChef(cityId, cuisineId, chefId));
       setIsLoading(false);
     }
@@ -76,7 +74,6 @@ export default function SingleChef() {
               selectedData={selectedData}
               setSelectedData={setSelectedData}
             />
-            <Divider />
             <Foods
               selectedData={selectedData}
               setSelectedData={setSelectedData}

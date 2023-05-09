@@ -4,7 +4,6 @@ import {addDays, isAfter, parse} from 'date-fns';
 
 // react-native
 import {TouchableOpacity, StyleSheet, Linking, ScrollView} from 'react-native';
-import {Divider} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 // mui
 import {Stack} from '@react-native-material/core';
@@ -16,7 +15,6 @@ import Typography from '../../../../components/typography';
 import ReadMore from '../../../../components/readMore';
 import Button from '../../../../components/button';
 // sections
-import NewCartDialog from './newCartDialog';
 import ChangeDeliveryDateDialog from './changeDeliveryDateDialog';
 // routes
 import {SCREEN_ROUTES} from '../../../../routes/paths';
@@ -159,9 +157,6 @@ export default function ChefHeader({
           </Stack>
         </Stack>
         <ReadMore>{chef?.about_me}</ReadMore>
-
-        <Divider />
-
         <Typography variant="h6" fontWeight="bold">
           Available dates
         </Typography>

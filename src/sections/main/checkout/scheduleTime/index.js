@@ -24,7 +24,7 @@ import {format, parse} from 'date-fns';
 
 const styles = StyleSheet.create({
   content: {
-    alignItems: 'center',
+    width: '100%',
   },
 });
 
@@ -55,7 +55,7 @@ export default function ScheduleTime({isPickup}) {
         icon="calendar"
         title={`${isPickup ? 'Pick up' : 'Delivery'} schedule`}
         subtitle={selectedDate}>
-        <Stack direction="row" justify="between" style={styles.content}>
+        <Stack style={styles.content} gap={20}>
           <Typography>{scheduleTime ?? ''}</Typography>
           <Button
             onPress={() => setDialogIsOpen(true)}

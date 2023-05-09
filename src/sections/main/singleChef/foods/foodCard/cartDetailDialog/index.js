@@ -177,7 +177,6 @@ export default function CartDetailDialog({
                   <TextInput
                     onChangeText={setNote}
                     defaultValue={note}
-                    name="message"
                     multiline
                     style={styles.multilineInput}
                     textAlignVertical="top"

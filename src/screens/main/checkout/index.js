@@ -14,6 +14,7 @@ import LoadingScreen from '../../../components/loadingScreen';
 // sections
 import Address from '../../../sections/main/checkout/address';
 import ScheduleTime from '../../../sections/main/checkout/scheduleTime';
+import Notes from '../../../sections/main/checkout/notes';
 // routes
 import {SCREEN_ROUTES} from '../../../routes/paths';
 // redux
@@ -60,6 +61,7 @@ export default function Checkout() {
           </Typography>
           <Address isPickup={isPickup} />
           <ScheduleTime isPickup={isPickup} />
+          <Notes isPickup={isPickup} />
         </Stack>
       </Container>
     </Layout>
