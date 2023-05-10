@@ -1,6 +1,8 @@
 //
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'src/utils/axios';
+import axios from '../../utils/axios';
+
+const API_VERSION = 'v1';
 
 // ----------------------------------------------------------------------
 export const createCardIntent = createAsyncThunk(
@@ -8,7 +10,7 @@ export const createCardIntent = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get(
-        `/api/${process.env.API_VERSION}/payments/create_card_intent`,
+        `/api/${API_VERSION}/payments/create_card_intent`,
       );
       return await Promise.resolve(response.data);
     } catch (error) {
@@ -24,7 +26,7 @@ export const placeOrder = createAsyncThunk(
   async (orderId, thunkAPI) => {
     try {
       const response = await axios.post(
-        `/api/${process.env.API_VERSION}/orders/${orderId}/place_order`,
+        `/api/${API_VERSION}/orders/${orderId}/place_order`,
       );
       return await Promise.resolve(response.data);
     } catch (error) {

@@ -25,12 +25,8 @@ import {GREY, SECONDARY} from '../../../../theme';
 // ----------------------------------------------------------------------
 
 const styles = StyleSheet.create({
-  wrapper: {
-    width: '100%',
-  },
-
   content: {
-    width: 200,
+    width: '100%',
   },
 
   multilineInput: {
@@ -73,7 +69,7 @@ export default function Notes({isPickup}) {
   };
 
   return (
-    <PanelWrapper icon="calendar" title="Notes">
+    <PanelWrapper icon="pencil" title="Notes">
       {panelIsOpen ? (
         <Stack gap={30}>
           <TextInput
@@ -94,8 +90,8 @@ export default function Notes({isPickup}) {
           </Button>
         </Stack>
       ) : (
-        <Stack style={styles.wrapper} gap={20}>
-          <Typography sx={styles.content}>
+        <Stack style={styles.content} gap={20}>
+          <Typography>
             {note ?? "Is there anything else you'd like us to know about ?"}
           </Typography>
           <Button

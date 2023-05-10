@@ -10,7 +10,6 @@ import {Stack} from '@react-native-material/core';
 import Layout from '../../../layouts';
 // screens
 // components
-import LoadingScreen from '../../../components/loadingScreen';
 import Container from '../../../components/container';
 import Typography from '../../../components/typography';
 import Button from '../../../components/button';

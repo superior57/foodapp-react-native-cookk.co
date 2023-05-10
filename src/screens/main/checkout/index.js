@@ -15,6 +15,9 @@ import LoadingScreen from '../../../components/loadingScreen';
 import Address from '../../../sections/main/checkout/address';
 import ScheduleTime from '../../../sections/main/checkout/scheduleTime';
 import Notes from '../../../sections/main/checkout/notes';
+import Payment from '../../../sections/main/checkout/payment';
+import CartList from '../../../sections/main/checkout/cartList';
+import OrderCard from '../../../sections/main/checkout/orderCard';
 // routes
 import {SCREEN_ROUTES} from '../../../routes/paths';
 // redux
@@ -62,6 +65,9 @@ export default function Checkout() {
           <Address isPickup={isPickup} />
           <ScheduleTime isPickup={isPickup} />
           <Notes isPickup={isPickup} />
+          <Payment />
+          <CartList />
+          <OrderCard />
         </Stack>
       </Container>
     </Layout>
