@@ -33,19 +33,15 @@ export default function Checkout() {
   const {checkout} = useSelector(FOOD_SELECTOR);
   const {cart} = checkout;
   const {orderId, orderDetail} = checkout;
-  const navigation = useNavigation();
 
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
       await dispatch(getOrderDetail(orderId));
       setIsLoading(false);
-      if (cart.length === 0) {
-        navigation.navigate(SCREEN_ROUTES.home);
-      }
     };
     fetch();
-  }, [cart.length, navigation, orderId]);
+  }, [orderId]);
 
   useEffect(() => {
     if (orderDetail) {

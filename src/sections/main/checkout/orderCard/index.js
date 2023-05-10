@@ -4,6 +4,8 @@ import React, {useState} from 'react';
 import {ImageBackground, StyleSheet, View} from 'react-native';
 import {Divider, TextInput} from 'react-native-paper';
 import {useToast} from 'react-native-styled-toast';
+import CheckBox from '@react-native-community/checkbox';
+import {useNavigation} from '@react-navigation/native';
 // mui
 import {Stack} from '@react-native-material/core';
 // layouts
@@ -13,17 +15,18 @@ import Typography from '../../../../components/typography';
 import Button from '../../../../components/button';
 // sections
 // routes
+import {SCREEN_ROUTES} from '../../../../routes/paths';
 // redux
 import {dispatch, useSelector} from '../../../../redux/store';
 import {
   FOOD_SELECTOR,
   addTips,
+  updateFoodCart,
   updateScheduleTime,
 } from '../../../../redux/slices/food';
 import {placeOrder} from '../../../../redux/service/payment';
 // theme
 import {PRIMARY} from '../../../../theme';
-import CheckBox from '@react-native-community/checkbox';
 
 // ----------------------------------------------------------------------
 
@@ -55,6 +58,7 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function OrderCard() {
+  const navigation = useNavigation();
   const [disabled, setDisabled] = useState(true);
   const {checkout} = useSelector(FOOD_SELECTOR);
   const {orderDetail, orderId, cart} = checkout;
@@ -66,19 +70,21 @@ export default function OrderCard() {
   const items = orderDetail?.items;
   const order_total = orderDetail?.order_total;
   const [tips, setTips] = useState(orderDetail?.tips ?? 0);
+
   const handleClickOrder = async () => {
-    setIsLoading(true);
     try {
+      setIsLoading(true);
       if (!scheduleTime) {
         await dispatch(updateScheduleTime(orderId, scheduleTime));
       }
       await dispatch(addTips({orderId: orderId, tips: tips}));
-      const response = await dispatch(placeOrder(orderId));
+      await dispatch(placeOrder(orderId));
+      dispatch(updateFoodCart({actionType: 'clear'}));
 
       toast({message: 'Your payment was successful.', intent: 'SUCCESS'});
       setIsLoading(false);
       setTimeout(() => {
-        // push(PATH_PAGE.orderConfirm.orders({orderId}));
+        navigation.navigate(SCREEN_ROUTES.confirm);
       }, 1000);
     } catch (error) {
       toast({message: error?.message, intent: 'ERROR'});
@@ -155,14 +161,18 @@ export default function OrderCard() {
         </Typography>
         <Stack direction="row" gap={5}>
           <CheckBox
-            value={disabled}
+            value={!disabled}
             onValueChange={e => setDisabled(!disabled)}
           />
           <Typography sx={{width: 270}}>
             I’ve read and agree to the website terms and conditions
           </Typography>
         </Stack>
-        <Button disabled={!disabled} loading={isLoading} borderRadius={100}>
+        <Button
+          onPress={handleClickOrder}
+          disabled={disabled}
+          isLoading={isLoading}
+          borderRadius={100}>
           ORDER
         </Button>
       </Stack>

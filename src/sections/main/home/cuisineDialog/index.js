@@ -76,21 +76,21 @@ export default function CuisineDialog({isOpen}) {
     async function fetch() {
       setIsLoading(true);
       await dispatch(getCuisines());
+      await dispatch(getCity(cityId));
       setIsLoading(false);
     }
 
     fetch();
-  }, []);
+  }, [cityId]);
 
   const close = async () => {
     dispatch(closeDialog());
   };
 
   const onSubmit = async cuisineId => {
-    await dispatch(getCity(cityId));
-    dispatch(getCuisine(cuisineId));
-    await close();
     navigation.navigate(SCREEN_ROUTES.chefs);
+    dispatch(getCuisine(cuisineId));
+    close();
   };
 
   return (

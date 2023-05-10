@@ -38,8 +38,8 @@ export default function Confirm() {
   const {loading, checkout} = useSelector(FOOD_SELECTOR);
   const {orderId} = checkout;
   useEffect(() => {
-    dispatch(getOrderConfirmInfo(744));
-  }, []);
+    dispatch(getOrderConfirmInfo(orderId));
+  }, [orderId]);
 
   return loading ? (
     <LoadingScreen />

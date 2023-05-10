@@ -43,7 +43,7 @@ export default function MainInfo() {
   const {primary_address, image_url, first_name, last_name} =
     chef_details ?? {};
   const orderDate = order_date
-    ? format(parse(order_date, 'yyyy-MM-dd', new Date()), 'MMMM d, yyyy')
+    ? format(parse(order_date, 'MM/dd/yyyy', new Date()), 'MMMM d, yyyy')
     : '';
   const pickupDate = pickup_date
     ? format(parse(pickup_date, 'MM/dd/yyyy', new Date()), 'MMMM d, yyyy')
