@@ -83,8 +83,8 @@ export default function ChooseChef() {
   const city = cities[0];
 
   const chooseChef = chefId => {
-    dispatch(getChef(chefId));
     navigation.navigate(SCREEN_ROUTES.singleChef);
+    dispatch(getChef(chefId));
   };
 
   return (

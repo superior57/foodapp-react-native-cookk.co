@@ -29,7 +29,7 @@ export default function Notes() {
   return (
     <Stack gap={30}>
       {notes && (
-        <Stack>
+        <Stack gap={10}>
           <Typography variant="subtitle1" fontWeight="bold">
             Notes
           </Typography>
