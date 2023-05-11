@@ -76,7 +76,7 @@ export default function Drawer() {
 
   const handleLogout = async () => {
     try {
-      await dispatch(updateFoodCart({actionType: 'clear'}));
+      dispatch(updateFoodCart({actionType: 'clear'}));
       await logout();
       navigation.navigate(SCREEN_ROUTES.home);
     } catch (error) {

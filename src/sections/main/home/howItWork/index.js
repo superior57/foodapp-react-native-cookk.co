@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
 
   image: {
     height: 360,
+    width: '100%',
   },
 });
 
@@ -46,21 +47,21 @@ export default function HowItWork() {
         </Typography>
         <Stack style={styles.card}>
           <Image
-            source={require('../../../../assets/images/home/how_it_works_1.png')}
-            resizeMode="contain"
+            source={require('../../../../assets/images/home/how_it_works_1.jpg')}
+            resizeMode="cover"
             style={styles.image}
           />
           <Typography variant={'h5'} textAlign="center" fontWeight={600}>
             1
           </Typography>
           <Typography variant={'h5'} textAlign="center" fontWeight={600}>
-            Find local home-chefs with 50+ cuisines available
+            Discover nearby chefs offering diverse cuisines
           </Typography>
         </Stack>
         <Stack style={styles.card}>
           <Image
-            source={require('../../../../assets/images/home/how_it_works_2.png')}
-            resizeMode="contain"
+            source={require('../../../../assets/images/home/how_it_works_2.jpg')}
+            resizeMode="cover"
             style={styles.image}
           />
           <Typography variant={'h5'} textAlign="center" fontWeight={600}>
@@ -72,8 +73,8 @@ export default function HowItWork() {
         </Stack>
         <Stack style={styles.card}>
           <Image
-            source={require('../../../../assets/images/home/how_it_works_3.png')}
-            resizeMode="contain"
+            source={require('../../../../assets/images/home/how_it_works_3.jpg')}
+            resizeMode="cover"
             style={styles.image}
           />
           <Typography variant={'h5'} textAlign="center" fontWeight={600}>

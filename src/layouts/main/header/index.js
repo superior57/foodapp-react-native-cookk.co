@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 // mui
-import {IconButton, Stack} from '@react-native-material/core';
+import {Stack} from '@react-native-material/core';
 // layouts
 // screens
 // components

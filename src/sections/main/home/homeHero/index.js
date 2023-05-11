@@ -54,24 +54,34 @@ export default function HomeHero() {
       <Container>
         <Stack style={styles.content}>
           <View paddingVertical={40}>
-            <Typography variant={'h4'} color={'white'} textAlign="center">
-              Delicious homemade
+            <Typography
+              variant={'h4'}
+              color={'white'}
+              textAlign="center"
+              fontWeight="bold">
+              Taste homemade
             </Typography>
-            <Typography variant={'h4'} color={'white'} textAlign="center">
-              food delivered to
+            <Typography
+              variant={'h4'}
+              color={'white'}
+              textAlign="center"
+              fontWeight="bold">
+              cooking from your
             </Typography>
-            <Typography variant={'h4'} color={'white'} textAlign="center">
-              your door
+            <Typography
+              variant={'h4'}
+              color={'white'}
+              textAlign="center"
+              fontWeight="bold">
+              community
             </Typography>
           </View>
-          <View>
-            <Button
-              sx={{borderRadius: 100}}
-              width={230}
-              onPress={() => dispatch(openDialog('choose_cuisine_dialog'))}>
-              Find Home Chefs
-            </Button>
-          </View>
+          <Button
+            sx={{borderRadius: 100}}
+            width={250}
+            onPress={() => dispatch(openDialog('choose_cuisine_dialog'))}>
+            Find home chefs in Austin
+          </Button>
           <Stack direction="row" style={styles.footer}>
             <Image
               source={require('../../../../assets/images/home/delicious.png')}

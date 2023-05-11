@@ -15,6 +15,7 @@ export const SCREEN_ROUTES = {
   chefs: 'Chefs',
   singleChef: 'SingleChef',
   checkout: 'Checkout',
+  confirm: 'Confirm',
   contactUs: 'ContactUs',
 };
 

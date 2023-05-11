@@ -19,6 +19,7 @@ import Chefs from '../screens/main/chefs';
 import Cart from '../screens/main/cart';
 import SingleChef from '../screens/main/singleChef';
 import Checkout from '../screens/main/checkout';
+import Confirm from '../screens/main/confirm';
 import ContactUs from '../screens/main/contactUs';
 // components
 // sections
@@ -51,6 +52,7 @@ export default function Navigator() {
         <Drawer.Screen name={SCREEN_ROUTES.cart} component={Cart} />
         <Drawer.Screen name={SCREEN_ROUTES.singleChef} component={SingleChef} />
         <Drawer.Screen name={SCREEN_ROUTES.checkout} component={Checkout} />
+        <Drawer.Screen name={SCREEN_ROUTES.confirm} component={Confirm} />
         <Drawer.Screen name={SCREEN_ROUTES.contactUs} component={ContactUs} />
       </Drawer.Navigator>
     </NavigationContainer>

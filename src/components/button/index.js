@@ -13,6 +13,7 @@ import {PRIMARY} from '../../theme';
 // ----------------------------------------------------------------------
 
 export default function Button({
+  disabled = false,
   isLoading = false,
   variant = 'contained',
   onPress,
@@ -29,7 +30,7 @@ export default function Button({
 }) {
   return (
     <TouchableOpacity
-      disabled={isLoading}
+      disabled={isLoading || disabled}
       onPress={onPress}
       style={{
         flexDirection: 'row',
@@ -37,6 +38,7 @@ export default function Button({
         alignItems: 'center',
         gap: 5,
         ...(variant === 'contained' && {backgroundColor: color}),
+        ...(disabled && {opacity: 0.8}),
         ...(variant === 'outlined' && {borderColor: color, borderWidth: 1}),
         paddingHorizontal: paddingHorizontal,
         paddingVertical: paddingVertical,
