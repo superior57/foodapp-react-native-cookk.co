@@ -29,6 +29,10 @@ import {addHours, format, getHours, isTomorrow} from 'date-fns';
 // ----------------------------------------------------------------------
 
 const styles = StyleSheet.create({
+  wrapper: {
+    paddingVertical: 30,
+  },
+
   closeButton: {
     position: 'absolute',
     zIndex: 1,
@@ -94,7 +98,7 @@ export default function TimeScheduleDialog({...other}) {
         <Icon name="close" color={SECONDARY.main} size={20} />
       </TouchableOpacity>
       <Container>
-        <Stack gap={10}>
+        <Stack gap={30} style={styles.wrapper}>
           <Typography variant="h6" fontWeight={500}>
             Select a time
           </Typography>

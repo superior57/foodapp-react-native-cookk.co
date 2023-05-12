@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {StripeProvider} from '@stripe/stripe-react-native';
 
 // react-native
 import {TouchableOpacity, StyleSheet} from 'react-native';
@@ -10,8 +11,7 @@ import {Dialog} from '@react-native-material/core';
 // components
 import Container from '../../../../../components/container';
 // sections
-import PaymentForm from './paymentProvider/paymentForm';
-import PaymentProvider from './paymentProvider';
+import PaymentForm from './paymentForm';
 // routes
 // redux
 import {dispatch} from '../../../../../redux/store';
@@ -64,9 +64,12 @@ export default function PaymentDialog({...other}) {
         <Icon name="close" color={SECONDARY.main} size={20} />
       </TouchableOpacity>
       <Container>
-        <PaymentProvider publicKey={publicKey} clientSecret={clientSecretKey}>
-          <PaymentForm onClose={other.onClose} />
-        </PaymentProvider>
+        <StripeProvider publishableKey={publicKey}>
+          <PaymentForm
+            onClose={other.onDismiss}
+            clientSecret={clientSecretKey}
+          />
+        </StripeProvider>
       </Container>
     </Dialog>
   );

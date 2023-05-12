@@ -31,7 +31,6 @@ export default function Checkout() {
   const [isLoading, setIsLoading] = useState(false);
   const [isPickup, setIsPickup] = useState(true);
   const {checkout} = useSelector(FOOD_SELECTOR);
-  const {cart} = checkout;
   const {orderId, orderDetail} = checkout;
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // react-native
-import {TouchableOpacity, Text, View, ActivityIndicator} from 'react-native';
+import {TouchableOpacity, Text, ActivityIndicator} from 'react-native';
 // @mui
 // theme
 // layouts

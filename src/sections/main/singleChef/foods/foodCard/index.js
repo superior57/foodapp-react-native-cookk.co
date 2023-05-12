@@ -61,6 +61,7 @@ export default function FoodCard({
   const addCart = async data => {
     if (cart?.some(item => item?.user_id !== data?.user_id)) {
       setNewCartDialogIsOpen(true);
+      setSelectedData(data);
     } else {
       dispatch(updateFoodCart({data: data, actionType: 'add'}));
     }

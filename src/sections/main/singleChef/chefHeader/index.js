@@ -70,9 +70,7 @@ export default function ChefHeader({
 
   const categories = Object.keys(foods)
     .sort((a, b) => new Date(a) - new Date(b))
-    .filter(key =>
-      isAfter(parse(key, 'MM/dd/yy', new Date()), addDays(new Date(), 1)),
-    )
+    .filter(key => isAfter(parse(key, 'MM/dd/yy', new Date()), new Date()))
     .map(key => ({date: key}));
 
   useEffect(() => {
