@@ -142,7 +142,7 @@ export default function CartDetailDialog({
                 </Stack>
                 {data?.min_order > 1 && (
                   <Typography variant="caption">
-                    min order {`${data?.min_order} ${data?.measurement || ''}`}
+                    min orders {`${data?.min_order} ${data?.measurement || ''}`}
                   </Typography>
                 )}
                 <Stack>

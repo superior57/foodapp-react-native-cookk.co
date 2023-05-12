@@ -78,14 +78,19 @@ export default function OrderCard() {
         await dispatch(updateScheduleTime(orderId, scheduleTime));
       }
       await dispatch(addTips({orderId: orderId, tips: tips}));
-      await dispatch(placeOrder(orderId));
+      const response = await dispatch(placeOrder(orderId));
       dispatch(updateFoodCart({actionType: 'clear'}));
-
-      toast({message: 'Your payment was successful.', intent: 'SUCCESS'});
-      setIsLoading(false);
-      setTimeout(() => {
-        navigation.navigate(SCREEN_ROUTES.confirm);
-      }, 1000);
+      if (placeOrder.fulfilled.match(response)) {
+        toast({message: 'Your payment was successful.', intent: 'SUCCESS'});
+        setIsLoading(false);
+        setTimeout(() => {
+          navigation.navigate(SCREEN_ROUTES.confirm);
+        }, 1000);
+      } else if (placeOrder.rejected.match(response)) {
+        const error = response.payload.message;
+        toast({message: error, intent: 'ERROR'});
+        setIsLoading(false);
+      }
     } catch (error) {
       toast({message: error?.message, intent: 'ERROR'});
       setIsLoading(false);

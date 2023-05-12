@@ -121,7 +121,7 @@ export default function FoodCard({
               </Typography>
               {min_order > 1 && (
                 <Typography variant="caption">
-                  min order {`${min_order} ${measurement || ''}`}
+                  min orders {`${min_order} ${measurement || ''}`}
                 </Typography>
               )}
             </Stack>

@@ -51,7 +51,7 @@ export default function TimeScheduleDialog({...other}) {
   const scheduleTime = checkout?.orderDetail?.schedule_time;
   const slots = checkout?.orderDetail?.schedule_slots;
   const isDateTomorrow = isTomorrow(
-    new Date(checkout?.orderDetail?.item?.[0]?.selected_day),
+    new Date(checkout?.orderDetail?.items?.[0]?.selected_day),
   );
   const handleChange = value => {
     setSelectedTime(value);
