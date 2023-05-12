@@ -33,7 +33,7 @@ import {cartItemCount} from '../../../navigator/drawer';
 const styles = StyleSheet.create({
   wrapper: {
     alignItems: 'center',
-    gap: 20,
+    gap: 30,
     paddingVertical: 20,
   },
 
@@ -76,6 +76,7 @@ export default function Cart() {
             <ChefProfile />
             <FoodList />
             <Button
+              sx={{marginTop: 20}}
               isLoading={isLoading}
               onPress={onSubmit}
               variant="outlined"
