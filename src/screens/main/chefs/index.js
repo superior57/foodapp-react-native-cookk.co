@@ -6,7 +6,6 @@ import React, {useEffect, useState} from 'react';
 // screens
 // components
 import Layout from '../../../layouts';
-import Container from '../../../components/container';
 import LoadingScreen from '../../../components/loadingScreen';
 // sections
 import ChooseChef from '../../../sections/main/chefs/chooseChef';
@@ -47,10 +46,8 @@ export default function Chefs() {
     <LoadingScreen />
   ) : (
     <Layout variant="main">
-      <Container>
-        <HeroHeader />
-        <ChooseChef />
-      </Container>
+      <HeroHeader />
+      <ChooseChef />
     </Layout>
   );
 }

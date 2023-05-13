@@ -9,6 +9,7 @@ import {Stack} from '@react-native-material/core';
 // layouts
 // screens
 // components
+import Container from '../../../../components/container';
 import Avatar from '../../../../components/avatar';
 import Typography from '../../../../components/typography';
 // sections
@@ -88,7 +89,7 @@ export default function ChooseChef() {
   };
 
   return (
-    <View style={styles.wrapper}>
+    <Container style={styles.wrapper}>
       <Typography
         variant="subtitle1"
         fontWeight="bold">{`${city?.name} Chefs`}</Typography>
@@ -168,6 +169,6 @@ export default function ChooseChef() {
           </View>
         </TouchableOpacity>
       ))}
-    </View>
+    </Container>
   );
 }

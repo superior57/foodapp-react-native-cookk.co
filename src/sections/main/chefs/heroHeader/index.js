@@ -8,13 +8,14 @@ import {Stack} from '@react-native-material/core';
 // layouts
 // screens
 // components
+import Container from '../../../../components/container';
 // sections
 // routes
 // theme
 // redux
+import {openDialog} from '../../../../redux/slices/dialog';
 import {dispatch, useSelector} from '../../../../redux/store';
 import {CITYCUISINE_SELECTOR} from '../../../../redux/slices/city';
-import {openDialog} from '../../../../redux/slices/dialog';
 
 // ----------------------------------------------------------------------
 
@@ -39,12 +40,14 @@ export default function HeroHeader() {
 
   return (
     <Stack style={styles.wrapper}>
-      <TouchableOpacity
-        onPress={() => dispatch(openDialog('choose_cuisine_dialog'))}>
-        <Typography variant="subtitle1" fontWeight="bold">
-          {cuisine?.name}
-        </Typography>
-      </TouchableOpacity>
+      <Container>
+        <TouchableOpacity
+          onPress={() => dispatch(openDialog('choose_cuisine_dialog'))}>
+          <Typography variant="subtitle1" fontWeight="bold">
+            {cuisine?.name}
+          </Typography>
+        </TouchableOpacity>
+      </Container>
       {cuisine?.image ? (
         <Image
           defaultSource={require('../../../../assets/images/placeholder.png')}
