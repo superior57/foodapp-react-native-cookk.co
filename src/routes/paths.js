@@ -21,4 +21,8 @@ export const SCREEN_ROUTES = {
 
 // ----------------------------------------------------------------------
 
-export const DASHBOARD_ROUTES = {};
+export const DASHBOARD_ROUTES = {
+  profile: 'Profile',
+  orders: 'Orders',
+  payments: 'Payments',
+};
