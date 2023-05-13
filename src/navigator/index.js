@@ -21,11 +21,12 @@ import SingleChef from '../screens/main/singleChef';
 import Checkout from '../screens/main/checkout';
 import Confirm from '../screens/main/confirm';
 import ContactUs from '../screens/main/contactUs';
+import Profile from '../screens/dashboard/profile';
 // components
 // sections
 import DrawerView from './drawer';
 // routes
-import {AUTH_ROUTES, SCREEN_ROUTES} from '../routes/paths';
+import {AUTH_ROUTES, DASHBOARD_ROUTES, SCREEN_ROUTES} from '../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -54,6 +55,7 @@ export default function Navigator() {
         <Drawer.Screen name={SCREEN_ROUTES.checkout} component={Checkout} />
         <Drawer.Screen name={SCREEN_ROUTES.confirm} component={Confirm} />
         <Drawer.Screen name={SCREEN_ROUTES.contactUs} component={ContactUs} />
+        <Drawer.Screen name={DASHBOARD_ROUTES.profile} component={Profile} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

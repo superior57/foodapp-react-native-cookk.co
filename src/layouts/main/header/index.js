@@ -9,18 +9,21 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import Popover from 'react-native-popover-view';
+import {Divider} from 'react-native-paper';
 // mui
 import {Stack} from '@react-native-material/core';
 // layouts
 // screens
 // components
 import Avatar from '../../../components/avatar';
+import Typography from '../../../components/typography';
 // sections
 import NavIcon from '../../../navigator/navIcon';
 // theme
-import {SECONDARY} from '../../../theme';
+import {GREY, SECONDARY} from '../../../theme';
 // routes
-import {SCREEN_ROUTES} from '../../../routes/paths';
+import {DASHBOARD_ROUTES, SCREEN_ROUTES} from '../../../routes/paths';
 // hook
 import useAuth from '../../../hooks/useAuth';
 // redux
@@ -48,13 +51,31 @@ const styles = StyleSheet.create({
     height: 50,
     width: 150,
   },
+
+  popover: {
+    paddingVertical: 20,
+  },
+
+  popoverItem: {
+    paddingHorizontal: 20,
+  },
 });
 
 // ----------------------------------------------------------------------
 
 export default function MainHeader() {
-  const {user, isAuthenticated} = useAuth();
+  const {user: userInfo, isAuthenticated, logout} = useAuth();
+  const {user} = userInfo ?? {};
   const navigation = useNavigation();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigation.navigate(SCREEN_ROUTES.home);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <View style={styles.wrapper}>
@@ -71,15 +92,39 @@ export default function MainHeader() {
       </Stack>
       <NavIcon />
       <View flexDirection="row" alignItems="center">
-        {isAuthenticated && user?.user && (
-          <TouchableOpacity>
-            <Avatar
-              size={50}
-              image={user?.image}
-              firstName={user?.user?.first_name}
-              lastName={user?.user?.last_name}
-            />
-          </TouchableOpacity>
+        {isAuthenticated && user && (
+          <Popover
+            from={
+              <TouchableOpacity>
+                <Avatar
+                  size={45}
+                  image={userInfo?.image}
+                  firstName={user?.first_name}
+                  lastName={user?.last_name}
+                />
+              </TouchableOpacity>
+            }>
+            <Stack style={styles.popover} gap={20}>
+              <Stack gap={10} style={styles.popoverItem}>
+                <Typography fontWeight="bold">
+                  {user?.first_name} {user?.last_name}
+                </Typography>
+                <Typography color={GREY[600]}>{user?.email}</Typography>
+              </Stack>
+              <Divider />
+              <TouchableOpacity
+                style={styles.popoverItem}
+                onPress={() => navigation.navigate(DASHBOARD_ROUTES.profile)}>
+                <Typography>Profile</Typography>
+              </TouchableOpacity>
+              <Divider />
+              <TouchableOpacity
+                style={styles.popoverItem}
+                onPress={handleLogout}>
+                <Typography>Logout</Typography>
+              </TouchableOpacity>
+            </Stack>
+          </Popover>
         )}
       </View>
     </View>
