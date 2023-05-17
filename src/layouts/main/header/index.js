@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 // react-native
@@ -67,6 +67,7 @@ export default function MainHeader() {
   const {user: userInfo, isAuthenticated, logout} = useAuth();
   const {user} = userInfo ?? {};
   const navigation = useNavigation();
+  const [showPopover, setShowPopover] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -76,6 +77,10 @@ export default function MainHeader() {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => setShowPopover(false), 2000);
+  }, []);
 
   return (
     <View style={styles.wrapper}>
@@ -94,8 +99,10 @@ export default function MainHeader() {
       <View flexDirection="row" alignItems="center">
         {isAuthenticated && user && (
           <Popover
+            isVisible={showPopover}
+            onRequestClose={() => setShowPopover(false)}
             from={
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => setShowPopover(true)}>
                 <Avatar
                   size={45}
                   image={userInfo?.image}
@@ -114,13 +121,19 @@ export default function MainHeader() {
               <Divider />
               <TouchableOpacity
                 style={styles.popoverItem}
-                onPress={() => navigation.navigate(DASHBOARD_ROUTES.profile)}>
+                onPress={() => {
+                  navigation.navigate(DASHBOARD_ROUTES.profile);
+                  setShowPopover(false);
+                }}>
                 <Typography>Profile</Typography>
               </TouchableOpacity>
               <Divider />
               <TouchableOpacity
                 style={styles.popoverItem}
-                onPress={handleLogout}>
+                onPress={() => {
+                  handleLogout;
+                  setShowPopover(false);
+                }}>
                 <Typography>Logout</Typography>
               </TouchableOpacity>
             </Stack>
