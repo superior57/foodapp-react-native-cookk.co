@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingVertical: 10,
     width: '100%',
-    gap: 30,
   },
 
   image: {

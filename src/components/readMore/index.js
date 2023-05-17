@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 
 // react-native
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 // mui
 import {Stack} from '@react-native-material/core';
 // layouts
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   button: {
     position: 'absolute',
     right: 0,
-    bottom: -3,
+    bottom: -20,
   },
 });
 
@@ -38,7 +38,7 @@ export default function ReadMore({children}) {
   return (
     <Stack style={styles.wrapper}>
       <Typography color={GREY[700]}>
-        {isReadMore ? `${children?.slice(0, 140)} ...` : children}
+        {isReadMore ? `${children?.slice(0, 150)} ...` : children}
       </Typography>
       <TouchableOpacity
         onPress={() => setIsReadMore(!isReadMore)}

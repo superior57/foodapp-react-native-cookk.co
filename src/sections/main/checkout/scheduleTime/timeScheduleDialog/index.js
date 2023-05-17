@@ -24,7 +24,7 @@ import {
 } from '../../../../../redux/slices/food';
 // theme
 import {SECONDARY} from '../../../../../theme';
-import {addHours, format, getHours, isTomorrow} from 'date-fns';
+import {addHours, format, getHours, isTomorrow, parse} from 'date-fns';
 
 // ----------------------------------------------------------------------
 
@@ -49,25 +49,31 @@ export default function TimeScheduleDialog({...other}) {
   const {orderId} = checkout;
   const [isLoading, setIsLoading] = useState(false);
   const scheduleTime = checkout?.orderDetail?.schedule_time;
+  const scheduleDate = checkout?.orderDetail?.items?.[0]?.selected_day;
   const slots = checkout?.orderDetail?.schedule_slots;
-  const isDateTomorrow = isTomorrow(
-    new Date(checkout?.orderDetail?.items?.[0]?.selected_day),
-  );
   const handleChange = value => {
     setSelectedTime(value);
   };
 
-  const times = isDateTomorrow
-    ? slots?.filter(time => {
-        const timeString = time;
-        const date = new Date(`2000-01-01 ${timeString}`);
-        const formattedTime = format(date, 'HH');
-        const currentDate = new Date();
-        const futureDate = addHours(currentDate, 17);
-        const hourAfter17Hours = getHours(futureDate);
-        return formattedTime > hourAfter17Hours;
-      })
-    : slots;
+  useEffect(() => {
+    if (scheduleDate) {
+      const dateToCheck = parse(scheduleDate, 'MM/dd/yyyy', new Date());
+      const isDateTomorrow = isTomorrow(dateToCheck);
+      // const times = isDateTomorrow
+      //   ? slots?.filter(time => {
+      //       const date = new Date(`2000-01-01 ${time}`);
+      //       const formattedTime = format(date, 'HH');
+      //       const currentDate = new Date();
+      //       const futureDate = addHours(currentDate, 17);
+      //       const hourAfter17Hours = getHours(futureDate);
+      //       return formattedTime > hourAfter17Hours; // compare the start time with the current hour
+      //     })
+      //   : slots;
+      console.log('slots: ', slots);
+    }
+  }, [scheduleDate]);
+
+  const times = [];
 
   const [selectedTime, setSelectedTime] = useState(scheduleTime);
 

@@ -18,6 +18,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getCities());
   }, []);
+
   return (
     <Layout variant="main">
       <HomeHero />

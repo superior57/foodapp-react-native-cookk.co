@@ -26,7 +26,6 @@ import {SCREEN_ROUTES} from '../../../routes/paths';
 // theme
 import {GREY} from '../../../theme';
 // cart item count
-import {cartItemCount} from '../../../navigator/drawer';
 
 // ----------------------------------------------------------------------
 
@@ -80,7 +79,7 @@ export default function Cart() {
               isLoading={isLoading}
               onPress={onSubmit}
               variant="outlined"
-              width="100%">{`Checkout (${cartItemCount})`}</Button>
+              width="100%">{`Checkout (${cart?.length})`}</Button>
           </Stack>
         ) : (
           <Stack style={styles.empty}>

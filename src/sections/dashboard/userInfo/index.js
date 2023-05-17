@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
   wrapper: {
     alignItems: 'center',
   },
+
+  content: {
+    width: 230,
+  },
 });
 
 // ----------------------------------------------------------------------
@@ -38,7 +42,7 @@ export default function UserInfo() {
         firstName={user?.first_name}
         lastName={user?.last_name}
       />
-      <Stack>
+      <Stack style={styles.content}>
         <Typography variant="h5" fontWeight="bold">
           Hello {user?.first_name}
         </Typography>

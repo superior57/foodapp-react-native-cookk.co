@@ -22,8 +22,6 @@ import {FOOD_SELECTOR, updateFoodCart} from '../../redux/slices/food';
 
 // ----------------------------------------------------------------------
 
-export let cartItemCount = 0;
-
 const styles = StyleSheet.create({
   wrapper: {
     position: 'relative',
@@ -63,16 +61,6 @@ export default function Drawer() {
   const navigation = useNavigation();
   const {checkout} = useSelector(FOOD_SELECTOR);
   const {cart} = checkout;
-  const [cartCount, setCartCount] = useState(0);
-
-  useEffect(() => {
-    const count = cart?.reduce(
-      (total, currentValue) => total + (currentValue?.count ?? 0),
-      0,
-    );
-    setCartCount(count);
-    cartItemCount = count;
-  }, [cart]);
 
   const handleLogout = async () => {
     try {
@@ -100,7 +88,7 @@ export default function Drawer() {
       <View style={styles.cart}>
         <TouchableOpacity
           onPress={() => navigation.navigate(SCREEN_ROUTES.cart)}>
-          <Badge label={cartCount} style={styles.badge} color="error" />
+          <Badge label={cart?.length} style={styles.badge} color="error" />
           <Avatar
             color="rgba(0,0,0,0)"
             icon={<Icon name="shoppingcart" size={25} color="white" />}

@@ -80,10 +80,10 @@ export default function CuisineDialog({isOpen}) {
       setIsLoading(false);
     }
 
-    if (isOpen) {
+    if (cityId) {
       fetch();
     }
-  }, [cityId, isOpen]);
+  }, [cityId]);
 
   const close = async () => {
     dispatch(closeDialog());

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import {addDays, isAfter, parse} from 'date-fns';
+import Icon from 'react-native-vector-icons/Entypo';
+import {isAfter, parse} from 'date-fns';
 
 // react-native
 import {TouchableOpacity, StyleSheet, Linking, ScrollView} from 'react-native';
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
-  instagramIcon: {
+  followIcons: {
     position: 'absolute',
     right: 0,
     top: 0,
@@ -112,13 +112,18 @@ export default function ChefHeader({
             Back
           </Typography>
         </TouchableOpacity>
-        {chef?.instagram && (
-          <TouchableOpacity
-            onPress={() => Linking.openURL(chef?.instagram)}
-            style={styles.instagramIcon}>
-            <Icon name="instagram" size={30} color={PRIMARY.main} />
-          </TouchableOpacity>
-        )}
+        <Stack style={styles.followIcons} direction="row" gap={15}>
+          {chef?.facebook && (
+            <TouchableOpacity onPress={() => Linking.openURL(chef?.facebook)}>
+              <Icon name="facebook" size={30} color={SECONDARY.main} />
+            </TouchableOpacity>
+          )}
+          {chef?.instagram && (
+            <TouchableOpacity onPress={() => Linking.openURL(chef?.instagram)}>
+              <Icon name="instagram" size={30} color={SECONDARY.main} />
+            </TouchableOpacity>
+          )}
+        </Stack>
         <Stack direction="row" style={styles.content}>
           <Avatar
             size={100}

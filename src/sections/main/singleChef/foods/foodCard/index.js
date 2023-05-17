@@ -109,7 +109,7 @@ export default function FoodCard({
       <Card style={styles.wrapper}>
         <Stack style={styles.content}>
           <TouchableOpacity onPress={handleClickItem}>
-            <Avatar size={120} image={image_url} />
+            <Avatar size={150} image={image_url} />
           </TouchableOpacity>
           <Stack direction="row" style={styles.body} justify="between" gap={20}>
             <Stack gap={5}>
