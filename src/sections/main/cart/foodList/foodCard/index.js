@@ -10,6 +10,7 @@ import {IconButton, Stack} from '@react-native-material/core';
 // components
 import Avatar from '../../../../../components/avatar';
 import Typography from '../../../../../components/typography';
+import CountBox from '../../../../../components/countBox';
 // sections
 // routes
 // redux
@@ -39,7 +40,7 @@ export default function FoodCard({data}) {
       <Stack direction="row" style={{alignItems: 'center'}} gap={20}>
         <Avatar image={data?.image_url} size={80} />
         <Stack>
-          <Typography variant="subtitle1" fontWeight={600} sx={{width: 150}}>
+          <Typography variant="subtitle1" fontWeight={600} sx={{width: 120}}>
             {data?.title}
           </Typography>
           <Typography color={PRIMARY.main} variant="subtitle2">
@@ -50,13 +51,7 @@ export default function FoodCard({data}) {
           )}
         </Stack>
       </Stack>
-      <Stack direction="row" gap={10} style={{alignItems: 'center'}}>
-        <Typography>{data?.count}</Typography>
-        <IconButton
-          onPress={deleteItem}
-          icon={<Icon name="trash" color={ERROR.main} size={16} />}
-        />
-      </Stack>
+      <CountBox data={data} />
     </Stack>
   );
 }
