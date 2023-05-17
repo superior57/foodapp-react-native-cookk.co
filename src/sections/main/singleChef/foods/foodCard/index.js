@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import Icon from 'react-native-vector-icons/Entypo';
 
 // react-native
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Card} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 // mui
 import {Stack} from '@react-native-material/core';
 // layouts
@@ -11,15 +11,20 @@ import {Stack} from '@react-native-material/core';
 // components
 import Avatar from '../../../../../components/avatar';
 import Typography from '../../../../../components/typography';
+import CountBox from '../../../../../components/countBox';
 // sections
 import CartDetailDialog from './cartDetailDialog';
 // routes
+import {AUTH_ROUTES} from '../../../../../routes/paths';
 // redux
 import {dispatch, useSelector} from '../../../../../redux/store';
-import {FOOD_SELECTOR, updateFoodCart} from '../../../../../redux/slices/food';
+import {
+  FOOD_SELECTOR,
+  setScheduleDate,
+  updateFoodCart,
+} from '../../../../../redux/slices/food';
+// hooks
 import useAuth from '../../../../../hooks/useAuth';
-import {useNavigation} from '@react-navigation/native';
-import {AUTH_ROUTES} from '../../../../../routes/paths';
 // theme
 
 // ----------------------------------------------------------------------
@@ -52,8 +57,6 @@ export default function FoodCard({
 }) {
   const {title, image_url, quantity, min_order, current_price, measurement} =
     foodData;
-  const navigation = useNavigation();
-  const {isAuthenticated} = useAuth();
   const [isOpenCartDialog, setIsOpenCartDialog] = useState(false);
   const {checkout} = useSelector(FOOD_SELECTOR);
   const {cart} = checkout;
@@ -64,20 +67,6 @@ export default function FoodCard({
       setSelectedData(data);
     } else {
       dispatch(updateFoodCart({data: data, actionType: 'add'}));
-    }
-  };
-
-  const handleClickPlus = () => {
-    if (isAuthenticated) {
-      addCart({
-        ...foodData,
-        count: cart.find(food => food?.id === foodData.id)
-          ? 1
-          : foodData.min_order ?? 1,
-        selected_day: selectedCategory,
-      });
-    } else {
-      navigation.navigate(AUTH_ROUTES.login);
     }
   };
 
@@ -102,6 +91,9 @@ export default function FoodCard({
         data={selectedData}
         setSelectedData={setSelectedData}
         onSubmit={() => {
+          if (!cart?.find(item => item?.user_id === selectedData?.user_id)) {
+            dispatch(setScheduleDate(selectedCategory));
+          }
           addCart(selectedData);
           setIsOpenCartDialog(false);
         }}
@@ -113,7 +105,7 @@ export default function FoodCard({
           </TouchableOpacity>
           <Stack direction="row" style={styles.body} justify="between" gap={20}>
             <Stack gap={5}>
-              <Typography variant="subtitle1" sx={{width: 200}}>
+              <Typography variant="subtitle1" sx={{width: 150}}>
                 {title}
               </Typography>
               <Typography variant="subtitle1" fontWeight="bold">
@@ -125,9 +117,12 @@ export default function FoodCard({
                 </Typography>
               )}
             </Stack>
-            <TouchableOpacity onPress={() => handleClickPlus(foodData)}>
-              <Icon name="plus" size={25} />
-            </TouchableOpacity>
+            <CountBox
+              data={foodData}
+              setIsOpenNewCartDlg={setNewCartDialogIsOpen}
+              setSelectedItemData={setSelectedData}
+              selectedCategory={selectedCategory}
+            />
           </Stack>
         </Stack>
       </Card>

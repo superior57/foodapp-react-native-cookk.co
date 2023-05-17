@@ -31,6 +31,7 @@ const initialState = {
     discount: 0,
     delivering: 0,
     billing: null,
+    scheduleDate: null,
     scheduleTime: null,
   },
   orderConfirmInfo: null,
@@ -42,6 +43,11 @@ const slice = createSlice({
   reducers: {
     startLoading(state) {
       state.loading = true;
+    },
+
+    setScheduleDate(state, action) {
+      state.loading = false;
+      state.checkout.scheduleDate = action.payload;
     },
 
     updateFoodCart(state, action) {
@@ -58,7 +64,24 @@ const slice = createSlice({
             alreadyFood.count += action.payload.data.count;
             alreadyFood.notes = action.payload.data.notes ?? alreadyFood.notes;
           } else {
-            state.checkout.cart = [...state.checkout.cart, action.payload.data];
+            const temp = {...action.payload.data};
+            temp.selected_day = state.checkout.scheduleDate;
+            state.checkout.cart = [...state.checkout.cart, temp];
+          }
+          break;
+        }
+
+        case 'remove': {
+          const alreadyFood = state?.checkout?.cart?.find(
+            item => item.id === action.payload.data.id,
+          );
+          if (alreadyFood.count > alreadyFood.min_order) {
+            alreadyFood.count -= 1;
+            alreadyFood.notes = action.payload.data.notes ?? alreadyFood.notes;
+          } else {
+            state.checkout.cart = state.checkout.cart.filter(
+              item => item?.id !== action.payload.data.id,
+            );
           }
           break;
         }
@@ -166,6 +189,7 @@ export const {
   setScheduleTime,
   setIsPickup,
   clearOrderDetail,
+  setScheduleDate,
 } = slice.actions;
 
 // Selector

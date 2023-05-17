@@ -115,7 +115,6 @@ export default function CuisineDialog({isOpen}) {
               ...(cuisines?.filter(item => item?.name !== 'Explore All') || []),
             ]?.map((item, _i) => (
               <TouchableOpacity
-                isLoading
                 key={_i}
                 onPress={() => onSubmit(item?.id)}
                 style={styles.cuisineItem}>

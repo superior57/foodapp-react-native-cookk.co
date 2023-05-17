@@ -184,7 +184,6 @@ export default function CartDetailDialog({
                   />
                 </Stack>
                 <Button color={SECONDARY.main} onPress={submit}>
-                  {' '}
                   Add to cart
                 </Button>
               </Stack>

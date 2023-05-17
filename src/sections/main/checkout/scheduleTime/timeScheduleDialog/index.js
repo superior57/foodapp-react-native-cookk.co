@@ -54,26 +54,26 @@ export default function TimeScheduleDialog({...other}) {
   const handleChange = value => {
     setSelectedTime(value);
   };
+  const [times, setTimes] = useState([]);
 
   useEffect(() => {
     if (scheduleDate) {
       const dateToCheck = parse(scheduleDate, 'MM/dd/yyyy', new Date());
       const isDateTomorrow = isTomorrow(dateToCheck);
-      // const times = isDateTomorrow
-      //   ? slots?.filter(time => {
-      //       const date = new Date(`2000-01-01 ${time}`);
-      //       const formattedTime = format(date, 'HH');
-      //       const currentDate = new Date();
-      //       const futureDate = addHours(currentDate, 17);
-      //       const hourAfter17Hours = getHours(futureDate);
-      //       return formattedTime > hourAfter17Hours; // compare the start time with the current hour
-      //     })
-      //   : slots;
-      console.log('slots: ', slots);
+      const temp = isDateTomorrow
+        ? slots?.filter(time => {
+            const dateObj = parse(time, 'h:mm a', new Date());
+            const formattedTime = format(dateObj, 'HH');
+            const currentDate = new Date();
+            const futureDate = addHours(currentDate, 17);
+            const hourAfter17Hours = getHours(futureDate);
+            return formattedTime > hourAfter17Hours; // compare the start time with the current hour
+          })
+        : slots;
+
+      setTimes(temp);
     }
   }, [scheduleDate]);
-
-  const times = [];
 
   const [selectedTime, setSelectedTime] = useState(scheduleTime);
 

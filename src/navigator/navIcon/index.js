@@ -32,19 +32,10 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function NavIcon() {
-  const {checkout} = useSelector(FOOD_SELECTOR);
-  const {cart} = checkout;
-  const [cartCount, setCartCount] = useState(0);
+  const {
+    checkout: {cart},
+  } = useSelector(FOOD_SELECTOR);
   const navigation = useNavigation();
-
-  useEffect(() => {
-    setCartCount(
-      cart?.reduce(
-        (total, currentValue) => total + (currentValue?.count ?? 0),
-        0,
-      ),
-    );
-  }, [cart]);
 
   const toggleDrawer = () => {
     navigation.toggleDrawer();
@@ -52,7 +43,7 @@ export default function NavIcon() {
 
   return (
     <TouchableOpacity onPress={() => toggleDrawer()} style={styles.listIcon}>
-      <Badge label={cartCount} style={styles.badge} color="error" />
+      <Badge label={cart?.length} style={styles.badge} color="error" />
       <Avatar
         color="rgba(0,0,0,0)"
         size={50}

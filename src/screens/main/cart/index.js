@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 // react-native
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 // mui
 import {Stack} from '@react-native-material/core';
@@ -63,24 +63,33 @@ export default function Cart() {
     <Layout variant="main">
       <Container>
         {cart?.length > 0 ? (
-          <Stack style={styles.wrapper}>
-            <Typography variant="h4" textAlign="center" fontWeight="bold">
-              Cart
-            </Typography>
-            <Typography textAlign="center">
-              Your cart currently contains delicious food items that are just
-              waiting to be enjoyed. Take a moment to review your selections
-              before proceeding to checkout.
-            </Typography>
-            <ChefProfile />
-            <FoodList />
-            <Button
-              sx={{marginTop: 20}}
-              isLoading={isLoading}
-              onPress={onSubmit}
-              variant="outlined"
-              width="100%">{`Checkout (${cart?.length})`}</Button>
-          </Stack>
+          <>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(SCREEN_ROUTES.chefs)}>
+              <Typography variant="subtitle1">Return to chef</Typography>
+            </TouchableOpacity>
+            <Stack style={styles.wrapper}>
+              <Typography variant="h4" textAlign="center" fontWeight="bold">
+                Cart
+              </Typography>
+              <Typography textAlign="center">
+                Your cart currently contains delicious food items that are just
+                waiting to be enjoyed. Take a moment to review your selections
+                before proceeding to checkout.
+              </Typography>
+              <TouchableOpacity
+                onPress={() => navigation.navigate(SCREEN_ROUTES.singleChef)}>
+                <ChefProfile />
+              </TouchableOpacity>
+              <FoodList />
+              <Button
+                sx={{marginTop: 20}}
+                isLoading={isLoading}
+                onPress={onSubmit}
+                variant="outlined"
+                width="100%">{`Checkout (${cart?.length})`}</Button>
+            </Stack>
+          </>
         ) : (
           <Stack style={styles.empty}>
             <Icon name="shoppingcart" color={GREY[400]} size={100} />

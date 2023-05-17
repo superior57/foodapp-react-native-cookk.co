@@ -63,7 +63,7 @@ export default function ChefHeader({
   const {chef: chefData} = useSelector(CITYCUISINE_SELECTOR);
   const {chef} = chefData ?? {};
   const {checkout, foods} = useSelector(FOOD_SELECTOR);
-  const {cart, deliveryDate} = checkout;
+  const {cart, scheduleDate} = checkout;
   const [tempCategory, setTempCategory] = useState();
   const [changeDeliveryDateDialogIsOpen, setChangeDeliveryDateDialogIsOpen] =
     useState(false);
@@ -74,9 +74,9 @@ export default function ChefHeader({
     .map(key => ({date: key}));
 
   useEffect(() => {
-    if (categories.length > 0) {
+    if (categories?.length > 0) {
       if (cart[0]?.user_id === chef?.id) {
-        setSelectedCategory(deliveryDate);
+        setSelectedCategory(scheduleDate);
       } else {
         setSelectedCategory(categories[0]?.date);
       }
