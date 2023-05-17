@@ -17,7 +17,7 @@ import {dispatch} from '../../../../../../redux/store';
 import {getSavedCards} from '../../../../../../redux/slices/food';
 // theme
 import {ERROR, GREY} from '../../../../../../theme';
-import {useToast} from 'react-native-styled-toast';
+// import {useToast} from 'react-native-styled-toast';
 
 // ----------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 export default function PaymentForm({onClose, clientSecret}) {
   const [isLoading, setIsLoading] = useState(false);
   const {confirmSetupIntent} = useConfirmSetupIntent();
-  const {toast} = useToast();
+  // const {toast} = useToast();
   const [error, setError] = useState();
   const [billingDetails, setBillingDetails] = useState();
 
@@ -61,10 +61,10 @@ export default function PaymentForm({onClose, clientSecret}) {
           await dispatch(getSavedCards());
           setIsLoading(false);
           onClose();
-          toast({
-            message: 'Your payment method has been added successfully',
-            intent: 'SUCCESS',
-          });
+          // toast({
+          //   message: 'Your payment method has been added successfully',
+          //   intent: 'SUCCESS',
+          // });
         }, 500);
       }
     } catch (error) {

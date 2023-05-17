@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
 // react-native
-import {StyleSheet} from 'react-native';
 // mui
 import {Stack} from '@react-native-material/core';
 // layouts
@@ -21,12 +20,8 @@ import Typography from '../../../../components/typography';
 
 // ----------------------------------------------------------------------
 
-const styles = StyleSheet.create({});
-
-// ----------------------------------------------------------------------
-
 export default function Payment() {
-  const {checkout, savedCards} = useSelector(FOOD_SELECTOR);
+  const {savedCards} = useSelector(FOOD_SELECTOR);
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
   useEffect(() => {

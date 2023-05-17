@@ -33,16 +33,15 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function PaymentDialog({...other}) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
   const [clientSecretKey, setClientSecretKey] = useState('');
   const [publicKey, setPublickey] = useState('');
 
   useEffect(() => {
-    if (!other.visible) return;
+    if (!other.visible) {
+      return;
+    }
 
     async function fetch() {
-      setIsLoading(true);
       const response = await dispatch(createCardIntent());
 
       if (createCardIntent.fulfilled.match(response)) {
@@ -50,8 +49,6 @@ export default function PaymentDialog({...other}) {
 
         setClientSecretKey(client_secret);
         setPublickey(publishable_key);
-        setIsInitialized(true);
-        setIsLoading(false);
       }
     }
 
