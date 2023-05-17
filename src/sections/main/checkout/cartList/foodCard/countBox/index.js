@@ -50,12 +50,6 @@ export default function CountBox({
     <Stack direction="row" style={styles.wrapper} gap={10}>
       <TouchableOpacity
         onPress={() => handleChange('-')}
-        disabled={
-          value <= (cart?.find(item => item?.id === foodId) ? 1 : minOrder) ||
-          loading
-            ? true
-            : false
-        }
         style={{
           opacity:
             value <= (cart?.find(item => item?.id === foodId) ? 1 : minOrder)

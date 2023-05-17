@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 
 // react-native
 import {StyleSheet} from 'react-native';
 import {Card} from 'react-native-paper';
 // mui
-import {IconButton, Stack} from '@react-native-material/core';
+import {Stack} from '@react-native-material/core';
 // layouts
 // screens
 // components
@@ -16,7 +15,7 @@ import CountBox from './countBox';
 // routes
 // redux
 // theme
-import {ERROR, PRIMARY, SECONDARY, SUCCESS} from '../../../../../theme';
+import {PRIMARY, SECONDARY, SUCCESS} from '../../../../../theme';
 import {dispatch, useSelector} from '../../../../../redux/store';
 import {
   FOOD_SELECTOR,
@@ -39,11 +38,6 @@ const styles = StyleSheet.create({
 
   image: {
     alignItems: 'center',
-  },
-
-  header: {
-    alignItems: 'center',
-    paddingRight: 15,
   },
 
   title: {
@@ -69,22 +63,24 @@ export default function FoodCard({data}) {
       setLoading(true);
       if (type === '+') {
         const response = await dispatch(updateCart('add', orderId, data.id));
-        // toast({message: response.data.success, intent: 'SUCCESS'});
+        // successAlert(response.data.success);
       } else {
-        if (data.count === (data.min_order ?? 1)) {
-          deleteItem(data?.id);
-        } else {
+        if (
+          orderDetail?.items?.find(item => item?.id === data?.id)?.count >
+          data?.min_order
+        ) {
           const response = await dispatch(
             updateCart('remove', orderId, data.id),
           );
-          // toast({message: response.data.success, intent: 'SUCCESS'});
+        } else {
+          deleteItem(data?.id);
         }
+        // successAlert(response.data.success);
       }
-      setLoading(false);
       await dispatch(getOrderDetail(orderId));
+      setLoading(false);
     } catch (error) {
       setLoading(false);
-      // toast({message: error.message, intent: 'ERROR'});
     }
   };
 
@@ -110,21 +106,16 @@ export default function FoodCard({data}) {
     <Card style={styles.wrapper}>
       <Stack gap={20}>
         <Stack style={styles.image}>
-          <Avatar size={100} image={data?.image} />
+          <Avatar size={120} image={data?.image} />
         </Stack>
-        <Stack gap={5}>
-          <Stack direction="row" justify="between" style={styles.header}>
-            <Typography
-              sx={styles.title}
-              variant="subtitle1"
-              fontWeight="bold"
-              color={SECONDARY.main}>
-              {data?.title}
-            </Typography>
-            <Typography variant={'subtitle1'} color={SUCCESS.main}>
-              ${data?.cost}
-            </Typography>
-          </Stack>
+        <Stack gap={10}>
+          <Typography
+            sx={styles.title}
+            variant="subtitle1"
+            fontWeight="bold"
+            color={SECONDARY.main}>
+            {data?.title}
+          </Typography>
           {data?.min_order > 1 && (
             <Typography color={PRIMARY.main}>
               min orders {`${data?.min_order} ${data?.measurement || ''}`}
@@ -139,11 +130,19 @@ export default function FoodCard({data}) {
               foodId={data?.id}
               onChange={type => handleClickAddCart(type)}
             />
-            <IconButton
-              disabled={loading}
-              onPress={() => deleteItem(data?.id)}
-              icon={<Icon name="trash" color={ERROR.main} size={16} />}
-            />
+            <Stack direction="row" gap={5}>
+              <Typography variant={'subtitle1'} color={SUCCESS.main}>
+                $
+                {data?.cost *
+                  orderDetail?.items?.find(item => item?.id === data?.id)
+                    ?.count}
+              </Typography>
+              <Typography variant={'body2'}>
+                ( ${data?.cost} x{' '}
+                {orderDetail?.items?.find(item => item?.id === data?.id)?.count}{' '}
+                )
+              </Typography>
+            </Stack>
           </Stack>
         </Stack>
       </Stack>
