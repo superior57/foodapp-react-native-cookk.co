@@ -281,12 +281,9 @@ export function addTips(data) {
   return async dispatch => {
     dispatch(startLoading());
     try {
-      const response = await axios.post(
-        `/api/${API_VERSION}/orders/${data.orderId}/add_tips`,
-        {
-          tips: data.tips,
-        },
-      );
+      await axios.post(`/api/${API_VERSION}/orders/${data.orderId}/add_tips`, {
+        tips: data.tips,
+      });
     } catch (error) {
       dispatch(slice.actions.setError(error));
     }
@@ -396,7 +393,7 @@ export function updateIsPickup(isPickup, orderId) {
   return async dispatch => {
     dispatch(startLoading());
     try {
-      const response = await axios.post(
+      await axios.post(
         `/api/${API_VERSION}/orders/${orderId}/update_is_pickup`,
         {
           is_pickup: isPickup,
@@ -412,12 +409,9 @@ export function applyCoupon(promocode, orderId) {
   return async dispatch => {
     dispatch(startLoading());
     try {
-      const response = await axios.post(
-        `/api/${process.env.API_VERSION}/orders/${orderId}/apply_coupon`,
-        {
-          code: promocode,
-        },
-      );
+      await axios.post(`/api/${API_VERSION}/orders/${orderId}/apply_coupon`, {
+        code: promocode,
+      });
     } catch (error) {
       dispatch(slice.actions.setError(error));
     }
