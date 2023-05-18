@@ -334,8 +334,8 @@ function AuthProvider({children}) {
     const response = await axios.post(
       `/api/${API_VERSION}/users/update_password`,
       {
-        new_password: data.new_password,
-        old_password: data.old_password,
+        new_password: data.newPassword,
+        old_password: data.currentPassword,
       },
     );
     return response;

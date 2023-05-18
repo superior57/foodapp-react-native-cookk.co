@@ -18,6 +18,8 @@ import Typography from '../../../components/typography';
 // redux
 // theme
 import {ERROR, SECONDARY} from '../../../theme';
+// hook
+import useAuth from '../../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -63,12 +65,14 @@ const passwordValidationSchema = yup.object().shape({
   confirmPassword: yup
     .string()
     .min(8, ({min}) => `Confirm password must be at least ${min} characters`)
+    .oneOf([yup.ref('newPassword')], 'Passwords do not match')
     .required('Confirm password is required'),
 });
 
 // ----------------------------------------------------------------------
 
 export default function Password() {
+  const {updatePassword} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [disable, setDisable] = useState(true);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -79,7 +83,8 @@ export default function Password() {
   const onSubmit = async data => {
     setIsLoading(true);
     try {
-      toast({message: 'Successfully', intent: 'SUCCESS'});
+      const response = await updatePassword(data);
+      toast({message: response.data.success, intent: 'SUCCESS'});
     } catch (error) {
       toast({message: error.message, intent: 'ERROR'});
     }
@@ -90,13 +95,9 @@ export default function Password() {
     <Formik
       validationSchema={passwordValidationSchema}
       initialValues={{
-        first_name: '',
-        last_name: '',
-        username: '',
-        phone_number: '',
-        email: '',
-        instagram: '',
-        facebook: '',
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
       }}
       onSubmit={onSubmit}>
       {({handleChange, handleSubmit, values, errors}) => (
@@ -113,6 +114,7 @@ export default function Password() {
             <Typography variant="subtitle">Current password</Typography>
             <Stack style={styles.passwordInputGroup}>
               <TextInput
+                editable={!disable}
                 name="currentPassword"
                 style={styles.passwordInput}
                 secureTextEntry={!showCurrentPassword}
@@ -135,6 +137,7 @@ export default function Password() {
             <Typography variant="subtitle">New password</Typography>
             <Stack style={styles.passwordInputGroup}>
               <TextInput
+                editable={!disable}
                 name="newPassword"
                 style={styles.passwordInput}
                 secureTextEntry={!showNewPassword}
@@ -155,6 +158,7 @@ export default function Password() {
             <Typography variant="subtitle">Confirm password</Typography>
             <Stack style={styles.passwordInputGroup}>
               <TextInput
+                editable={!disable}
                 name="confirmPassword"
                 style={styles.passwordInput}
                 secureTextEntry={!showConfirmPassword}
