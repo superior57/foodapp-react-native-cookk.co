@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
 export default function UserInfo() {
   const {user, updateAvatar} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const [passport, setPassport] = useState();
 
   const pickPassport = async () => {
     try {
@@ -66,9 +65,8 @@ export default function UserInfo() {
         type: [DocumentPicker.types.images],
         allowMultiSelection: false,
       });
-      setPassport(res[0]);
       const formData = new FormData();
-      formData.append('image', passport);
+      formData.append('image', res[0]);
       await updateAvatar(formData);
       setIsLoading(false);
     } catch (error) {
@@ -84,6 +82,7 @@ export default function UserInfo() {
   return (
     <Stack direction="row" gap={20} style={styles?.wrapper}>
       <TouchableOpacity
+        disabled={isLoading}
         style={styles.upload}
         onPress={() => {
           pickPassport();
