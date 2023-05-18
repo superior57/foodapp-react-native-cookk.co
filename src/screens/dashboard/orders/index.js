@@ -49,7 +49,7 @@ export default function Orders() {
   ) : (
     <Layout variant="dashboard">
       <Container>
-        <Stack gap={30}>
+        <Stack gap={20}>
           <Typography variant="h6" fontWeight="bold">
             Orders
           </Typography>
@@ -58,31 +58,33 @@ export default function Orders() {
           ) : (
             orders?.map((item, _i) => (
               <Card key={_i} style={styles.card}>
-                <Stack direction="row" justify="between">
-                  <Typography variant="subtitle1">Order Number :</Typography>
-                  <Typography>#{item?.order_num}</Typography>
-                </Stack>
-                <Stack direction="row" justify="between">
-                  <Typography variant="subtitle1">Order Date :</Typography>
-                  <Typography>{item?.order_date}</Typography>
-                </Stack>
-                <Stack direction="row" justify="between">
-                  <Typography variant="subtitle1">Chef :</Typography>
-                  <Typography>
-                    {item?.chef?.first_name} {item?.chef?.last_name}
-                  </Typography>
-                </Stack>
-                <Stack direction="row" justify="between">
-                  <Typography variant="subtitle1">Price :</Typography>
-                  <Typography>{item?.sub_total}</Typography>
-                </Stack>
-                <Stack direction="row" justify="between">
-                  <Typography variant="subtitle1">Status :</Typography>
-                  <Badge
-                    style={styles.badge}
-                    color={SUCCESS.main}
-                    label={item?.status}
-                  />
+                <Stack gap={5}>
+                  <Stack direction="row" justify="between">
+                    <Typography variant="subtitle1">Order Number :</Typography>
+                    <Typography>#{item?.order_num}</Typography>
+                  </Stack>
+                  <Stack direction="row" justify="between">
+                    <Typography variant="subtitle1">Order Date :</Typography>
+                    <Typography>{item?.order_date}</Typography>
+                  </Stack>
+                  <Stack direction="row" justify="between">
+                    <Typography variant="subtitle1">Chef :</Typography>
+                    <Typography>
+                      {item?.chef?.first_name} {item?.chef?.last_name}
+                    </Typography>
+                  </Stack>
+                  <Stack direction="row" justify="between">
+                    <Typography variant="subtitle1">Price :</Typography>
+                    <Typography>${item?.sub_total}</Typography>
+                  </Stack>
+                  <Stack direction="row" justify="between">
+                    <Typography variant="subtitle1">Status :</Typography>
+                    <Badge
+                      style={styles.badge}
+                      color={SUCCESS.main}
+                      label={item?.status}
+                    />
+                  </Stack>
                 </Stack>
               </Card>
             ))
