@@ -301,10 +301,10 @@ function AuthProvider({children}) {
       `/api/${API_VERSION}/users/update_personal_info`,
       {
         user: {
-          first_name: data.first_name,
-          last_name: data.last_name,
+          first_name: data.firstName,
+          last_name: data.lastName,
           username: data.username,
-          mobile: data.phone_number,
+          mobile: data.phoneNumber,
           instagram: data.instagram,
           facebook: data.facebook,
         },
@@ -313,13 +313,21 @@ function AuthProvider({children}) {
     return response;
   };
 
-  const updateAvatar = async avatarUrl => {
-    dispatch({
-      type: 'UPDATE_AVATAR',
-      payload: avatarUrl,
-    });
+  const updateAvatar = async formData => {
+    try {
+      const response = await axios.post(
+        `/api/${API_VERSION}/users/upload_image`,
+        formData,
+      );
+      dispatch({
+        type: 'UPDATE_AVATAR',
+        payload: response.data?.image?.url,
+      });
 
-    return await Promise.resolve(true);
+      return response;
+    } catch (error) {
+      console.log('error: ', error);
+    }
   };
 
   const updatePassword = async data => {

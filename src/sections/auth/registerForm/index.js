@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 const registerValidationSchema = yup.object().shape({
-  first_name: yup.string().required('First name is required'),
-  last_name: yup.string().required('First name is required'),
+  firstName: yup.string().required('First name is required'),
+  lastName: yup.string().required('First name is required'),
   email: yup
     .string()
     .email('Please enter valid email')
@@ -81,7 +81,7 @@ const registerValidationSchema = yup.object().shape({
     .string()
     .min(8, ({min}) => `Password must be at least ${min} characters`)
     .required('Password is required'),
-  password_confirmation: yup
+  confirmPassword: yup
     .string()
     .min(8, ({min}) => `Confirm password must be at least ${min} characters`)
     .required('Confirm password is required'),
@@ -114,37 +114,37 @@ export default function RegisterForm() {
       <Formik
         validationSchema={registerValidationSchema}
         initialValues={{
-          first_name: '',
-          last_name: '',
+          firstName: '',
+          lastName: '',
           email: '',
           password: '',
-          password_confirmation: '',
+          confirmPassword: '',
         }}
         onSubmit={onSubmit}>
         {({handleChange, handleSubmit, values, errors}) => (
           <Stack style={styles.form}>
             <Stack>
               <TextInput
-                name="first_name"
+                name="firstName"
                 placeholder="First name"
                 style={styles.input}
-                onChangeText={handleChange('first_name')}
-                value={values.first_name}
+                onChangeText={handleChange('firstName')}
+                value={values.firstName}
               />
-              {errors.first_name && (
-                <Typography color={ERROR.main}>{errors.first_name}</Typography>
+              {errors.firstName && (
+                <Typography color={ERROR.main}>{errors.firstName}</Typography>
               )}
             </Stack>
             <Stack>
               <TextInput
-                name="last_name"
+                name="lastName"
                 placeholder="Last name"
                 style={styles.input}
-                onChangeText={handleChange('last_name')}
-                value={values.last_name}
+                onChangeText={handleChange('lastName')}
+                value={values.lastName}
               />
-              {errors.last_name && (
-                <Typography color={ERROR.main}>{errors.last_name}</Typography>
+              {errors.lastName && (
+                <Typography color={ERROR.main}>{errors.lastName}</Typography>
               )}
             </Stack>
             <Stack>
@@ -182,12 +182,12 @@ export default function RegisterForm() {
             <Stack>
               <Stack style={styles.passwordInputGroup}>
                 <TextInput
-                  name="password_confirmation"
+                  name="confirmPassword"
                   style={styles.passwordInput}
                   placeholder="Confirm password"
                   secureTextEntry={!showConfirmPassword}
-                  onChangeText={handleChange('password_confirmation')}
-                  value={values.password_confirmation}
+                  onChangeText={handleChange('confirmPassword')}
+                  value={values.confirmPassword}
                 />
                 <IconButton
                   onPress={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -195,9 +195,9 @@ export default function RegisterForm() {
                   icon={<Icon name="eye-outline" size={20} color="#939393" />}
                 />
               </Stack>
-              {errors.password_confirmation && (
+              {errors.confirmPassword && (
                 <Typography color={ERROR.main}>
-                  {errors.password_confirmation}
+                  {errors.confirmPassword}
                 </Typography>
               )}
             </Stack>

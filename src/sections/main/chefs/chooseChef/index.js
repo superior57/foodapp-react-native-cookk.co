@@ -94,34 +94,33 @@ export default function ChooseChef() {
           variant="subtitle1"
           fontWeight="bold">{`${city?.name} Chefs`}</Typography>
         {chefs?.map(item => (
-          <TouchableOpacity
-            key={item?.chef?.id}
-            onPress={() => {
-              if (item?.chef?.can_sell) {
-                chooseChef(item?.chef?.id);
-              }
-            }}>
-            <View style={{position: 'relative'}}>
-              <Stack style={styles.chef}>
-                <Stack direction="row" style={styles.header}>
-                  <Stack direction="row" style={styles.rating}>
-                    <Typography
-                      display={'flex'}
-                      flexWrap={'nowrap'}
-                      gap={1}
-                      variant="subtitle1">
-                      Rating: {item?.chef?.rating}
-                    </Typography>
-                    <Icon name="star" size={20} color={PRIMARY.main} />
-                  </Stack>
+          <View key={item?.chef?.id} style={{position: 'relative'}}>
+            <Stack style={styles.chef}>
+              <Stack direction="row" style={styles.header}>
+                <Stack direction="row" style={styles.rating}>
                   <Typography
-                    variant="subtitle1"
                     display={'flex'}
-                    flexWrap={'nowrap'}>
-                    Orders: {item?.chef?.orders}
+                    flexWrap={'nowrap'}
+                    gap={1}
+                    variant="subtitle1">
+                    Rating: {item?.chef?.rating}
                   </Typography>
+                  <Icon name="star" size={20} color={PRIMARY.main} />
                 </Stack>
-                <Stack style={styles.body}>
+                <Typography
+                  variant="subtitle1"
+                  display={'flex'}
+                  flexWrap={'nowrap'}>
+                  Orders: {item?.chef?.orders}
+                </Typography>
+              </Stack>
+              <Stack style={styles.body}>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (item?.chef?.can_sell) {
+                      chooseChef(item?.chef?.id);
+                    }
+                  }}>
                   <Stack direction="row" gap={20}>
                     <Avatar
                       size={100}
@@ -138,36 +137,36 @@ export default function ChooseChef() {
                       </Typography>
                     </Stack>
                   </Stack>
-                  <ScrollView horizontal={true}>
-                    <View style={styles.foodSection}>
-                      <Stack
-                        direction="row"
-                        justify="around"
-                        style={styles.foods}>
-                        {item?.foods?.map(food => (
-                          <FoodCard
-                            key={food?.id}
-                            title={food?.title}
-                            image={food?.image_url}
-                            price={food?.current_price}
-                            measurement={food?.measurement}
-                            quantity={food?.quantity}
-                          />
-                        ))}
-                      </Stack>
-                    </View>
-                  </ScrollView>
-                </Stack>
+                </TouchableOpacity>
+                <ScrollView horizontal={true}>
+                  <View style={styles.foodSection}>
+                    <Stack
+                      direction="row"
+                      justify="around"
+                      style={styles.foods}>
+                      {item?.foods?.map(food => (
+                        <FoodCard
+                          key={food?.id}
+                          title={food?.title}
+                          image={food?.image_url}
+                          price={food?.current_price}
+                          measurement={food?.measurement}
+                          quantity={food?.quantity}
+                        />
+                      ))}
+                    </Stack>
+                  </View>
+                </ScrollView>
               </Stack>
-              {!item?.chef?.can_sell && (
-                <View style={styles.backdrop}>
-                  <Typography variant="h5" fontWeight="bold">
-                    Comming Soon
-                  </Typography>
-                </View>
-              )}
-            </View>
-          </TouchableOpacity>
+            </Stack>
+            {!item?.chef?.can_sell && (
+              <View style={styles.backdrop}>
+                <Typography variant="h5" fontWeight="bold">
+                  Comming Soon
+                </Typography>
+              </View>
+            )}
+          </View>
         ))}
       </Stack>
     </Container>

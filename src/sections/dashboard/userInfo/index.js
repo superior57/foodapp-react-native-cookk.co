@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 // react-native
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import DocumentPicker from 'react-native-document-picker';
 // mui
 import {Stack} from '@react-native-material/core';
 // layouts
@@ -32,16 +33,43 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function UserInfo() {
-  const {user: userInfo} = useAuth();
+  const {user: userInfo, updateAvatar} = useAuth();
   const {user} = userInfo ?? {};
+  const [passport, setPassport] = useState();
+
+  const pickPassport = async () => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images],
+        allowMultiSelection: false,
+      });
+      setPassport(res[0]);
+      const formData = new FormData();
+      formData.append('image', passport);
+      updateAvatar(formData);
+    } catch (error) {
+      if (DocumentPicker.isCancel(error)) {
+        console.log(error);
+      } else {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <Stack direction="row" gap={20} style={styles?.wrapper}>
-      <Avatar
-        size={100}
-        image={userInfo?.image}
-        firstName={user?.first_name}
-        lastName={user?.last_name}
-      />
+      <TouchableOpacity
+        style={styles.upload}
+        onPress={() => {
+          pickPassport();
+        }}>
+        <Avatar
+          size={100}
+          image={passport?.uri ?? userInfo?.image}
+          firstName={user?.first_name}
+          lastName={user?.last_name}
+        />
+      </TouchableOpacity>
       <Stack style={styles.content}>
         <Typography variant="h5" fontWeight="bold">
           Hello {user?.first_name}
