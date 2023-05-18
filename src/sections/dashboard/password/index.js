@@ -4,7 +4,7 @@ import {Formik} from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 // react-native
-import {TextInput, StyleSheet} from 'react-native';
+import {TextInput, StyleSheet, TouchableOpacity} from 'react-native';
 import {useToast} from 'react-native-styled-toast';
 // mui
 import {IconButton, Stack} from '@react-native-material/core';
@@ -70,6 +70,7 @@ const passwordValidationSchema = yup.object().shape({
 
 export default function Password() {
   const [isLoading, setIsLoading] = useState(false);
+  const [disable, setDisable] = useState(true);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -100,9 +101,14 @@ export default function Password() {
       onSubmit={onSubmit}>
       {({handleChange, handleSubmit, values, errors}) => (
         <Stack gap={20}>
-          <Typography variant="h6" fontWeight="bold">
-            Update password
-          </Typography>
+          <Stack direction="row" justify="between" style={styles.title}>
+            <Typography variant="h6" fontWeight="bold">
+              Update password
+            </Typography>
+            <TouchableOpacity onPress={() => setDisable(!disable)}>
+              <Typography>Edit</Typography>
+            </TouchableOpacity>
+          </Stack>
           <Stack gap={5}>
             <Typography variant="subtitle">Current password</Typography>
             <Stack style={styles.passwordInputGroup}>
@@ -168,6 +174,7 @@ export default function Password() {
             )}
           </Stack>
           <Button
+            disabled={disable}
             color={SECONDARY.main}
             variant="outlined"
             isLoading={isLoading}

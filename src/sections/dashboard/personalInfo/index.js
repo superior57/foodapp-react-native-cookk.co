@@ -185,6 +185,7 @@ export default function PersonalInfo() {
             )}
           </Stack>
           <Button
+            disabled={disable}
             color={SECONDARY.main}
             variant="outlined"
             isLoading={isLoading}

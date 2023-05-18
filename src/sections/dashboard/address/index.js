@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import {Formik} from 'formik';
 
 // react-native
-import {TextInput, StyleSheet} from 'react-native';
+import {TextInput, StyleSheet, TouchableOpacity} from 'react-native';
 import {useToast} from 'react-native-styled-toast';
 // mui
 import {Stack} from '@react-native-material/core';
@@ -17,6 +17,8 @@ import Typography from '../../../components/typography';
 // redux
 // theme
 import {ERROR, SECONDARY} from '../../../theme';
+// hook
+import useAuth from '../../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -35,19 +37,29 @@ const addressValidationSchema = yup.object().shape({
   apartment: yup.string().required('Apartment is required'),
   state: yup.string().required('State is required'),
   city: yup.string().required('City is required'),
-  zip: yup.string().required('Zip is required'),
+  zip: yup.number().required('Zip is required'),
 });
 
 // ----------------------------------------------------------------------
 
 export default function Address() {
   const [isLoading, setIsLoading] = useState(false);
+  const {user, updateAddress, addAddress} = useAuth();
+  const [disable, setDisable] = useState(true);
+  const address = user?.addresses?.find(item => item.primary_address === true);
   const {toast} = useToast();
 
   const onSubmit = async data => {
+    data.id = address?.id;
     setIsLoading(true);
     try {
-      toast({message: 'Successfully', intent: 'SUCCESS'});
+      if (address?.id) {
+        const response = await updateAddress(data);
+        toast({message: response.data.success, intent: 'SUCCESS'});
+      } else {
+        const response = await addAddress(data);
+        toast({message: response.data.success, intent: 'SUCCESS'});
+      }
     } catch (error) {
       toast({message: error.message, intent: 'ERROR'});
     }
@@ -58,21 +70,27 @@ export default function Address() {
     <Formik
       validationSchema={addressValidationSchema}
       initialValues={{
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
+        address: address?.line1 ?? '',
+        apartment: address?.apartment ?? '',
+        state: address?.state ?? '',
+        city: address?.city ?? '',
+        zip: `${address?.zip}` ?? '',
       }}
       onSubmit={onSubmit}>
       {({handleChange, handleSubmit, values, errors}) => (
         <Stack gap={20}>
-          <Typography variant="h6" fontWeight="bold">
-            Personal information
-          </Typography>
+          <Stack direction="row" justify="between" style={styles.title}>
+            <Typography variant="h6" fontWeight="bold">
+              Address
+            </Typography>
+            <TouchableOpacity onPress={() => setDisable(!disable)}>
+              <Typography>Edit</Typography>
+            </TouchableOpacity>
+          </Stack>
           <Stack gap={5}>
             <Typography variant="subtitle">Address</Typography>
             <TextInput
+              editable={!disable}
               name="address"
               style={styles.input}
               onChangeText={handleChange('address')}
@@ -85,6 +103,7 @@ export default function Address() {
           <Stack gap={5}>
             <Typography variant="subtitle">Apartment</Typography>
             <TextInput
+              editable={!disable}
               name="apartment"
               style={styles.input}
               onChangeText={handleChange('apartment')}
@@ -97,6 +116,7 @@ export default function Address() {
           <Stack gap={5}>
             <Typography variant="subtitle">State</Typography>
             <TextInput
+              editable={!disable}
               name="state"
               style={styles.input}
               onChangeText={handleChange('state')}
@@ -109,6 +129,7 @@ export default function Address() {
           <Stack gap={5}>
             <Typography variant="subtitle">City</Typography>
             <TextInput
+              editable={!disable}
               name="city"
               style={styles.input}
               onChangeText={handleChange('city')}
@@ -121,6 +142,8 @@ export default function Address() {
           <Stack gap={5}>
             <Typography variant="subtitle">Zip</Typography>
             <TextInput
+              keyboardType="numeric"
+              editable={!disable}
               name="zip"
               style={styles.input}
               onChangeText={handleChange('zip')}
@@ -131,6 +154,7 @@ export default function Address() {
             )}
           </Stack>
           <Button
+            disabled={disable}
             color={SECONDARY.main}
             variant="outlined"
             isLoading={isLoading}
