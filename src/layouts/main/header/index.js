@@ -127,6 +127,22 @@ export default function MainHeader() {
                 }}>
                 <Typography>Profile</Typography>
               </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.popoverItem}
+                onPress={() => {
+                  navigation.navigate(DASHBOARD_ROUTES.payments);
+                  setShowPopover(false);
+                }}>
+                <Typography>Payments</Typography>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.popoverItem}
+                onPress={() => {
+                  navigation.navigate(DASHBOARD_ROUTES.orders);
+                  setShowPopover(false);
+                }}>
+                <Typography>Orders</Typography>
+              </TouchableOpacity>
               <Divider />
               <TouchableOpacity
                 style={styles.popoverItem}

@@ -22,6 +22,8 @@ import Checkout from '../screens/main/checkout';
 import Confirm from '../screens/main/confirm';
 import ContactUs from '../screens/main/contactUs';
 import Profile from '../screens/dashboard/profile';
+import Payments from '../screens/dashboard/payments';
+import Orders from '../screens/dashboard/orders';
 // components
 // sections
 import DrawerView from './drawer';
@@ -56,6 +58,8 @@ export default function Navigator() {
         <Drawer.Screen name={SCREEN_ROUTES.confirm} component={Confirm} />
         <Drawer.Screen name={SCREEN_ROUTES.contactUs} component={ContactUs} />
         <Drawer.Screen name={DASHBOARD_ROUTES.profile} component={Profile} />
+        <Drawer.Screen name={DASHBOARD_ROUTES.payments} component={Payments} />
+        <Drawer.Screen name={DASHBOARD_ROUTES.orders} component={Orders} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

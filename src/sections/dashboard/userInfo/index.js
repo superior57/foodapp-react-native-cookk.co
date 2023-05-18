@@ -1,7 +1,12 @@
 import React, {useState} from 'react';
 
 // react-native
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
 // mui
 import {Stack} from '@react-native-material/core';
@@ -25,6 +30,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  avatarWrapper: {
+    position: 'relative',
+    width: 100,
+    height: 100,
+  },
+
+  backdrop: {
+    borderRadius: 50,
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   content: {
     width: 230,
   },
@@ -34,11 +56,13 @@ const styles = StyleSheet.create({
 
 export default function UserInfo() {
   const {user: userInfo, updateAvatar} = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const {user} = userInfo ?? {};
   const [passport, setPassport] = useState();
 
   const pickPassport = async () => {
     try {
+      setIsLoading(true);
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
         allowMultiSelection: false,
@@ -46,8 +70,10 @@ export default function UserInfo() {
       setPassport(res[0]);
       const formData = new FormData();
       formData.append('image', passport);
-      updateAvatar(formData);
+      await updateAvatar(formData);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       if (DocumentPicker.isCancel(error)) {
         console.log(error);
       } else {
@@ -63,12 +89,19 @@ export default function UserInfo() {
         onPress={() => {
           pickPassport();
         }}>
-        <Avatar
-          size={100}
-          image={passport?.uri ?? userInfo?.image}
-          firstName={user?.first_name}
-          lastName={user?.last_name}
-        />
+        <View style={styles.avatarWrapper}>
+          <Avatar
+            size={100}
+            image={userInfo?.image}
+            firstName={user?.first_name}
+            lastName={user?.last_name}
+          />
+          {isLoading && (
+            <Stack style={styles.backdrop}>
+              <ActivityIndicator color="white" />
+            </Stack>
+          )}
+        </View>
       </TouchableOpacity>
       <Stack style={styles.content}>
         <Typography variant="h5" fontWeight="bold">
