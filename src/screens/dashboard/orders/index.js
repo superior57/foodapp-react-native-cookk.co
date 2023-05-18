@@ -18,7 +18,7 @@ import LoadingScreen from '../../../components/loadingScreen';
 import {SCREEN_ROUTES} from '../../../routes/paths';
 // redux
 import {dispatch, useSelector} from '../../../redux/store';
-import {FOOD_SELECTOR, getOrders} from '../../../redux/slices/food';
+import {FOOD_SELECTOR, getOrders, setOrderId} from '../../../redux/slices/food';
 // theme
 import {SUCCESS} from '../../../theme';
 
@@ -48,7 +48,8 @@ export default function Orders() {
     fetch();
   }, []);
 
-  const handleClick = async data => {
+  const handleClick = data => {
+    dispatch(setOrderId(data?.id));
     navigation.navigate(SCREEN_ROUTES.confirm);
   };
 
@@ -86,7 +87,7 @@ export default function Orders() {
                     </Stack>
                     <Stack direction="row" justify="between">
                       <Typography variant="subtitle1">Price :</Typography>
-                      <Typography>${item?.sub_total}</Typography>
+                      <Typography>${item?.order_total}</Typography>
                     </Stack>
                     <Stack direction="row" justify="between">
                       <Typography variant="subtitle1">Status :</Typography>
