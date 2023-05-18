@@ -69,7 +69,7 @@ export default function MainInfo() {
             {is_pickup ? 'Pick Up' : 'Delivery'} date
           </Typography>
           <Typography fontWeight="bold" variant="body1">
-            {is_pickup ? pickupDate : 'Delivery'}
+            {pickupDate}
           </Typography>
         </Stack>
       </Stack>
