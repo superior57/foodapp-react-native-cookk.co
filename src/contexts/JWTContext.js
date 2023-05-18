@@ -318,6 +318,9 @@ function AuthProvider({children}) {
       const response = await axios.post(
         `/api/${API_VERSION}/users/upload_image`,
         formData,
+        {
+          headers: {'Content-Type': 'multipart/form-data'},
+        },
       );
       dispatch({
         type: 'UPDATE_AVATAR',
