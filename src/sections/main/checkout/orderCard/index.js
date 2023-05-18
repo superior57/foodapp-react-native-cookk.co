@@ -79,11 +79,11 @@ export default function OrderCard() {
       }
       await dispatch(addTips({orderId: orderId, tips: tips}));
       const response = await dispatch(placeOrder(orderId));
-      dispatch(updateFoodCart({actionType: 'clear'}));
       if (placeOrder.fulfilled.match(response)) {
         toast({message: 'Your payment was successful.', intent: 'SUCCESS'});
         setIsLoading(false);
         setTimeout(() => {
+          dispatch(updateFoodCart({actionType: 'clear'}));
           navigation.navigate(SCREEN_ROUTES.confirm);
         }, 1000);
       } else if (placeOrder.rejected.match(response)) {

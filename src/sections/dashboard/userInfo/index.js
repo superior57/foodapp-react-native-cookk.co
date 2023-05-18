@@ -55,9 +55,8 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function UserInfo() {
-  const {user: userInfo, updateAvatar} = useAuth();
+  const {user, updateAvatar} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const {user} = userInfo ?? {};
   const [passport, setPassport] = useState();
 
   const pickPassport = async () => {
@@ -92,9 +91,9 @@ export default function UserInfo() {
         <View style={styles.avatarWrapper}>
           <Avatar
             size={100}
-            image={userInfo?.image}
-            firstName={user?.first_name}
-            lastName={user?.last_name}
+            image={user?.image}
+            firstName={user?.user?.first_name}
+            lastName={user?.user?.last_name}
           />
           {isLoading && (
             <Stack style={styles.backdrop}>
@@ -105,10 +104,10 @@ export default function UserInfo() {
       </TouchableOpacity>
       <Stack style={styles.content}>
         <Typography variant="h5" fontWeight="bold">
-          Hello {user?.first_name}
+          Hello {user?.user?.first_name}
         </Typography>
         <Typography variant="body1" color={GREY[600]}>
-          {user?.email}
+          {user?.user?.email}
         </Typography>
       </Stack>
     </Stack>
