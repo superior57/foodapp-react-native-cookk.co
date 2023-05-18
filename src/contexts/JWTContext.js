@@ -115,11 +115,11 @@ const handlers = {
   UPDATEPERSONALINFO: (state, action) => {
     const {user} = state;
     user.user = {
-      first_name: action.payload.first_name,
-      last_name: action.payload.last_name,
+      ...user.user,
+      first_name: action.payload.firstName,
+      last_name: action.payload.lastName,
       username: action.payload.username,
-      mobile: action.payload.phone_number,
-      email: action.payload.email_address,
+      mobile: action.payload.phoneNumber,
       instagram: action.payload.instagram,
       facebook: action.payload.facebook,
     };
