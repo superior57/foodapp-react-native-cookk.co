@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 // react-native
 import {StyleSheet, Image} from 'react-native';
@@ -14,8 +14,12 @@ import Typography from '../../../../components/typography';
 // sections
 // routes
 // redux
-import {useSelector} from '../../../../redux/store';
-import {FOOD_SELECTOR} from '../../../../redux/slices/food';
+import {dispatch, useSelector} from '../../../../redux/store';
+import {
+  FOOD_SELECTOR,
+  getOrderDetail,
+  updateIsPickup,
+} from '../../../../redux/slices/food';
 // theme
 import {SECONDARY} from '../../../../theme';
 
@@ -44,18 +48,19 @@ const styles = StyleSheet.create({
 
 // ----------------------------------------------------------------------
 
-export default function Address({isPickup}) {
-  const {toast} = useToast();
+export default function Address() {
   const {checkout} = useSelector(FOOD_SELECTOR);
-  const {orderDetail} = checkout;
+  const {orderDetail, orderId} = checkout;
+  const isPickup = orderDetail?.is_pickup;
   const pickupAddress = orderDetail?.pickup_address;
+  const deliveryAddress = orderDetail?.available_addresses?.[0];
+  const [isLoading, setIsLoading] = useState(false);
 
-  const dleiverySubmit = () => {
-    toast({
-      message:
-        'At the moment, delivery services are not available, but we are actively working towards making it possible',
-      intent: 'INFO',
-    });
+  const handleChange = async is_pickup => {
+    setIsLoading(true);
+    await dispatch(updateIsPickup(is_pickup, orderId));
+    await dispatch(getOrderDetail(orderId));
+    setIsLoading(false);
   };
 
   return (
@@ -63,6 +68,8 @@ export default function Address({isPickup}) {
       <Stack gap={20}>
         <Stack direction="row">
           <Button
+            isLoading={!isPickup && isLoading}
+            onPress={() => handleChange(true)}
             width={120}
             sx={styles.pickup}
             color={SECONDARY.main}
@@ -71,7 +78,8 @@ export default function Address({isPickup}) {
             Pickup
           </Button>
           <Button
-            onPress={dleiverySubmit}
+            isLoading={isPickup && isLoading}
+            onPress={() => handleChange(false)}
             width={120}
             sx={styles.delivery}
             color={SECONDARY.main}
@@ -85,20 +93,37 @@ export default function Address({isPickup}) {
             <Typography variant="subtitle1" fontWeight="bold">
               {isPickup ? 'Pick up' : 'Delivery'}:
             </Typography>
-            {pickupAddress && (
-              <Stack>
-                <Typography variant="body2">
-                  {pickupAddress?.line1 + ' ' + pickupAddress?.apartment}
-                </Typography>
-                <Typography variant="body2">
-                  {pickupAddress?.city +
-                    ' ' +
-                    pickupAddress?.state +
-                    ' ' +
-                    pickupAddress?.zip}
-                </Typography>
-              </Stack>
-            )}
+            {isPickup
+              ? pickupAddress && (
+                  <Stack>
+                    <Typography variant="body2">
+                      {pickupAddress?.line1 + ' ' + pickupAddress?.apartment}
+                    </Typography>
+                    <Typography variant="body2">
+                      {pickupAddress?.city +
+                        ' ' +
+                        pickupAddress?.state +
+                        ' ' +
+                        pickupAddress?.zip}
+                    </Typography>
+                  </Stack>
+                )
+              : deliveryAddress && (
+                  <Stack>
+                    <Typography variant="body2">
+                      {deliveryAddress?.line1 +
+                        ' ' +
+                        deliveryAddress?.apartment}
+                    </Typography>
+                    <Typography variant="body2">
+                      {deliveryAddress?.city +
+                        ' ' +
+                        deliveryAddress?.state +
+                        ' ' +
+                        deliveryAddress?.zip}
+                    </Typography>
+                  </Stack>
+                )}
           </Stack>
           <Image
             style={styles.map}

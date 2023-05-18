@@ -73,7 +73,7 @@ export default function TimeScheduleDialog({...other}) {
 
       setTimes(temp);
     }
-  }, [scheduleDate]);
+  }, [scheduleDate, slots]);
 
   const [selectedTime, setSelectedTime] = useState(scheduleTime);
 
@@ -86,9 +86,7 @@ export default function TimeScheduleDialog({...other}) {
   const onSubmit = async () => {
     try {
       setIsLoading(true);
-      const response = await dispatch(
-        updateScheduleTime(orderId, selectedTime),
-      );
+      await dispatch(updateScheduleTime(orderId, selectedTime));
       await dispatch(getOrderDetail(orderId));
       setIsLoading(false);
       // toast({message: response.success, intent: 'SUCCESS'});

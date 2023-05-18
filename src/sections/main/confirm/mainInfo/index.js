@@ -54,7 +54,6 @@ export default function MainInfo() {
       <Typography variant="h6" fontWeight="bold" color={SECONDARY.main}>
         Order details
       </Typography>
-      <Divider />
       <Stack direction="row" justify="between">
         <Stack gap={10}>
           <Typography variant="body1" color={GREY[700]}>

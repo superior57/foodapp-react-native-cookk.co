@@ -21,12 +21,15 @@ import {dispatch, useSelector} from '../../../../redux/store';
 import {
   FOOD_SELECTOR,
   addTips,
+  applyCoupon,
   updateFoodCart,
   updateScheduleTime,
 } from '../../../../redux/slices/food';
 import {placeOrder} from '../../../../redux/service/payment';
 // theme
 import {PRIMARY} from '../../../../theme';
+// hook
+import useAuth from '../../../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -58,25 +61,34 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function OrderCard() {
+  const {changeAddress} = useAuth();
   const navigation = useNavigation();
   const [disabled, setDisabled] = useState(true);
   const {checkout} = useSelector(FOOD_SELECTOR);
-  const {orderDetail, orderId, cart} = checkout;
-  const scheduleTime = checkout?.orderDetail?.schedule_time;
+  const {orderDetail, orderId} = checkout;
   const [isLoading, setIsLoading] = useState(false);
   const {toast} = useToast();
-  const sub_total = orderDetail?.sub_total;
-  const service_fee = orderDetail?.service_fee;
-  const items = orderDetail?.items;
-  const order_total = orderDetail?.order_total;
+  const [promocode, setPromocode] = useState();
+  const address = orderDetail?.available_addresses?.[0];
+  const {
+    isPickup,
+    delivery_fee,
+    sub_total,
+    service_fee,
+    items,
+    order_total,
+    scheduleTime,
+  } = orderDetail ?? {};
   const [tips, setTips] = useState(orderDetail?.tips ?? 0);
 
   const handleClickOrder = async () => {
     try {
       setIsLoading(true);
-      if (!scheduleTime) {
+      if (scheduleTime) {
         await dispatch(updateScheduleTime(orderId, scheduleTime));
       }
+      await changeAddress(isPickup, address?.id, orderId);
+      await dispatch(applyCoupon(promocode, orderId));
       await dispatch(addTips({orderId: orderId, tips: tips}));
       const response = await dispatch(placeOrder(orderId));
       if (placeOrder.fulfilled.match(response)) {
@@ -123,6 +135,11 @@ export default function OrderCard() {
           </Stack>
           <Divider />
           <Stack direction="row" justify="between">
+            <Typography>Delivery Fee:</Typography>
+            <Typography fontWeight="bold">${delivery_fee}</Typography>
+          </Stack>
+          <Divider />
+          <Stack direction="row" justify="between">
             <Typography>Tip:</Typography>
             <Typography fontWeight="bold"> ${tips}</Typography>
           </Stack>
@@ -157,7 +174,11 @@ export default function OrderCard() {
           <Typography variant="subtitle1" fontWeight="bold">
             Enter your promocode here
           </Typography>
-          <TextInput color={PRIMARY.tips} placeholder="Promocode" />
+          <TextInput
+            color={PRIMARY.tips}
+            placeholder="Promocode"
+            onChangeText={e => setPromocode(e)}
+          />
         </Stack>
         <Typography sx={{lineHeight: 20}}>
           Your personal data will be used to process your order, support your
