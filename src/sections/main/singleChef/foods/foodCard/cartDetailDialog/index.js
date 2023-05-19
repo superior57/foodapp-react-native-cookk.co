@@ -24,7 +24,7 @@ import Button from '../../../../../../components/button';
 import CartCountBox from './cartCountBox';
 // routes
 // theme
-import {GREY, SECONDARY} from '../../../../../../theme';
+import {GREY, SECONDARY, SUCCESS} from '../../../../../../theme';
 import useAuth from '../../../../../../hooks/useAuth';
 import {useSelector} from '../../../../../../redux/store';
 import {FOOD_SELECTOR} from '../../../../../../redux/slices/food';
@@ -119,37 +119,42 @@ export default function CartDetailDialog({
             />
             <Container>
               <Stack gap={30}>
-                <Typography
-                  variant="subtitle1"
-                  color={SECONDARY.main}
-                  fontWeight="bold">
-                  {data?.title}
-                </Typography>
-                <Stack
-                  direction="row"
-                  justify="between"
-                  style={{alignItems: 'center'}}>
-                  <Stack gap={5}>
-                    <Typography fontWeight={600}>
-                      {`$${data?.current_price} /${data?.quantity} ${
-                        data?.measurement || ''
-                      }`}
-                    </Typography>
-                    {data?.min_order > 1 && (
-                      <Typography>
-                        min orders{' '}
-                        {`${data?.min_order} ${data?.measurement || ''}`}
+                <Stack gap={10}>
+                  <Typography
+                    variant="subtitle1"
+                    color={SECONDARY.main}
+                    fontWeight="bold">
+                    {data?.title}
+                  </Typography>
+                  <Stack
+                    direction="row"
+                    justify="between"
+                    style={{alignItems: 'center'}}>
+                    <Stack gap={5}>
+                      <Typography
+                        variant="subtitle1"
+                        fontWeight={600}
+                        color={SUCCESS.main}>
+                        {`$${data?.current_price} /${data?.quantity} ${
+                          data?.measurement || ''
+                        }`}
                       </Typography>
-                    )}
+                      {data?.min_order > 1 && (
+                        <Typography>
+                          min orders{' '}
+                          {`${data?.min_order} ${data?.measurement || ''}`}
+                        </Typography>
+                      )}
+                    </Stack>
+                    <CartCountBox
+                      foodId={data?.id}
+                      value={orderCount}
+                      minOrder={data?.min_order}
+                      onChange={val => {
+                        setOrderCount(val);
+                      }}
+                    />
                   </Stack>
-                  <CartCountBox
-                    foodId={data?.id}
-                    value={orderCount}
-                    minOrder={data?.min_order}
-                    onChange={val => {
-                      setOrderCount(val);
-                    }}
-                  />
                 </Stack>
                 <Stack gap={5}>
                   <Typography variant="subtitle1" fontWeight="bold">
