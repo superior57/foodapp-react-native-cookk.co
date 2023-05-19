@@ -101,8 +101,8 @@ export default function AddressDialog({...other}) {
             {({handleChange, handleSubmit, values, errors}) => (
               <Stack gap={15}>
                 <Stack gap={5}>
+                  <Typography variant="subtitle1">Address</Typography>
                   <TextInput
-                    placeholder="Address"
                     name="address"
                     style={styles.input}
                     onChangeText={handleChange('address')}
@@ -113,8 +113,8 @@ export default function AddressDialog({...other}) {
                   )}
                 </Stack>
                 <Stack gap={5}>
+                  <Typography variant="subtitle1">Apartment</Typography>
                   <TextInput
-                    placeholder="Apartment"
                     name="apartment"
                     style={styles.input}
                     onChangeText={handleChange('apartment')}
@@ -127,8 +127,8 @@ export default function AddressDialog({...other}) {
                   )}
                 </Stack>
                 <Stack gap={5}>
+                  <Typography variant="subtitle1">State</Typography>
                   <TextInput
-                    placeholder="State"
                     name="state"
                     style={styles.input}
                     onChangeText={handleChange('state')}
@@ -139,8 +139,8 @@ export default function AddressDialog({...other}) {
                   )}
                 </Stack>
                 <Stack gap={5}>
+                  <Typography variant="subtitle1">City</Typography>
                   <TextInput
-                    placeholder="City"
                     name="city"
                     style={styles.input}
                     onChangeText={handleChange('city')}
@@ -151,8 +151,8 @@ export default function AddressDialog({...other}) {
                   )}
                 </Stack>
                 <Stack gap={5}>
+                  <Typography variant="subtitle1">Zip</Typography>
                   <TextInput
-                    placeholder="Zip"
                     keyboardType="numeric"
                     name="zip"
                     style={styles.input}
@@ -166,7 +166,6 @@ export default function AddressDialog({...other}) {
                 <Button
                   sx={styles.submitButton}
                   color={SECONDARY.main}
-                  variant="outlined"
                   isLoading={isLoading}
                   onPress={handleSubmit}>
                   Save

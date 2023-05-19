@@ -112,7 +112,10 @@ export default function TimeScheduleDialog({...other}) {
             onSelect={handleChange}
             buttonStyle={{width: '100%'}}
           />
-          <Button onPress={onSubmit} isLoading={isLoading}>
+          <Button
+            onPress={onSubmit}
+            color={SECONDARY.main}
+            isLoading={isLoading}>
             Save
           </Button>
         </Stack>
