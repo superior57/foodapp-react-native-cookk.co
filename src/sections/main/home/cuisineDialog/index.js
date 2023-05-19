@@ -96,10 +96,10 @@ export default function CuisineDialog({isOpen}) {
   };
 
   return (
-    <Dialog visible={isOpen} onDismiss={close}>
+    <Dialog visible={isOpen} onDismiss={() => close()}>
       <DialogHeader title="Select cuisine" />
       <DialogContent style={styles.content}>
-        <TouchableOpacity onPress={close}>
+        <TouchableOpacity onPress={() => close()}>
           <Icon name="close" size={20} style={styles.closeButton} />
         </TouchableOpacity>
         <Typography>
@@ -113,20 +113,23 @@ export default function CuisineDialog({isOpen}) {
             [
               cuisines?.find(item => item?.name === 'Explore All'),
               ...(cuisines?.filter(item => item?.name !== 'Explore All') || []),
-            ]?.map((item, _i) => (
-              <TouchableOpacity
-                key={_i}
-                onPress={() => onSubmit(item?.id)}
-                style={styles.cuisineItem}>
-                <Image
-                  source={{
-                    uri: item?.image,
-                  }}
-                  style={styles.image}
-                />
-                <Text>{item?.name}</Text>
-              </TouchableOpacity>
-            ))
+            ]?.map(
+              (item, _i) =>
+                item && (
+                  <TouchableOpacity
+                    key={_i}
+                    onPress={() => onSubmit(item?.id)}
+                    style={styles.cuisineItem}>
+                    <Image
+                      source={{
+                        uri: item?.image,
+                      }}
+                      style={styles.image}
+                    />
+                    <Text>{item?.name}</Text>
+                  </TouchableOpacity>
+                ),
+            )
           )}
         </Stack>
       </DialogContent>
