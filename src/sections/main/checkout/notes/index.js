@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   multilineInput: {
     backgroundColor: 'white',
     paddingHorizontal: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     borderWidth: 0.5,
     borderColor: GREY[400],
   },

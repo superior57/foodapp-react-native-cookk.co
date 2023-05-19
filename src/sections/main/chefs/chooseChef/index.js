@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 
   chef: {
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 5,
     borderColor: GREY[400],
   },
 

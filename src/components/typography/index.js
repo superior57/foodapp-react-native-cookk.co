@@ -12,24 +12,24 @@ import {GREY} from '../../theme';
 // ----------------------------------------------------------------------
 
 export default function Typography({
+  numberOfLines = false,
   textAlign = 'left',
   fontWeight = 'normal',
   color = GREY[800],
   variant = 'body2',
   sx = {},
   children,
-  other,
 }) {
   return (
     <Text
+      {...(numberOfLines && (numberOfLines = {numberOfLines}))}
       variant={variant}
       color={color}
       style={{
         fontWeight: fontWeight,
         textAlign: textAlign,
         ...sx,
-      }}
-      {...other}>
+      }}>
       {children}
     </Text>
   );

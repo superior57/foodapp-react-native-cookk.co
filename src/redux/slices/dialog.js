@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 // ----------------------------------------------------------------------
 
 const initialState = {
-  current: null,
+  currentDialog: null,
   initialized: false,
 };
 
@@ -12,10 +12,10 @@ const slice = createSlice({
   initialState,
   reducers: {
     openDialog(state, action) {
-      state.current = action.payload;
+      state.currentDialog = action.payload;
     },
     closeDialog(state) {
-      state.current = null;
+      state.currentDialog = null;
     },
     setInitialized(state, action) {
       state.initialized = action.payload;

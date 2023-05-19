@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 20,
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 5,
     borderWidth: 1,
     borderColor: GREY[400],
   },

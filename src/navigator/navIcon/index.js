@@ -33,9 +33,8 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function NavIcon() {
-  const {
-    checkout: {cart},
-  } = useSelector(FOOD_SELECTOR);
+  const {checkout} = useSelector(FOOD_SELECTOR);
+  const {cart} = checkout ?? {};
   const navigation = useNavigation();
 
   const toggleDrawer = () => {

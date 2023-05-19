@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: '100%',
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 5,
   },
 });
 // ----------------------------------------------------------------------
@@ -54,10 +54,7 @@ export default function PersonalInfo() {
   const [isLoading, setIsLoading] = useState(false);
   const [disable, setDisable] = useState(true);
   const {toast} = useToast();
-  const {
-    updatePersonalInfo,
-    user: {user},
-  } = useAuth();
+  const {updatePersonalInfo, user} = useAuth();
 
   const onSubmit = async data => {
     setIsLoading(true);
@@ -74,13 +71,13 @@ export default function PersonalInfo() {
     <Formik
       validationSchema={registerValidationSchema}
       initialValues={{
-        firstName: user?.first_name ?? '',
-        lastName: user?.last_name ?? '',
-        username: user?.username ?? '',
-        phoneNumber: user?.mobile ?? '',
-        email: user?.email ?? '',
-        instagram: user?.instagram ?? '',
-        facebook: user?.facebook ?? '',
+        firstName: user?.user?.first_name ?? '',
+        lastName: user?.user?.last_name ?? '',
+        username: user?.user?.username ?? '',
+        phoneNumber: user?.user?.mobile ?? '',
+        email: user?.user?.email ?? '',
+        instagram: user?.user?.instagram ?? '',
+        facebook: user?.user?.facebook ?? '',
       }}
       onSubmit={onSubmit}>
       {({handleChange, handleSubmit, values, errors}) => (

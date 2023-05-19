@@ -25,26 +25,26 @@ import {ERROR} from '../../../theme';
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginTop: 50,
+    marginTop: 40,
     width: '100%',
   },
 
   form: {
-    gap: 40,
+    gap: 25,
   },
 
   input: {
     paddingHorizontal: 20,
     width: '100%',
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 5,
   },
 
   passwordInputGroup: {
     backgroundColor: 'white',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 10,
+    borderRadius: 5,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
 const registerValidationSchema = yup.object().shape({
   firstName: yup.string().required('First name is required'),
   lastName: yup.string().required('First name is required'),
+  phoneNumber: yup.string().required('Phone number is required'),
   email: yup
     .string()
     .email('Please enter valid email')
@@ -116,6 +117,7 @@ export default function RegisterForm() {
         initialValues={{
           firstName: '',
           lastName: '',
+          phoneNumber: '',
           email: '',
           password: '',
           confirmPassword: '',
@@ -145,6 +147,18 @@ export default function RegisterForm() {
               />
               {errors.lastName && (
                 <Typography color={ERROR.main}>{errors.lastName}</Typography>
+              )}
+            </Stack>
+            <Stack>
+              <TextInput
+                name="phoneNumber"
+                placeholder="Phone number"
+                style={styles.input}
+                onChangeText={handleChange('phoneNumber')}
+                value={values.phoneNumber}
+              />
+              {errors.phoneNumber && (
+                <Typography color={ERROR.main}>{errors.phoneNumber}</Typography>
               )}
             </Stack>
             <Stack>

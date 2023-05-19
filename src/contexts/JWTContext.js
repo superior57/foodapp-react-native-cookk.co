@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {isValidToken, setSession} from '../utils/jwt';
+import {setSession} from '../utils/jwt';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../utils/axios';
 // import {API_VERSION} from '@env';
@@ -34,11 +34,13 @@ const handlers = {
     };
   },
 
-  LOGOUT: state => ({
-    ...state,
-    isAuthenticated: false,
-    user: null,
-  }),
+  LOGOUT: (state, action) => {
+    return {
+      ...state,
+      isAuthenticated: false,
+      user: null,
+    };
+  },
 
   REGISTER: (state, action) => {
     const {user} = action.payload;
@@ -212,7 +214,12 @@ function AuthProvider({children}) {
   const register = async data => {
     const response = await axios.post(`/api/${API_VERSION}/sign_up`, {
       users: {
-        ...data,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        mobile: data.phoneNumber,
+        email: data.email,
+        password: data.password,
+        password_confirmation: data.confirmPassword,
         user_type: 'end_user',
       },
     });
@@ -242,7 +249,7 @@ function AuthProvider({children}) {
     await axios.post(`/api/${API_VERSION}/reset_password`, data);
   };
 
-  const logout = async () => {
+  const logout = () => {
     setSession(null);
     dispatch({type: 'LOGOUT'});
   };

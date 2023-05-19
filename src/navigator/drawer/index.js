@@ -62,10 +62,10 @@ export default function Drawer() {
   const {checkout} = useSelector(FOOD_SELECTOR);
   const {cart} = checkout;
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     try {
       dispatch(updateFoodCart({actionType: 'clear'}));
-      await logout();
+      logout();
       navigation.navigate(SCREEN_ROUTES.home);
     } catch (error) {
       console.error(error);

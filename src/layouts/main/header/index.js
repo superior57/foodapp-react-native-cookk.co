@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 // react-native
@@ -9,7 +9,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import Popover from 'react-native-popover-view';
+import {Tip, closeTip, showTip} from 'react-native-tip';
 import {Divider} from 'react-native-paper';
 // mui
 import {Stack} from '@react-native-material/core';
@@ -24,6 +24,9 @@ import NavIcon from '../../../navigator/navIcon';
 import {GREY, SECONDARY} from '../../../theme';
 // routes
 import {DASHBOARD_ROUTES, SCREEN_ROUTES} from '../../../routes/paths';
+// redux
+import {dispatch} from '../../../redux/store';
+import {updateFoodCart} from '../../../redux/slices/food';
 // hook
 import useAuth from '../../../hooks/useAuth';
 // redux
@@ -59,6 +62,12 @@ const styles = StyleSheet.create({
   popoverItem: {
     paddingHorizontal: 20,
   },
+
+  optionStyle: {
+    optionsContainer: {
+      marginTop: 50,
+    },
+  },
 });
 
 // ----------------------------------------------------------------------
@@ -67,11 +76,12 @@ export default function MainHeader() {
   const {user: userInfo, isAuthenticated, logout} = useAuth();
   const {user} = userInfo ?? {};
   const navigation = useNavigation();
-  const [showPopover, setShowPopover] = useState(false);
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     try {
-      await logout();
+      dispatch(updateFoodCart({actionType: 'clear'}));
+      logout();
+      closeTip();
       navigation.navigate(SCREEN_ROUTES.home);
     } catch (error) {
       console.error(error);
@@ -94,11 +104,58 @@ export default function MainHeader() {
       <NavIcon />
       <View flexDirection="row" alignItems="center">
         {isAuthenticated && user && (
-          <Popover
-            isVisible={showPopover}
-            onRequestClose={() => setShowPopover(false)}
-            from={
-              <TouchableOpacity onPress={() => setShowPopover(true)}>
+          <>
+            <Tip
+              id="popover"
+              body={
+                <>
+                  <Stack style={styles.popover} gap={20}>
+                    <Stack gap={10} style={styles.popoverItem}>
+                      <Typography fontWeight="bold">
+                        {user?.first_name} {user?.last_name}
+                      </Typography>
+                      <Typography numberOfLines={1} color={GREY[600]}>
+                        {user?.email}
+                      </Typography>
+                    </Stack>
+                    <Divider />
+                    <TouchableOpacity
+                      style={styles.popoverItem}
+                      onPress={() => {
+                        closeTip();
+                        navigation.navigate(DASHBOARD_ROUTES.profile);
+                      }}>
+                      <Typography>Profile</Typography>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.popoverItem}
+                      onPress={() => {
+                        closeTip();
+                        navigation.navigate(DASHBOARD_ROUTES.payments);
+                      }}>
+                      <Typography>Payments</Typography>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.popoverItem}
+                      onPress={() => {
+                        closeTip();
+                        navigation.navigate(DASHBOARD_ROUTES.orders);
+                      }}>
+                      <Typography>Orders</Typography>
+                    </TouchableOpacity>
+                    <Divider />
+                    <TouchableOpacity
+                      style={styles.popoverItem}
+                      onPress={handleLogout}>
+                      <Typography>Logout</Typography>
+                    </TouchableOpacity>
+                  </Stack>
+                </>
+              }
+              showItemPulseAnimation
+              pulseColor="#ff8080"
+              active={false}>
+              <TouchableOpacity onPress={() => showTip('popover')}>
                 <Avatar
                   size={45}
                   image={userInfo?.image}
@@ -106,50 +163,8 @@ export default function MainHeader() {
                   lastName={user?.last_name}
                 />
               </TouchableOpacity>
-            }>
-            <Stack style={styles.popover} gap={20}>
-              <Stack gap={10} style={styles.popoverItem}>
-                <Typography fontWeight="bold">
-                  {user?.first_name} {user?.last_name}
-                </Typography>
-                <Typography color={GREY[600]}>{user?.email}</Typography>
-              </Stack>
-              <Divider />
-              <TouchableOpacity
-                style={styles.popoverItem}
-                onPress={() => {
-                  navigation.navigate(DASHBOARD_ROUTES.profile);
-                  setShowPopover(false);
-                }}>
-                <Typography>Profile</Typography>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.popoverItem}
-                onPress={() => {
-                  navigation.navigate(DASHBOARD_ROUTES.payments);
-                  setShowPopover(false);
-                }}>
-                <Typography>Payments</Typography>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.popoverItem}
-                onPress={() => {
-                  navigation.navigate(DASHBOARD_ROUTES.orders);
-                  setShowPopover(false);
-                }}>
-                <Typography>Orders</Typography>
-              </TouchableOpacity>
-              <Divider />
-              <TouchableOpacity
-                style={styles.popoverItem}
-                onPress={() => {
-                  handleLogout;
-                  setShowPopover(false);
-                }}>
-                <Typography>Logout</Typography>
-              </TouchableOpacity>
-            </Stack>
-          </Popover>
+            </Tip>
+          </>
         )}
       </View>
     </View>

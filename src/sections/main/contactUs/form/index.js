@@ -35,14 +35,14 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: 'white',
     paddingHorizontal: 10,
-    borderRadius: 10,
+    borderRadius: 5,
   },
 
   multilineInput: {
     backgroundColor: 'white',
     paddingVertical: 15,
     paddingHorizontal: 10,
-    borderRadius: 10,
+    borderRadius: 5,
   },
 
   iconButton: {

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import CuisineDialog from '../../../sections/main/home/cuisineDialog';
 
 // react-native
@@ -16,31 +16,15 @@ import {DIALOG_SELECTOR} from '../../../redux/slices/dialog';
 // ----------------------------------------------------------------------
 
 export default function DialogProvider({children}) {
-  const {current: openedDialog} = useSelector(DIALOG_SELECTOR);
-
-  const isOpenComingDialog = openedDialog === 'coming_dialog';
-  const isOpenCityDialog = openedDialog === 'choose_city_dialog';
-  const isOpenCuisineDialog = openedDialog === 'choose_cuisine_dialog';
-
-  const [comingDialogIsOpen, setComingDialogIsOpen] = useState(false);
-  const [cityDialogIsOpen, setCityDialogIsOpen] = useState(false);
-  const [cuisineDialogIsOpen, setCuisineDialogIsOpen] = useState(false);
-
+  const {currentDialog} = useSelector(DIALOG_SELECTOR);
+  const [isOpenCuisineDialog, setIsOpenCuisineDialog] = useState(false);
   useEffect(() => {
-    setComingDialogIsOpen(isOpenComingDialog);
-  }, [isOpenComingDialog]);
-
-  useEffect(() => {
-    setCityDialogIsOpen(isOpenCityDialog);
-  }, [isOpenCityDialog]);
-
-  useEffect(() => {
-    setCuisineDialogIsOpen(isOpenCuisineDialog);
-  }, [isOpenCuisineDialog]);
+    setIsOpenCuisineDialog(currentDialog === 'choose_cuisine_dialog');
+  }, [currentDialog]);
 
   return (
     <>
-      <CuisineDialog isOpen={cuisineDialogIsOpen} />
+      <CuisineDialog isOpen={isOpenCuisineDialog} />
       {children}
     </>
   );

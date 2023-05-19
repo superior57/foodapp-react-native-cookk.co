@@ -35,8 +35,9 @@ export default function LoadingScreen() {
             padding: 2,
           }}>
           <Image
-            source={require('../../assets/images/logo/logo-dark-green.png')}
-            style={{width: 100, height: 100, borderRadius: 100}}
+            source={require('../../assets/images/logo/logo_transperent.png')}
+            resizeMode="contain"
+            style={{width: 120, height: 120, borderRadius: 120}}
           />
         </View>
       </Animatable.View>

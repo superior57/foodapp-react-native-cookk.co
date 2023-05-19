@@ -57,9 +57,8 @@ const addressValidationSchema = yup.object().shape({
 export default function AddressDialog({...other}) {
   const [isLoading, setIsLoading] = useState(false);
   const {updateAddress, addAddress} = useAuth();
-  const {
-    checkout: {orderDetail, orderId},
-  } = useSelector(FOOD_SELECTOR);
+  const {checkout} = useSelector(FOOD_SELECTOR);
+  const {orderDetail, orderId} = checkout ?? {};
   const address = orderDetail?.available_addresses?.[0];
 
   const onSubmit = async data => {
