@@ -85,7 +85,7 @@ export default function Address() {
               Address
             </Typography>
             <TouchableOpacity onPress={() => setDisable(!disable)}>
-              <Typography>Edit</Typography>
+              <Typography>{disable ? 'Edit' : 'Disable'}</Typography>
             </TouchableOpacity>
           </Stack>
           <Stack gap={5}>

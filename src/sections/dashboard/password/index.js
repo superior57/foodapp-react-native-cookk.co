@@ -107,7 +107,7 @@ export default function Password() {
               Update password
             </Typography>
             <TouchableOpacity onPress={() => setDisable(!disable)}>
-              <Typography>Edit</Typography>
+              <Typography>{disable ? 'Edit' : 'Disable'}</Typography>
             </TouchableOpacity>
           </Stack>
           <Stack gap={5}>

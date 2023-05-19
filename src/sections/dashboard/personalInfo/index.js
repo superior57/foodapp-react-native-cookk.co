@@ -87,7 +87,7 @@ export default function PersonalInfo() {
               Personal information
             </Typography>
             <TouchableOpacity onPress={() => setDisable(!disable)}>
-              <Typography>Edit</Typography>
+              <Typography>{disable ? 'Edit' : 'Disable'}</Typography>
             </TouchableOpacity>
           </Stack>
           <Stack gap={5}>
