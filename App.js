@@ -10,7 +10,6 @@ import {ToastProvider} from 'react-native-styled-toast';
 import {DefaultTheme} from 'react-native-paper';
 import TipProvider from 'react-native-tip';
 // react-navigation
-import {NavigationContainer} from '@react-navigation/native';
 //navigator
 import Navigator from './src/navigator';
 // redux
@@ -50,9 +49,7 @@ function App() {
         <ToastProvider>
           <ReduxProvider store={store}>
             <Provider>
-              <NavigationContainer>
-                <Navigator />
-              </NavigationContainer>
+              <Navigator />
             </Provider>
           </ReduxProvider>
         </ToastProvider>

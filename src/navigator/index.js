@@ -8,7 +8,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 // @mui
 // layouts
-import AuthHeader from '../layouts/auth/authHeader';
 // screens
 import Login from '../screens/auth/login';
 import Register from '../screens/auth/register';
@@ -38,12 +37,11 @@ const Drawer = createDrawerNavigator();
 
 export default function Navigator() {
   return (
-    <NavigationContainer independent={true}>
+    <NavigationContainer>
       <Drawer.Navigator
         initialRouteName={SCREEN_ROUTES.home}
         drawerContent={() => <DrawerView />}
         screenOptions={{
-          headerLeft: <AuthHeader />,
           headerShown: false,
         }}>
         <Drawer.Screen name={AUTH_ROUTES.login} component={Login} />
