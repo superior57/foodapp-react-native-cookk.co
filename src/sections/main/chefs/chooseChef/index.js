@@ -79,8 +79,7 @@ const styles = StyleSheet.create({
 
 export default function ChooseChef() {
   const navigation = useNavigation();
-  const {cities, chefs} = useSelector(CITYCUISINE_SELECTOR);
-  const city = cities[0];
+  const {city, chefs} = useSelector(CITYCUISINE_SELECTOR);
 
   const chooseChef = chefId => {
     navigation.navigate(SCREEN_ROUTES.singleChef);
