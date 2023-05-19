@@ -78,10 +78,6 @@ export default function MainHeader() {
     }
   };
 
-  useEffect(() => {
-    setTimeout(() => setShowPopover(false), 2000);
-  }, []);
-
   return (
     <View style={styles.wrapper}>
       <Stack style={styles.logoWrapper}>

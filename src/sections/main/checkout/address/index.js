@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 
 // react-native
-import {StyleSheet, Image} from 'react-native';
-import {useToast} from 'react-native-styled-toast';
+import {StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Card} from 'react-native-paper';
 // mui
 import {Stack} from '@react-native-material/core';
@@ -12,6 +11,7 @@ import {Stack} from '@react-native-material/core';
 import Button from '../../../../components/button';
 import Typography from '../../../../components/typography';
 // sections
+import AddressDialog from './addressDialog';
 // routes
 // redux
 import {dispatch, useSelector} from '../../../../redux/store';
@@ -21,7 +21,7 @@ import {
   updateIsPickup,
 } from '../../../../redux/slices/food';
 // theme
-import {SECONDARY} from '../../../../theme';
+import {PRIMARY, SECONDARY} from '../../../../theme';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +44,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 100,
   },
+
+  editAddressButton: {
+    paddingHorizontal: 10,
+    width: 50,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
 });
 
 // ----------------------------------------------------------------------
@@ -55,6 +62,7 @@ export default function Address() {
   const pickupAddress = orderDetail?.pickup_address;
   const deliveryAddress = orderDetail?.available_addresses?.[0];
   const [isLoading, setIsLoading] = useState(false);
+  const [addressDialogIsOpen, setAddressDialogIsOpen] = useState(false);
 
   const handleChange = async is_pickup => {
     setIsLoading(true);
@@ -64,74 +72,94 @@ export default function Address() {
   };
 
   return (
-    <Card style={styles.wrapper}>
-      <Stack gap={20}>
-        <Stack direction="row">
-          <Button
-            isLoading={!isPickup && isLoading}
-            onPress={() => handleChange(true)}
-            width={120}
-            sx={styles.pickup}
-            color={SECONDARY.main}
-            borderRadius={0}
-            variant={isPickup ? 'contained' : 'outlined'}>
-            Pickup
-          </Button>
-          <Button
-            isLoading={isPickup && isLoading}
-            onPress={() => handleChange(false)}
-            width={120}
-            sx={styles.delivery}
-            color={SECONDARY.main}
-            borderRadius={0}
-            variant={!isPickup ? 'contained' : 'outlined'}>
-            Delivery
-          </Button>
-        </Stack>
+    <>
+      <AddressDialog
+        visible={addressDialogIsOpen}
+        onDismiss={() => {
+          setAddressDialogIsOpen(false);
+        }}
+      />
+      <Card style={styles.wrapper}>
         <Stack gap={20}>
-          <Stack gap={5}>
-            <Typography variant="subtitle1" fontWeight="bold">
-              {isPickup ? 'Pick up' : 'Delivery'}:
-            </Typography>
-            {isPickup
-              ? pickupAddress && (
-                  <Stack>
-                    <Typography variant="body2">
-                      {pickupAddress?.line1 + ' ' + pickupAddress?.apartment}
-                    </Typography>
-                    <Typography variant="body2">
-                      {pickupAddress?.city +
-                        ' ' +
-                        pickupAddress?.state +
-                        ' ' +
-                        pickupAddress?.zip}
-                    </Typography>
-                  </Stack>
-                )
-              : deliveryAddress && (
-                  <Stack>
-                    <Typography variant="body2">
-                      {deliveryAddress?.line1 +
-                        ' ' +
-                        deliveryAddress?.apartment}
-                    </Typography>
-                    <Typography variant="body2">
-                      {deliveryAddress?.city +
-                        ' ' +
-                        deliveryAddress?.state +
-                        ' ' +
-                        deliveryAddress?.zip}
-                    </Typography>
-                  </Stack>
-                )}
+          <Stack direction="row">
+            <Button
+              isLoading={!isPickup && isLoading}
+              onPress={() => handleChange(true)}
+              width={120}
+              sx={styles.pickup}
+              color={SECONDARY.main}
+              borderRadius={0}
+              variant={isPickup ? 'contained' : 'outlined'}>
+              Pickup
+            </Button>
+            <Button
+              isLoading={isPickup && isLoading}
+              onPress={() => handleChange(false)}
+              width={120}
+              sx={styles.delivery}
+              color={SECONDARY.main}
+              borderRadius={0}
+              variant={!isPickup ? 'contained' : 'outlined'}>
+              Delivery
+            </Button>
           </Stack>
-          <Image
-            style={styles.map}
-            source={require('../../../../assets/images/checkout/map.png')}
-            resizeMode="contain"
-          />
+          <Stack gap={20}>
+            <Stack gap={5}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                {isPickup ? 'Pick up' : 'Delivery'}:
+              </Typography>
+              {isPickup
+                ? pickupAddress && (
+                    <Stack>
+                      <Typography variant="body2">
+                        {pickupAddress?.line1 + ' ' + pickupAddress?.apartment}
+                      </Typography>
+                      <Typography variant="body2">
+                        {pickupAddress?.city +
+                          ' ' +
+                          pickupAddress?.state +
+                          ' ' +
+                          pickupAddress?.zip}
+                      </Typography>
+                    </Stack>
+                  )
+                : deliveryAddress && (
+                    <Stack gap={10}>
+                      <Stack>
+                        <Typography variant="body2">
+                          {deliveryAddress?.line1 +
+                            ' ' +
+                            deliveryAddress?.apartment}
+                        </Typography>
+                        <Typography variant="body2">
+                          {deliveryAddress?.city +
+                            ' ' +
+                            deliveryAddress?.state +
+                            ' ' +
+                            deliveryAddress?.zip}
+                        </Typography>
+                      </Stack>
+                      <TouchableOpacity
+                        onPress={() => setAddressDialogIsOpen(true)}
+                        style={styles.editAddressButton}>
+                        <Typography
+                          variant="subtitle1"
+                          fontWeight="bold"
+                          color={PRIMARY.main}>
+                          {deliveryAddress ? 'Edit' : 'Add address'}
+                        </Typography>
+                      </TouchableOpacity>
+                    </Stack>
+                  )}
+            </Stack>
+            <Image
+              style={styles.map}
+              source={require('../../../../assets/images/checkout/map.png')}
+              resizeMode="contain"
+            />
+          </Stack>
         </Stack>
-      </Stack>
-    </Card>
+      </Card>
+    </>
   );
 }

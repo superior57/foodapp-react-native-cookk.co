@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
+
 // ----------------------------------------------------------------------
 
 const addressValidationSchema = yup.object().shape({

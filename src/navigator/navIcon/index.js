@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   listIcon: {
     color: 'white',
     position: 'relative',
+    width: 50,
   },
 
   badge: {
