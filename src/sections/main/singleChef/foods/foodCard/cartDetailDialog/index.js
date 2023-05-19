@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
 
   closeButton: {
     position: 'absolute',
-    top: 0,
-    right: 0,
+    top: 5,
+    right: 5,
     zIndex: 10,
     padding: 3,
   },
@@ -118,19 +118,30 @@ export default function CartDetailDialog({
               resizeMode="cover"
             />
             <Container>
-              <Stack gap={10}>
+              <Stack gap={30}>
                 <Typography
                   variant="subtitle1"
                   color={SECONDARY.main}
                   fontWeight="bold">
                   {data?.title}
                 </Typography>
-                <Stack direction="row" justify="between">
-                  <Typography fontWeight={600}>
-                    {`$${data?.current_price} /${data?.quantity} ${
-                      data?.measurement || ''
-                    }`}
-                  </Typography>
+                <Stack
+                  direction="row"
+                  justify="between"
+                  style={{alignItems: 'center'}}>
+                  <Stack gap={5}>
+                    <Typography fontWeight={600}>
+                      {`$${data?.current_price} /${data?.quantity} ${
+                        data?.measurement || ''
+                      }`}
+                    </Typography>
+                    {data?.min_order > 1 && (
+                      <Typography>
+                        min orders{' '}
+                        {`${data?.min_order} ${data?.measurement || ''}`}
+                      </Typography>
+                    )}
+                  </Stack>
                   <CartCountBox
                     foodId={data?.id}
                     value={orderCount}
@@ -140,38 +151,34 @@ export default function CartDetailDialog({
                     }}
                   />
                 </Stack>
-                {data?.min_order > 1 && (
-                  <Typography variant="caption">
-                    min orders {`${data?.min_order} ${data?.measurement || ''}`}
-                  </Typography>
-                )}
-                <Stack>
-                  <Typography variant="subtitle2" fontWeight="bold">
+                <Stack gap={5}>
+                  <Typography variant="subtitle1" fontWeight="bold">
                     Description
                   </Typography>
-                  <Typography variant="caption">{data?.description}</Typography>
+                  <Divider />
+                  <Typography>{data?.description}</Typography>
                 </Stack>
-                <Stack>
-                  <Typography variant="subtitle2" fontWeight="bold">
+                <Stack gap={5}>
+                  <Typography variant="subtitle1" fontWeight="bold">
                     Ingredients
                   </Typography>
-                  <Typography variant="caption">{data?.ingredients}</Typography>
+                  <Divider />
+                  <Typography>{data?.ingredients}</Typography>
                 </Stack>
-                <Divider />
-                <Stack>
-                  <Typography variant="subtitle2" fontWeight="bold">
+                <Stack gap={5}>
+                  <Typography variant="subtitle1" fontWeight="bold">
                     Allergy warning
                   </Typography>
-                  <Typography variant="caption">
+                  <Divider />
+                  <Typography>
                     Please be aware that the ingredients mentioned are the
                     primary ones, and the food could contain allergens such as
                     milk, peanuts, tree nuts, wheat, dairy, eggs, fish,
                     shellfish, soy, or sesame.
                   </Typography>
                 </Stack>
-                <Divider />
                 <Stack gap={10}>
-                  <Typography variant="subtitle2" fontWeight="bold">
+                  <Typography variant="subtitle1" fontWeight="bold">
                     Notes
                   </Typography>
                   <TextInput
