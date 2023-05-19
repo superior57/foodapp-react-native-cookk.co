@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 // react-native
-import {StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Image} from 'react-native';
 import {Card} from 'react-native-paper';
 // mui
 import {Stack} from '@react-native-material/core';
@@ -21,7 +21,7 @@ import {
   updateIsPickup,
 } from '../../../../redux/slices/food';
 // theme
-import {PRIMARY, SECONDARY} from '../../../../theme';
+import {SECONDARY} from '../../../../theme';
 
 // ----------------------------------------------------------------------
 
@@ -85,7 +85,7 @@ export default function Address() {
             <Button
               isLoading={!isPickup && isLoading}
               onPress={() => handleChange(true)}
-              width={120}
+              width={'50%'}
               sx={styles.pickup}
               color={SECONDARY.main}
               borderRadius={0}
@@ -95,7 +95,7 @@ export default function Address() {
             <Button
               isLoading={isPickup && isLoading}
               onPress={() => handleChange(false)}
-              width={120}
+              width={'50%'}
               sx={styles.delivery}
               color={SECONDARY.main}
               borderRadius={0}
@@ -139,16 +139,12 @@ export default function Address() {
                             deliveryAddress?.zip}
                         </Typography>
                       </Stack>
-                      <TouchableOpacity
+                      <Button
                         onPress={() => setAddressDialogIsOpen(true)}
-                        style={styles.editAddressButton}>
-                        <Typography
-                          variant="subtitle1"
-                          fontWeight="bold"
-                          color={PRIMARY.main}>
-                          {deliveryAddress ? 'Edit' : 'Add address'}
-                        </Typography>
-                      </TouchableOpacity>
+                        variant="outlined"
+                        color={SECONDARY.main}>
+                        {deliveryAddress ? 'Edit' : 'Add address'}
+                      </Button>
                     </Stack>
                   )}
             </Stack>

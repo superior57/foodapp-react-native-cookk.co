@@ -126,8 +126,6 @@ export default function FoodCard({data}) {
             <CountBox
               loading={loading}
               value={data?.count}
-              minOrder={data?.min_order}
-              foodId={data?.id}
               onChange={type => handleClickAddCart(type)}
             />
             <Stack direction="row" gap={5}>
