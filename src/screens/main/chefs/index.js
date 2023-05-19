@@ -15,11 +15,7 @@ import HeroHeader from '../../../sections/main/chefs/heroHeader';
 // theme
 // redux
 import {dispatch, useSelector} from '../../../redux/store';
-import {
-  CITYCUISINE_SELECTOR,
-  getChefs,
-  getCity,
-} from '../../../redux/slices/city';
+import {CITYCUISINE_SELECTOR, getChefs} from '../../../redux/slices/city';
 
 // ----------------------------------------------------------------------
 
@@ -34,13 +30,12 @@ export default function Chefs() {
       setIsLoading(true);
       await dispatch(getChefs(cityId, cuisineId));
       setIsLoading(false);
-      dispatch(getCity(cityId));
     }
 
-    if (cityId != null && cuisineId != null) {
+    if (cuisineId) {
       fetch();
     }
-  }, [cityId, cuisineId]);
+  }, [cuisineId]);
 
   return isLoading ? (
     <LoadingScreen />

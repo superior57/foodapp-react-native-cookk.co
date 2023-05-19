@@ -148,7 +148,7 @@ export function getCity(cityId) {
     dispatch(startLoading());
     try {
       const response = await axios.get(`/api/${API_VERSION}/cities`);
-      const city = response.data.cities.find(({id}) => id === cityId);
+      const city = response.data.cities[0];
       dispatch(slice.actions.getCitySuccess(city));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

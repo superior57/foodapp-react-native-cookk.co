@@ -24,7 +24,6 @@ import {
   CITYCUISINE_SELECTOR,
   getCuisines,
   getCuisine,
-  getCity,
 } from '../../../../redux/slices/city';
 // layouts
 // screens
@@ -68,22 +67,20 @@ const styles = StyleSheet.create({
 
 export default function CuisineDialog({isOpen}) {
   const navigation = useNavigation();
-  const {cuisines, cities} = useSelector(CITYCUISINE_SELECTOR);
+  const {cuisines} = useSelector(CITYCUISINE_SELECTOR);
   const [isLoading, setIsLoading] = useState(false);
-  const cityId = cities?.[0]?.id;
 
   useEffect(() => {
     async function fetch() {
       setIsLoading(true);
       await dispatch(getCuisines());
-      await dispatch(getCity(cityId));
       setIsLoading(false);
     }
 
-    if (cityId) {
+    if (cuisines.length === 0) {
       fetch();
     }
-  }, [cityId]);
+  }, []);
 
   const close = async () => {
     dispatch(closeDialog());
