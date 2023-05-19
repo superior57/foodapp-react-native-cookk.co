@@ -35,7 +35,7 @@ import useAuth from '../../../hooks/useAuth';
 
 const styles = StyleSheet.create({
   wrapper: {
-    padding: 10,
+    padding: 15,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -56,17 +56,7 @@ const styles = StyleSheet.create({
   },
 
   popover: {
-    paddingVertical: 20,
-  },
-
-  popoverItem: {
-    paddingHorizontal: 20,
-  },
-
-  optionStyle: {
-    optionsContainer: {
-      marginTop: 50,
-    },
+    padding: 10,
   },
 });
 
@@ -110,8 +100,8 @@ export default function MainHeader() {
               body={
                 <>
                   <Stack style={styles.popover} gap={20}>
-                    <Stack gap={10} style={styles.popoverItem}>
-                      <Typography fontWeight="bold">
+                    <Stack gap={10}>
+                      <Typography variant="subtitle1" fontWeight="bold">
                         {user?.first_name} {user?.last_name}
                       </Typography>
                       <Typography numberOfLines={1} color={GREY[600]}>
@@ -120,7 +110,6 @@ export default function MainHeader() {
                     </Stack>
                     <Divider />
                     <TouchableOpacity
-                      style={styles.popoverItem}
                       onPress={() => {
                         closeTip();
                         navigation.navigate(DASHBOARD_ROUTES.profile);
@@ -128,7 +117,6 @@ export default function MainHeader() {
                       <Typography>Profile</Typography>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      style={styles.popoverItem}
                       onPress={() => {
                         closeTip();
                         navigation.navigate(DASHBOARD_ROUTES.payments);
@@ -136,7 +124,6 @@ export default function MainHeader() {
                       <Typography>Payments</Typography>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      style={styles.popoverItem}
                       onPress={() => {
                         closeTip();
                         navigation.navigate(DASHBOARD_ROUTES.orders);
@@ -144,9 +131,7 @@ export default function MainHeader() {
                       <Typography>Orders</Typography>
                     </TouchableOpacity>
                     <Divider />
-                    <TouchableOpacity
-                      style={styles.popoverItem}
-                      onPress={handleLogout}>
+                    <TouchableOpacity onPress={handleLogout}>
                       <Typography>Logout</Typography>
                     </TouchableOpacity>
                   </Stack>
