@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
   card: {
     padding: 10,
   },
+
+  badge: {
+    paddingHorizontal: 10,
+  },
 });
 
 // ----------------------------------------------------------------------
@@ -70,27 +74,25 @@ export default function Orders() {
                 <Card style={styles.card}>
                   <Stack gap={5}>
                     <Stack direction="row" justify="between">
-                      <Typography variant="subtitle1">
-                        Order Number :
-                      </Typography>
+                      <Typography fontWeight="bold">Order Number :</Typography>
                       <Typography>#{item?.order_num}</Typography>
                     </Stack>
                     <Stack direction="row" justify="between">
-                      <Typography variant="subtitle1">Order Date :</Typography>
+                      <Typography fontWeight="bold">Order Date :</Typography>
                       <Typography>{item?.order_date}</Typography>
                     </Stack>
                     <Stack direction="row" justify="between">
-                      <Typography variant="subtitle1">Chef :</Typography>
+                      <Typography fontWeight="bold">Chef :</Typography>
                       <Typography>
                         {item?.chef?.first_name} {item?.chef?.last_name}
                       </Typography>
                     </Stack>
                     <Stack direction="row" justify="between">
-                      <Typography variant="subtitle1">Price :</Typography>
+                      <Typography fontWeight="bold">Price :</Typography>
                       <Typography>${item?.order_total}</Typography>
                     </Stack>
                     <Stack direction="row" justify="between">
-                      <Typography variant="subtitle1">Status :</Typography>
+                      <Typography fontWeight="bold">Status :</Typography>
                       <Badge
                         style={styles.badge}
                         color={SUCCESS.main}
