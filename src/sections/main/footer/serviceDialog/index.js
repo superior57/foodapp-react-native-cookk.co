@@ -130,8 +130,8 @@ export default function ServiceDialog({...other}) {
 
           <Typography>
             Your privacy is important to us. Please review our Privacy Policy
-            [provide hyperlink] to understand how we collect, use, and disclose
-            your information when you use the Services.
+            www.cookk.co to understand how we collect, use, and disclose your
+            information when you use the Services.
           </Typography>
 
           <Typography>Disclaimer of Warranties:</Typography>
