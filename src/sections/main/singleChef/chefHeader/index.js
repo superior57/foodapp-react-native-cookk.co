@@ -115,18 +115,20 @@ export default function ChefHeader({selectedCategory, setSelectedCategory}) {
             Back
           </Typography>
         </TouchableOpacity>
-        <Stack direction="row" justify="between">
-          <TouchableOpacity onPress={() => handleClick(prevChefId)}>
-            <Typography color={PRIMARY.main}>
-              {prevChefId ? 'Previous Chef' : ' '}
-            </Typography>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleClick(nextChefId)}>
-            <Typography color={PRIMARY.main}>
-              {nextChefId ? 'Next Chef' : ' '}
-            </Typography>
-          </TouchableOpacity>
-        </Stack>
+        {prevChefId && nextChefId && (
+          <Stack direction="row" justify="between">
+            <TouchableOpacity onPress={() => handleClick(prevChefId)}>
+              <Typography color={PRIMARY.main}>
+                {prevChefId ? 'Previous Chef' : ' '}
+              </Typography>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleClick(nextChefId)}>
+              <Typography color={PRIMARY.main}>
+                {nextChefId ? 'Next Chef' : ' '}
+              </Typography>
+            </TouchableOpacity>
+          </Stack>
+        )}
         <Stack style={styles.content} gap={20} justify="center">
           <Avatar
             size={100}
