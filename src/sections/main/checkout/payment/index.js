@@ -72,12 +72,14 @@ export default function Payment() {
           ) : (
             <Typography>You do not have saved credit cards</Typography>
           )}
-          <Button
-            onPress={() => setDialogIsOpen(true)}
-            variant="outlined"
-            color={SECONDARY.main}>
-            Add a new card
-          </Button>
+          {savedCards?.length === 0 && (
+            <Button
+              onPress={() => setDialogIsOpen(true)}
+              variant="outlined"
+              color={SECONDARY.main}>
+              Add a new card
+            </Button>
+          )}
         </Stack>
       </PanelWrapper>
     </>
