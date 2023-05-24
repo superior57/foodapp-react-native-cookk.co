@@ -47,9 +47,8 @@ export default function Payments() {
 
   const deletePayment = async () => {
     try {
-      const response = await dispatch(deleteCard());
+      await dispatch(deleteCard());
       dispatch(getSavedCards());
-      toast({message: response.data.success, intent: 'SUCCESS'});
     } catch (error) {
       toast({message: error.message, intent: 'ERROR'});
     }

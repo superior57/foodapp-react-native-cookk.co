@@ -24,7 +24,6 @@ import {
   updateCart,
   updateFoodCart,
 } from '../../../../../redux/slices/food';
-// import {useToast} from 'react-native-styled-toast';
 import {useNavigation} from '@react-navigation/native';
 import {SCREEN_ROUTES} from '../../../../../routes/paths';
 
@@ -53,7 +52,6 @@ const styles = StyleSheet.create({
 
 export default function FoodCard({data}) {
   const navigation = useNavigation();
-  // const {toast} = useToast();
   const {checkout} = useSelector(FOOD_SELECTOR);
   const {orderDetail, orderId} = checkout;
   const [loading, setLoading] = useState(false);
@@ -62,20 +60,16 @@ export default function FoodCard({data}) {
     try {
       setLoading(true);
       if (type === '+') {
-        const response = await dispatch(updateCart('add', orderId, data.id));
-        // successAlert(response.data.success);
+        await dispatch(updateCart('add', orderId, data.id));
       } else {
         if (
           orderDetail?.items?.find(item => item?.id === data?.id)?.count >
           data?.min_order
         ) {
-          const response = await dispatch(
-            updateCart('remove', orderId, data.id),
-          );
+          await dispatch(updateCart('remove', orderId, data.id));
         } else {
           deleteItem(data?.id);
         }
-        // successAlert(response.data.success);
       }
       await dispatch(getOrderDetail(orderId));
       setLoading(false);
@@ -87,9 +81,8 @@ export default function FoodCard({data}) {
   const deleteItem = async foodId => {
     try {
       setLoading(true);
-      const response = await dispatch(deleteCart(orderId, foodId));
+      await dispatch(deleteCart(orderId, foodId));
       await dispatch(getOrderDetail(orderId));
-      // toast({message: response.data.success, intent: 'SUCCESS'});
       setLoading(false);
       if (orderDetail?.items?.length === 1) {
         dispatch(updateFoodCart({actionType: 'clear'}));

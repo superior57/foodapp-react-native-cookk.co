@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 // react-native
 import {StyleSheet, TextInput} from 'react-native';
+import {useToast} from 'react-native-styled-toast';
 // mui
 import {Stack} from '@react-native-material/core';
 // layouts
@@ -18,7 +19,6 @@ import {
   FOOD_SELECTOR,
   updateDeliveryInstructions,
 } from '../../../../redux/slices/food';
-// import {useToast} from 'react-native-styled-toast';
 // theme
 import {GREY, SECONDARY} from '../../../../theme';
 
@@ -47,7 +47,7 @@ export default function Notes({isPickup}) {
     checkout?.orderDetail?.delivery_instructions,
   );
   const [panelIsOpen, setPanelIsOpen] = useState(false);
-  // const {toast} = useToast();
+  const {toast} = useToast();
   const [loading, setLoading] = useState(false);
 
   const updateNote = async () => {
@@ -60,12 +60,11 @@ export default function Notes({isPickup}) {
           note: note,
         }),
       );
-      // toast({message: response?.success, intent: 'SUCCESS'});
       setLoading(false);
       setPanelIsOpen(false);
     } catch (error) {
       setLoading(false);
-      // toast({message: error.message, intent: 'ERROR'});
+      toast({message: error.message, intent: 'ERROR'});
     }
   };
 

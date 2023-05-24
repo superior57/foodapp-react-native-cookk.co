@@ -86,8 +86,7 @@ export default function ContactUsForm() {
   const onSubmit = async data => {
     try {
       setIsLoading(true);
-      const response = await dispatch(contactUs(data));
-      toast({message: response.success, intent: 'SUCCESS'});
+      await dispatch(contactUs(data));
     } catch (error) {
       toast({message: error.message, intent: 'ERROR'});
     }

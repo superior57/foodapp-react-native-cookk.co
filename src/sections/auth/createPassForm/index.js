@@ -85,7 +85,6 @@ export default function CreatePassForm() {
         token: accessToken,
         password: data.password,
       });
-      toast({message: 'Password created successfully', intent: 'SUCCESS'});
       navigation.navigate(AUTH_ROUTES.login);
     } catch (error) {
       toast({message: error.message, intent: 'ERROR'});

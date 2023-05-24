@@ -56,11 +56,9 @@ export default function Address() {
     setIsLoading(true);
     try {
       if (address?.id) {
-        const response = await updateAddress(data);
-        toast({message: response.data.success, intent: 'SUCCESS'});
+        await updateAddress(data);
       } else {
-        const response = await addAddress(data);
-        toast({message: response.data.success, intent: 'SUCCESS'});
+        await addAddress(data);
       }
     } catch (error) {
       toast({message: error.message, intent: 'ERROR'});

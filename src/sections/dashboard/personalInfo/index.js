@@ -60,8 +60,7 @@ export default function PersonalInfo() {
   const onSubmit = async data => {
     setIsLoading(true);
     try {
-      const response = await updatePersonalInfo(data);
-      toast({message: response.data.success, intent: 'SUCCESS'});
+      await updatePersonalInfo(data);
     } catch (error) {
       toast({message: error.message, intent: 'ERROR'});
     }

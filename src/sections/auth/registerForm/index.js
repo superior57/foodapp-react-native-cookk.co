@@ -104,7 +104,6 @@ export default function RegisterForm() {
     try {
       await register(data);
       navigation.navigate(SCREEN_ROUTES.home);
-      toast({message: ' Register Successfully', intent: 'SUCCESS'});
     } catch (error) {
       toast({message: error.message, intent: 'ERROR'});
     }

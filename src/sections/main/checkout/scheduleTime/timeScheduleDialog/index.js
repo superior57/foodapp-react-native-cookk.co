@@ -3,7 +3,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 // react-native
 import {TouchableOpacity, StyleSheet} from 'react-native';
-// import {useToast} from 'react-native-styled-toast';
+import {useToast} from 'react-native-styled-toast';
 import SelectDropdown from 'react-native-select-dropdown';
 // mui
 import {Dialog, Stack} from '@react-native-material/core';
@@ -24,7 +24,7 @@ import {
 } from '../../../../../redux/slices/food';
 // theme
 import {SECONDARY} from '../../../../../theme';
-import {addHours, format, getHours, isTomorrow, parse} from 'date-fns';
+import {format, getHours, isTomorrow, parse} from 'date-fns';
 
 // ----------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function TimeScheduleDialog({...other}) {
-  // const {toast} = useToast();
+  const {toast} = useToast();
   const {checkout} = useSelector(FOOD_SELECTOR);
   const {orderId} = checkout;
   const [isLoading, setIsLoading] = useState(false);
@@ -88,10 +88,9 @@ export default function TimeScheduleDialog({...other}) {
       await dispatch(updateScheduleTime(orderId, selectedTime));
       await dispatch(getOrderDetail(orderId));
       setIsLoading(false);
-      // toast({message: response.success, intent: 'SUCCESS'});
       other.onDismiss();
     } catch (error) {
-      // toast({message: error.message, intent: 'ERROR'});
+      toast({message: error.message, intent: 'ERROR'});
     }
   };
 

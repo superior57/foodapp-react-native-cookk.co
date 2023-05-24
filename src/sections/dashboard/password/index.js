@@ -84,8 +84,7 @@ export default function Password() {
   const onSubmit = async data => {
     setIsLoading(true);
     try {
-      const response = await updatePassword(data);
-      toast({message: response.data.success, intent: 'SUCCESS'});
+      await updatePassword(data);
     } catch (error) {
       toast({message: error.message, intent: 'ERROR'});
     }
