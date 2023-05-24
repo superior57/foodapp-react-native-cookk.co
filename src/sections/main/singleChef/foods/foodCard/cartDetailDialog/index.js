@@ -8,7 +8,6 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  View,
 } from 'react-native';
 import {Divider} from 'react-native-paper';
 // mui
@@ -34,10 +33,18 @@ import {AUTH_ROUTES} from '../../../../../../routes/paths';
 // ----------------------------------------------------------------------
 
 const styles = StyleSheet.create({
-  content: {height: 500},
+  content: {
+    position: 'relative',
+    borderRadius: 5,
+    width: '130%',
+    left: '-15%',
+    height: 600,
+    backgroundColor: 'white',
+    zIndex: 10,
+  },
 
   multilineInput: {
-    height: 150,
+    height: 100,
     backgroundColor: 'white',
     paddingHorizontal: 10,
     borderRadius: 5,
@@ -46,11 +53,12 @@ const styles = StyleSheet.create({
   },
 
   closeButton: {
+    borderRadius: 50,
     position: 'absolute',
+    backgroundColor: 'white',
+    right: -35,
     top: 5,
-    right: 5,
-    zIndex: 10,
-    padding: 3,
+    zIndex: 99999,
   },
 
   closeIcon: {borderRadius: 20, padding: 2},
@@ -101,109 +109,107 @@ export default function CartDetailDialog({
 
   return (
     <Dialog {...other}>
-      <View>
-        <TouchableOpacity onPress={other.onDismiss} style={styles.closeButton}>
-          <Icon
-            name="close"
-            backgroundColor="white"
-            color={SECONDARY.main}
-            size={20}
-            style={styles.closeIcon}
+      <TouchableOpacity onPress={other.onDismiss} style={styles.closeButton}>
+        <Icon
+          name="close"
+          backgroundColor="white"
+          color={SECONDARY.main}
+          size={20}
+          style={styles.closeIcon}
+        />
+      </TouchableOpacity>
+      <ScrollView style={styles.content}>
+        <Stack>
+          <Image
+            source={{uri: data?.image_url}}
+            style={styles.image}
+            resizeMode="cover"
           />
-        </TouchableOpacity>
-        <ScrollView style={styles.content}>
-          <Stack>
-            <Image
-              source={{uri: data?.image_url}}
-              style={styles.image}
-              resizeMode="cover"
-            />
-            <Container>
-              <Stack gap={30}>
-                <Stack gap={10}>
-                  <Typography
-                    variant="subtitle1"
-                    color={SECONDARY.main}
-                    fontWeight="bold">
-                    {data?.title}
-                  </Typography>
-                  <Stack
-                    direction="row"
-                    justify="between"
-                    style={{alignItems: 'center'}}>
-                    <Stack gap={5}>
-                      <Typography
-                        variant="subtitle1"
-                        fontWeight={600}
-                        color={SUCCESS.main}>
-                        {`$${data?.current_price} /${data?.quantity} ${
-                          data?.measurement || ''
-                        }`}
+          <Container>
+            <Stack gap={30}>
+              <Stack gap={10}>
+                <Typography
+                  variant="subtitle1"
+                  color={SECONDARY.main}
+                  fontWeight="bold">
+                  {data?.title}
+                </Typography>
+                <Stack
+                  direction="row"
+                  justify="between"
+                  style={{alignItems: 'center'}}>
+                  <Stack gap={5}>
+                    <Typography
+                      variant="subtitle1"
+                      fontWeight={600}
+                      color={SUCCESS.main}>
+                      {`$${data?.current_price} /${data?.quantity} ${
+                        data?.measurement || ''
+                      }`}
+                    </Typography>
+                    {data?.min_order > 1 && (
+                      <Typography>
+                        min orders{' '}
+                        {`${data?.min_order} ${data?.measurement || ''}`}
                       </Typography>
-                      {data?.min_order > 1 && (
-                        <Typography>
-                          min orders{' '}
-                          {`${data?.min_order} ${data?.measurement || ''}`}
-                        </Typography>
-                      )}
-                    </Stack>
-                    <CartCountBox
-                      foodId={data?.id}
-                      value={orderCount}
-                      minOrder={data?.min_order}
-                      onChange={val => {
-                        setOrderCount(val);
-                      }}
-                    />
+                    )}
                   </Stack>
-                </Stack>
-                <Stack gap={5}>
-                  <Typography variant="subtitle1" fontWeight="bold">
-                    Description
-                  </Typography>
-                  <Divider />
-                  <Typography>{data?.description}</Typography>
-                </Stack>
-                <Stack gap={5}>
-                  <Typography variant="subtitle1" fontWeight="bold">
-                    Ingredients
-                  </Typography>
-                  <Divider />
-                  <Typography>{data?.ingredients}</Typography>
-                </Stack>
-                <Stack gap={5}>
-                  <Typography variant="subtitle1" fontWeight="bold">
-                    Allergy warning
-                  </Typography>
-                  <Divider />
-                  <Typography>
-                    Please be aware that the ingredients mentioned are the
-                    primary ones, and the food could contain allergens such as
-                    milk, peanuts, tree nuts, wheat, dairy, eggs, fish,
-                    shellfish, soy, or sesame.
-                  </Typography>
-                </Stack>
-                <Stack gap={10}>
-                  <Typography variant="subtitle1" fontWeight="bold">
-                    Notes
-                  </Typography>
-                  <TextInput
-                    onChangeText={setNote}
-                    defaultValue={note}
-                    multiline
-                    style={styles.multilineInput}
-                    textAlignVertical="top"
-                    numberOfLines={4}
+                  <CartCountBox
+                    foodId={data?.id}
+                    value={orderCount}
+                    minOrder={data?.min_order}
+                    onChange={val => {
+                      setOrderCount(val);
+                    }}
                   />
                 </Stack>
-                <Button color={SECONDARY.main} onPress={submit}>
-                  Add to cart
-                </Button>
               </Stack>
-            </Container>
-          </Stack>
-        </ScrollView>
-      </View>
+              <Stack gap={5}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  Description
+                </Typography>
+                <Divider />
+                <Typography>{data?.description}</Typography>
+              </Stack>
+              <Stack gap={5}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  Ingredients
+                </Typography>
+                <Divider />
+                <Typography>{data?.ingredients}</Typography>
+              </Stack>
+              <Stack gap={5}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  Allergy warning
+                </Typography>
+                <Divider />
+                <Typography>
+                  Please be aware that the ingredients mentioned are the primary
+                  ones, and the food could contain allergens such as milk,
+                  peanuts, tree nuts, wheat, dairy, eggs, fish, shellfish, soy,
+                  or sesame.
+                </Typography>
+              </Stack>
+              <Stack gap={10}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  Notes
+                </Typography>
+                <TextInput
+                  onChangeText={setNote}
+                  defaultValue={note}
+                  multiline
+                  style={styles.multilineInput}
+                  textAlignVertical="top"
+                  numberOfLines={4}
+                />
+              </Stack>
+              <Button color={SECONDARY.main} onPress={submit}>
+                Add to cart
+              </Button>
+            </Stack>
+          </Container>
+        </Stack>
+      </ScrollView>
     </Dialog>
   );
 }
