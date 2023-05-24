@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 // react-native
-import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Image, Linking} from 'react-native';
 // mui
 import {IconButton, Stack} from '@react-native-material/core';
 // layouts
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
 
   logo: {
     height: 50,
+    width: 200,
   },
 
   iconButton: {
@@ -79,6 +80,7 @@ export default function MainFooter() {
             }
           />
           <IconButton
+            onPress={() => Linking.openURL('https://instagram.com/cookk.co')}
             icon={
               <Stack style={styles.iconButton}>
                 <Icon name="instagram" size={20} color="white" />
