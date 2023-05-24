@@ -95,23 +95,25 @@ export default function ChooseChef() {
         {chefs?.map(item => (
           <View key={item?.chef?.id} style={{position: 'relative'}}>
             <Stack style={styles.chef}>
-              <Stack direction="row" style={styles.header}>
+              <Stack direction="row" justify="around" style={styles.header}>
                 <Stack direction="row" style={styles.rating}>
-                  <Typography
-                    display={'flex'}
-                    flexWrap={'nowrap'}
-                    gap={1}
-                    variant="subtitle1">
-                    Rating: {item?.chef?.rating}
-                  </Typography>
                   <Icon name="star" size={20} color={PRIMARY.main} />
+                  <Typography variant="subtitle1" fontWeight="bold">
+                    {item?.chef?.rating}
+                  </Typography>
                 </Stack>
-                <Typography
-                  variant="subtitle1"
-                  display={'flex'}
-                  flexWrap={'nowrap'}>
-                  Orders: {item?.chef?.orders}
-                </Typography>
+                <Stack direction="row">
+                  <Typography variant="body1">Orders: </Typography>
+                  <Typography variant={'subtitle1'} fontWeight="bold">
+                    {item?.chef?.orders}
+                  </Typography>
+                </Stack>
+                <Stack direction="row">
+                  <Typography variant="body1">Delivery fee: </Typography>
+                  <Typography variant={'subtitle1'} fontWeight="bold">
+                    ${item?.chef?.delivery_fee ?? 4.99}
+                  </Typography>
+                </Stack>
               </Stack>
               <Stack style={styles.body}>
                 <TouchableOpacity
