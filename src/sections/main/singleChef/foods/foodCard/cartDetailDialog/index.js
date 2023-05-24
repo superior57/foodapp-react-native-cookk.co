@@ -59,15 +59,14 @@ const styles = StyleSheet.create({
     right: -35,
     top: 5,
     zIndex: 99999,
+    padding: 5,
   },
-
-  closeIcon: {borderRadius: 20, padding: 2},
 
   image: {
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     width: '100%',
-    height: 200,
+    height: 300,
   },
 });
 
@@ -115,7 +114,6 @@ export default function CartDetailDialog({
           backgroundColor="white"
           color={SECONDARY.main}
           size={20}
-          style={styles.closeIcon}
         />
       </TouchableOpacity>
       <ScrollView style={styles.content}>
