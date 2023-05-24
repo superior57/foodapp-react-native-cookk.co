@@ -115,7 +115,7 @@ export default function ChefHeader({selectedCategory, setSelectedCategory}) {
             Back
           </Typography>
         </TouchableOpacity>
-        {prevChefId && nextChefId && (
+        {(prevChefId || nextChefId) && (
           <Stack direction="row" justify="between">
             <TouchableOpacity onPress={() => handleClick(prevChefId)}>
               <Typography color={PRIMARY.main}>
