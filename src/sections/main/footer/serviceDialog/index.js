@@ -2,14 +2,10 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 // react-native
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
+import {Divider} from 'react-native-paper';
 // mui
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  Stack,
-} from '@react-native-material/core';
+import {Dialog, Stack} from '@react-native-material/core';
 // layouts
 // screens
 // components
@@ -22,29 +18,41 @@ import Typography from '../../../../components/typography';
 // ----------------------------------------------------------------------
 
 const styles = StyleSheet.create({
-  content: {
-    gap: 20,
-    marginTop: 10,
-    padding: 5,
+  wrapper: {
+    position: 'relative',
+    borderRadius: 5,
+    width: '130%',
+    left: '-15%',
+    height: 600,
+    backgroundColor: 'white',
+    zIndex: 10,
   },
 
   closeButton: {
     position: 'absolute',
-    right: -10,
-    top: -50,
+    backgroundColor: 'white',
+    right: -30,
+    top: 10,
+    zIndex: 99999,
   },
 });
+
 // ----------------------------------------------------------------------
 
 export default function ServiceDialog({...other}) {
   return (
     <Dialog {...other}>
-      <DialogHeader title="Terms of Service" />
-      <DialogContent style={styles.content}>
-        <TouchableOpacity onPress={other.dismiss}>
-          <Icon name="close" size={20} style={styles.closeButton} />
-        </TouchableOpacity>
-        <Stack gap={5}>
+      <TouchableOpacity onPress={other.onDismiss} style={styles.closeButton}>
+        <Icon name="close" size={20} />
+      </TouchableOpacity>
+      <ScrollView style={styles.wrapper}>
+        <Stack gap={5} style={{padding: 20}}>
+          <Typography variant="h6" fontWeight="bold">
+            Terms of Service
+          </Typography>
+
+          <Divider />
+
           <Typography>Effective Date: 05/23/2023</Typography>
 
           <Typography>
@@ -229,7 +237,7 @@ export default function ServiceDialog({...other}) {
             understood, and agree to be bound by these Terms of Service.
           </Typography>
         </Stack>
-      </DialogContent>
+      </ScrollView>
     </Dialog>
   );
 }

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Text,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 // mui
@@ -58,8 +59,9 @@ const styles = StyleSheet.create({
 
   closeButton: {
     position: 'absolute',
-    right: -10,
-    top: -50,
+    right: 10,
+    top: 10,
+    zIndex: 99999,
   },
 });
 
@@ -94,42 +96,45 @@ export default function CuisineDialog({isOpen}) {
 
   return (
     <Dialog visible={isOpen} onDismiss={() => close()}>
-      <DialogHeader title="Select cuisine" />
-      <DialogContent style={styles.content}>
-        <TouchableOpacity onPress={() => close()}>
-          <Icon name="close" size={20} style={styles.closeButton} />
-        </TouchableOpacity>
-        <Typography>
-          With our diverse range of cuisines, there's something for everyone to
-          enjoy.
-        </Typography>
-        <Stack style={styles.content}>
-          {isLoading ? (
-            <ActivityIndicator size="large" color={PRIMARY.main} />
-          ) : (
-            [
-              cuisines?.find(item => item?.name === 'Explore All'),
-              ...(cuisines?.filter(item => item?.name !== 'Explore All') || []),
-            ]?.map(
-              (item, _i) =>
-                item && (
-                  <TouchableOpacity
-                    key={_i}
-                    onPress={() => onSubmit(item?.id)}
-                    style={styles.cuisineItem}>
-                    <Image
-                      source={{
-                        uri: item?.image,
-                      }}
-                      style={styles.image}
-                    />
-                    <Text>{item?.name}</Text>
-                  </TouchableOpacity>
-                ),
-            )
-          )}
-        </Stack>
-      </DialogContent>
+      <TouchableOpacity onPress={() => close()} style={styles.closeButton}>
+        <Icon name="close" size={20} />
+      </TouchableOpacity>
+      <ScrollView style={{height: 500, position: 'relative'}}>
+        <DialogHeader title="Select cuisine" />
+        <DialogContent style={styles.content}>
+          <Typography>
+            With our diverse range of cuisines, there's something for everyone
+            to enjoy.
+          </Typography>
+          <Stack style={styles.content}>
+            {isLoading ? (
+              <ActivityIndicator size="large" color={PRIMARY.main} />
+            ) : (
+              [
+                cuisines?.find(item => item?.name === 'Explore All'),
+                ...(cuisines?.filter(item => item?.name !== 'Explore All') ||
+                  []),
+              ]?.map(
+                (item, _i) =>
+                  item && (
+                    <TouchableOpacity
+                      key={_i}
+                      onPress={() => onSubmit(item?.id)}
+                      style={styles.cuisineItem}>
+                      <Image
+                        source={{
+                          uri: item?.image,
+                        }}
+                        style={styles.image}
+                      />
+                      <Text>{item?.name}</Text>
+                    </TouchableOpacity>
+                  ),
+              )
+            )}
+          </Stack>
+        </DialogContent>
+      </ScrollView>
     </Dialog>
   );
 }
