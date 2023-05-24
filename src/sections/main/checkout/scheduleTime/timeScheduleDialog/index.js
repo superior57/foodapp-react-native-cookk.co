@@ -57,7 +57,7 @@ export default function TimeScheduleDialog({...other}) {
   const [times, setTimes] = useState([]);
 
   useEffect(() => {
-    if (scheduleDate) {
+    if (scheduleDate && slots) {
       const dateToCheck = parse(scheduleDate, 'MM/dd/yyyy', new Date());
       const isDateTomorrow = isTomorrow(dateToCheck);
       const temp = isDateTomorrow
@@ -65,8 +65,7 @@ export default function TimeScheduleDialog({...other}) {
             const dateObj = parse(time, 'h:mm a', new Date());
             const formattedTime = format(dateObj, 'HH');
             const currentDate = new Date();
-            const futureDate = addHours(currentDate, 17);
-            const hourAfter17Hours = getHours(futureDate);
+            const hourAfter17Hours = getHours(currentDate) - 7;
             return formattedTime > hourAfter17Hours; // compare the start time with the current hour
           })
         : slots;
