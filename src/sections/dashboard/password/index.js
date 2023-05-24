@@ -25,6 +25,7 @@ import useAuth from '../../../hooks/useAuth';
 
 const styles = StyleSheet.create({
   input: {
+    height: 50,
     paddingHorizontal: 20,
     width: '100%',
     backgroundColor: 'white',
@@ -32,8 +33,8 @@ const styles = StyleSheet.create({
   },
 
   passwordInputGroup: {
+    height: 50,
     backgroundColor: 'white',
-    paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
     flexDirection: 'row',

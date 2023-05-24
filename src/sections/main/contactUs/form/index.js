@@ -33,12 +33,14 @@ const styles = StyleSheet.create({
   form: {padding: 20, gap: 20},
 
   input: {
+    height: 50,
     backgroundColor: 'white',
     paddingHorizontal: 10,
     borderRadius: 5,
   },
 
   multilineInput: {
+    height: 150,
     backgroundColor: 'white',
     paddingVertical: 15,
     paddingHorizontal: 10,

@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
   },
 
   passwordInputGroup: {
+    height: 50,
     backgroundColor: 'white',
-    paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
     flexDirection: 'row',

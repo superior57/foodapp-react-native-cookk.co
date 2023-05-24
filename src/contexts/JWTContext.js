@@ -95,7 +95,7 @@ const handlers = {
     user.addresses = [
       {
         id: action.payload.id,
-        line1: action.payload.address,
+        line1: action.payload.line1,
         apartment: action.payload.apartment,
         state: action.payload.state,
         city: action.payload.city,

@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   content: {height: 500},
 
   multilineInput: {
+    height: 150,
     backgroundColor: 'white',
     paddingHorizontal: 10,
     borderRadius: 5,

@@ -27,6 +27,7 @@ import useAuth from '../../../../../hooks/useAuth';
 
 const styles = StyleSheet.create({
   input: {
+    height: 50,
     borderWidth: 0.5,
     borderColor: GREY[500],
     paddingHorizontal: 20,
