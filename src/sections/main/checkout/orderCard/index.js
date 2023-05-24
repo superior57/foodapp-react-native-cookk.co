@@ -22,6 +22,7 @@ import {
   FOOD_SELECTOR,
   addTips,
   applyCoupon,
+  getOrderDetail,
   updateFoodCart,
   updateScheduleTime,
 } from '../../../../redux/slices/food';
@@ -56,6 +57,11 @@ const styles = StyleSheet.create({
   tipsInput: {
     paddingLeft: 10,
   },
+
+  promocode: {
+    width: '100%',
+    alignItems: 'center',
+  },
 });
 
 // ----------------------------------------------------------------------
@@ -66,6 +72,7 @@ export default function OrderCard() {
   const [disabled, setDisabled] = useState(true);
   const {checkout} = useSelector(FOOD_SELECTOR);
   const {orderDetail, orderId} = checkout;
+  const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const {toast} = useToast();
   const [promocode, setPromocode] = useState();
@@ -81,6 +88,18 @@ export default function OrderCard() {
   } = orderDetail ?? {};
   const [tips, setTips] = useState(orderDetail?.tips ?? 0);
 
+  const sendPromocode = async () => {
+    setLoading(true);
+    const response = await dispatch(applyCoupon(promocode, orderId));
+    setLoading(false);
+    if (!response) {
+      toast({message: 'Promocode is not valid', intent: 'ERROR'});
+    } else {
+      toast({message: 'Successfully applied promo code', intent: 'SUCCESS'});
+    }
+    dispatch(getOrderDetail(orderId));
+  };
+
   const handleClickOrder = async () => {
     try {
       setIsLoading(true);
@@ -88,7 +107,6 @@ export default function OrderCard() {
         await dispatch(updateScheduleTime(orderId, scheduleTime));
       }
       await changeAddress(isPickup, address?.id, orderId);
-      await dispatch(applyCoupon(promocode, orderId));
       await dispatch(addTips({orderId: orderId, tips: tips}));
       const response = await dispatch(placeOrder(orderId));
       if (placeOrder.fulfilled.match(response)) {
@@ -174,11 +192,21 @@ export default function OrderCard() {
           <Typography variant="subtitle1" fontWeight="bold">
             Enter your promocode here
           </Typography>
-          <TextInput
-            color={PRIMARY.tips}
-            placeholder="Promocode"
-            onChangeText={e => setPromocode(e)}
-          />
+          <Stack direction="row" justify="between" style={styles.promocode}>
+            <TextInput
+              style={{width: 220}}
+              placeholder="Promocode"
+              onChangeText={e => setPromocode(e)}
+            />
+            <Button
+              width={80}
+              isLoading={loading}
+              paddingVertical={16}
+              variant="outlined"
+              onPress={sendPromocode}>
+              Add
+            </Button>
+          </Stack>
         </Stack>
         <Typography sx={{lineHeight: 20}}>
           Your personal data will be used to process your order, support your

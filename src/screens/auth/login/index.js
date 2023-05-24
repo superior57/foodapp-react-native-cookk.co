@@ -34,7 +34,7 @@ export default function Login({navigation}) {
         Log in
       </Typography>
       <Typography variant={'body1'} color={'#ACACAC'} sx={{marginTop: 20}}>
-        Welcome back! Please enter your details...
+        Welcome back! Please enter your details
       </Typography>
       <LoginForm />
       <View style={styles.footer}>

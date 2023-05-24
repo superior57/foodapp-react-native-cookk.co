@@ -18,7 +18,7 @@ export default function Register({navigation, route}) {
         Sign up!
       </Typography>
       <Typography variant={'body1'} color={'#ACACAC'} sx={{marginTop: 20}}>
-        Welcome back! Please enter your details...
+        Welcome back! Please enter your details
       </Typography>
       <RegisterForm />
     </AuthLayout>

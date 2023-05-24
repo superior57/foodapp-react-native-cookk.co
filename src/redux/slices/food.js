@@ -409,9 +409,13 @@ export function applyCoupon(promocode, orderId) {
   return async dispatch => {
     dispatch(startLoading());
     try {
-      await axios.post(`/api/${API_VERSION}/orders/${orderId}/apply_coupon`, {
-        code: promocode,
-      });
+      const response = await axios.post(
+        `/api/${API_VERSION}/orders/${orderId}/apply_coupon`,
+        {
+          code: promocode,
+        },
+      );
+      return response;
     } catch (error) {
       dispatch(slice.actions.setError(error));
     }

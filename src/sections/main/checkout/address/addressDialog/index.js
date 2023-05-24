@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 
 const addressValidationSchema = yup.object().shape({
   address: yup.string().required('Address is required'),
-  apartment: yup.string().required('Apartment is required'),
+  apartment: yup.string(),
   state: yup.string().required('State is required'),
   city: yup.string().required('City is required'),
   zip: yup.number().required('Zip is required'),
