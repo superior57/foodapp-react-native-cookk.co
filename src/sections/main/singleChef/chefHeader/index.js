@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import Icon from 'react-native-vector-icons/Entypo';
 import {isAfter, parse} from 'date-fns';
 
 // react-native
-import {TouchableOpacity, StyleSheet, Linking, ScrollView} from 'react-native';
+import {TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 // mui
 import {Stack} from '@react-native-material/core';
@@ -20,27 +19,21 @@ import ChangeDeliveryDateDialog from './changeDeliveryDateDialog';
 import {SCREEN_ROUTES} from '../../../../routes/paths';
 // redux
 import {dispatch, useSelector} from '../../../../redux/store';
-import {CITYCUISINE_SELECTOR} from '../../../../redux/slices/city';
+import {CITYCUISINE_SELECTOR, getChef} from '../../../../redux/slices/city';
+import {FOOD_SELECTOR, updateFoodCart} from '../../../../redux/slices/food';
 // theme
 import {PRIMARY, SECONDARY} from '../../../../theme';
-import {FOOD_SELECTOR, updateFoodCart} from '../../../../redux/slices/food';
 
 // ----------------------------------------------------------------------
 
 const styles = StyleSheet.create({
   wrapper: {
-    gap: 20,
+    gap: 30,
     paddingVertical: 10,
   },
 
-  followIcons: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-  },
-
   content: {
-    gap: 20,
+    width: '100%',
     alignItems: 'center',
   },
 
@@ -51,27 +44,33 @@ const styles = StyleSheet.create({
 
 // ----------------------------------------------------------------------
 
-export default function ChefHeader({
-  selectedCategory,
-  setSelectedCategory,
-  selectedData,
-  setSelectedData,
-  newCartDialogIsOpen,
-  setNewCartDialogIsOpen,
-}) {
+export default function ChefHeader({selectedCategory, setSelectedCategory}) {
   const navigation = useNavigation();
-  const {chef: chefData} = useSelector(CITYCUISINE_SELECTOR);
+  const {chef: chefData, chefs} = useSelector(CITYCUISINE_SELECTOR);
+  const chefId = chefData?.chef?.id;
   const {chef} = chefData ?? {};
   const {checkout, foods} = useSelector(FOOD_SELECTOR);
   const {cart, scheduleDate} = checkout;
   const [tempCategory, setTempCategory] = useState();
+  const [nextChefId, setNextChefId] = useState();
+  const [prevChefId, setPrevChefId] = useState();
   const [changeDeliveryDateDialogIsOpen, setChangeDeliveryDateDialogIsOpen] =
     useState(false);
-
   const categories = Object.keys(foods)
     .sort((a, b) => new Date(a) - new Date(b))
     .filter(key => isAfter(parse(key, 'MM/dd/yy', new Date()), new Date()))
     .map(key => ({date: key}));
+
+  useEffect(() => {
+    if (chefId && chefs) {
+      const availableChefs = chefs?.filter(item => item?.chef?.can_sell);
+      const currentIndex = availableChefs?.findIndex(
+        item => item.chef.id === chefId,
+      );
+      setPrevChefId(availableChefs?.[currentIndex - 1]?.chef?.id);
+      setNextChefId(availableChefs?.[currentIndex + 1]?.chef?.id);
+    }
+  }, [chefId, chefs]);
 
   useEffect(() => {
     if (categories?.length > 0) {
@@ -98,6 +97,10 @@ export default function ChefHeader({
     }
   };
 
+  const handleClick = id => {
+    dispatch(getChef(id));
+  };
+
   return (
     <>
       <ChangeDeliveryDateDialog
@@ -112,50 +115,59 @@ export default function ChefHeader({
             Back
           </Typography>
         </TouchableOpacity>
-        <Stack style={styles.followIcons} direction="row" gap={15}>
-          {chef?.facebook && (
-            <TouchableOpacity onPress={() => Linking.openURL(chef?.facebook)}>
-              <Icon name="facebook" size={30} color={SECONDARY.main} />
-            </TouchableOpacity>
-          )}
-          {chef?.instagram && (
-            <TouchableOpacity onPress={() => Linking.openURL(chef?.instagram)}>
-              <Icon name="instagram" size={30} color={SECONDARY.main} />
-            </TouchableOpacity>
-          )}
+        <Stack direction="row" justify="between">
+          <TouchableOpacity onPress={() => handleClick(prevChefId)}>
+            <Typography color={PRIMARY.main}>
+              {prevChefId ? 'Previous Chef' : ' '}
+            </Typography>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleClick(nextChefId)}>
+            <Typography color={PRIMARY.main}>
+              {nextChefId ? 'Next Chef' : ' '}
+            </Typography>
+          </TouchableOpacity>
         </Stack>
-        <Stack direction="row" style={styles.content}>
+        <Stack style={styles.content} gap={20} justify="center">
           <Avatar
             size={100}
             image={chef?.image_url}
             firstName={chef?.first_name}
             lastName={chef?.last_name}
           />
-          <Stack gap={3}>
-            <Typography
-              variant="subtitle1"
-              fontWeight="bold"
-              color={SECONDARY.main}>
-              {chef?.company_name}
-            </Typography>
-            <Typography variant={'subtitle2'} fontWeight={600}>
-              by {chef?.first_name} {chef?.last_name}
-            </Typography>
-            <Stack direction="row" gap={30}>
-              <Typography variant={'subtitle2'}>
-                Rating: {chef?.rating}
-              </Typography>
-              <Typography variant={'subtitle2'} fontWeight={600}>
-                Zip code: {chef?.primary_address?.zip}
-              </Typography>
+          <Typography variant="h6" fontWeight="bold" color={SECONDARY.main}>
+            {chef?.company_name}
+          </Typography>
+          <Typography variant={'subtitle1'} fontWeight={600}>
+            by {chef?.first_name} {chef?.last_name}
+          </Typography>
+          <Stack direction="row" justify="between" gap={60}>
+            <Stack gap={10}>
+              <Stack direction="row">
+                <Typography variant="body1">Rating: </Typography>
+                <Typography variant={'subtitle1'} fontWeight="bold">
+                  {chef?.rating}
+                </Typography>
+              </Stack>
+              <Stack direction="row">
+                <Typography variant="body1">Deliveries: </Typography>
+                <Typography variant={'subtitle1'} fontWeight="bold">
+                  {chef?.orders}
+                </Typography>
+              </Stack>
             </Stack>
-            <Stack direction="row" gap={30}>
-              <Typography variant={'subtitle2'}>
-                Deliveries: {chef?.orders}
-              </Typography>
-              <Typography color={PRIMARY.main} variant={'subtitle2'}>
-                Certified chef
-              </Typography>
+            <Stack gap={10}>
+              <Stack direction="row">
+                <Typography variant="body1">Zip code: </Typography>
+                <Typography variant={'subtitle1'} fontWeight="bold">
+                  {chef?.primary_address?.zip}
+                </Typography>
+              </Stack>
+              <Stack direction="row">
+                <Typography variant="body1">Rating: </Typography>
+                <Typography variant={'subtitle1'} fontWeight="bold">
+                  ${chef?.delivery_fee ?? 4.99}
+                </Typography>
+              </Stack>
             </Stack>
           </Stack>
         </Stack>

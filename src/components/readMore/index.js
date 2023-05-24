@@ -21,6 +21,7 @@ import {GREY, PRIMARY} from '../../theme';
 const styles = StyleSheet.create({
   wrapper: {
     position: 'relative',
+    marginBottom: 30,
   },
 
   button: {

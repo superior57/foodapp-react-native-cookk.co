@@ -23,7 +23,7 @@ import {openDialog} from '../../../../redux/slices/dialog';
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: SECONDARY.main,
-    paddingVertical: 40,
+    paddingVertical: 50,
   },
 
   content: {
