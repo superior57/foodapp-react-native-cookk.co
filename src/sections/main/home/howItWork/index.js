@@ -68,7 +68,7 @@ export default function HowItWork() {
             2
           </Typography>
           <Typography variant={'h5'} textAlign="center" fontWeight={600}>
-            Select your meals - whether fresh or frozen
+            Select your meals - homemade, catering, or cakes
           </Typography>
         </Stack>
         <Stack style={styles.card}>

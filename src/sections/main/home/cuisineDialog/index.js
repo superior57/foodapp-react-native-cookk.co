@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   ScrollView,
 } from 'react-native';
+import {Divider} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 // mui
 import {
@@ -101,37 +102,40 @@ export default function CuisineDialog({isOpen}) {
       </TouchableOpacity>
       <ScrollView style={{height: 500, position: 'relative'}}>
         <DialogHeader title="Select cuisine" />
-        <DialogContent style={styles.content}>
-          <Typography>
-            With our diverse range of cuisines, there's something for everyone
-            to enjoy.
-          </Typography>
-          <Stack style={styles.content}>
-            {isLoading ? (
-              <ActivityIndicator size="large" color={PRIMARY.main} />
-            ) : (
-              [
-                cuisines?.find(item => item?.name === 'Explore All'),
-                ...(cuisines?.filter(item => item?.name !== 'Explore All') ||
-                  []),
-              ]?.map(
-                (item, _i) =>
-                  item && (
-                    <TouchableOpacity
-                      key={_i}
-                      onPress={() => onSubmit(item?.id)}
-                      style={styles.cuisineItem}>
-                      <Image
-                        source={{
-                          uri: item?.image,
-                        }}
-                        style={styles.image}
-                      />
-                      <Text>{item?.name}</Text>
-                    </TouchableOpacity>
-                  ),
-              )
-            )}
+        <DialogContent>
+          <Stack gap={10}>
+            <Typography>
+              With our diverse range of cuisines, there's something for everyone
+              to enjoy.
+            </Typography>
+            <Stack style={styles.content}>
+              {isLoading ? (
+                <ActivityIndicator size="large" color={PRIMARY.main} />
+              ) : (
+                [
+                  cuisines?.find(item => item?.id === 7),
+                  ...(cuisines?.filter(item => item?.id !== 7) || []),
+                ]?.map(
+                  (item, _i) =>
+                    item && (
+                      <Stack key={item?.id} gap={20}>
+                        {_i === 1 && <Divider />}
+                        <TouchableOpacity
+                          onPress={() => onSubmit(item?.id)}
+                          style={styles.cuisineItem}>
+                          <Image
+                            source={{
+                              uri: item?.image,
+                            }}
+                            style={styles.image}
+                          />
+                          <Text>{item?.name}</Text>
+                        </TouchableOpacity>
+                      </Stack>
+                    ),
+                )
+              )}
+            </Stack>
           </Stack>
         </DialogContent>
       </ScrollView>

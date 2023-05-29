@@ -193,7 +193,6 @@ export default function ChefHeader({selectedCategory, setSelectedCategory}) {
             ))}
           </Stack>
         </ScrollView>
-        <Typography>Chef requires 17 hours for food preparation</Typography>
       </Stack>
     </>
   );

@@ -85,13 +85,13 @@ export default function MainFooter() {
             +1929-928-5292
           </Typography>
           <Stack direction="row" gap={10}>
-            <IconButton
+            {/* <IconButton
               icon={
                 <Stack style={styles.iconButton}>
                   <Icon name="twitter" size={20} color="white" />
                 </Stack>
               }
-            />
+            /> */}
             <IconButton
               onPress={() => Linking.openURL('https://instagram.com/cookk.co')}
               icon={
@@ -101,6 +101,9 @@ export default function MainFooter() {
               }
             />
             <IconButton
+              onPress={() =>
+                Linking.openURL('https://www.facebook.com/cookk.co')
+              }
               icon={
                 <Stack style={styles.iconButton}>
                   <Icon name="facebook-f" size={20} color="white" />
