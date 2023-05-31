@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
 
 export default function CartDetailDialog({
   data,
+  foods,
   setSelectedData,
   onSubmit,
   ...other
@@ -82,24 +83,32 @@ export default function CartDetailDialog({
   const {isAuthenticated} = useAuth();
   const [orderCount, setOrderCount] = useState();
   const [note, setNote] = useState();
+  const [similiarFoods, setSimiliarFoods] = useState();
   const {checkout} = useSelector(FOOD_SELECTOR);
   const {cart} = checkout;
 
   useEffect(() => {
     if (other.visible) {
+      const temp = foods?.filter(
+        item =>
+          item.title.split('with')[0] === data.title.split('with')[0] &&
+          item.id !== data.id,
+      );
+      setSimiliarFoods(temp);
       setNote(cart?.find(item => item?.id === data?.id)?.notes ?? '');
       setOrderCount(
         cart?.find(item => item?.id === data?.id) ? 1 : data?.min_order ?? 1,
       );
     }
-  }, [other.visible]);
+  }, [other.visible, data.id]);
 
   const submit = () => {
     if (isAuthenticated) {
-      data.notes = note;
-      data.count = orderCount;
-      setSelectedData(data);
-      onSubmit();
+      const temp = {...data};
+      temp.notes = note;
+      temp.count = orderCount;
+      setSelectedData(temp);
+      onSubmit(temp);
     } else {
       navigation.navigate(AUTH_ROUTES.login);
       other.onDismiss();
@@ -162,6 +171,28 @@ export default function CartDetailDialog({
                   />
                 </Stack>
               </Stack>
+              {similiarFoods?.length > 0 && (
+                <Stack>
+                  <Typography
+                    variant="subtitle1"
+                    fontWeight="bold"
+                    color={SECONDARY.main}>
+                    {'Similiar food'}
+                  </Typography>
+                  {similiarFoods.map(item => (
+                    <TouchableOpacity
+                      key={item.id}
+                      onPress={() => setSelectedData(item)}>
+                      <Typography variant="subtitle2" color={GREY[600]}>
+                        {item.title} -{' '}
+                        {`$${item.current_price} /${item.quantity} ${
+                          item.measurement || ''
+                        }`}
+                      </Typography>
+                    </TouchableOpacity>
+                  ))}
+                </Stack>
+              )}
               <Stack gap={5}>
                 <Typography variant="subtitle1" fontWeight="bold">
                   Description

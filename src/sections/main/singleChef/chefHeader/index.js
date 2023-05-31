@@ -1,8 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {isAfter, parse} from 'date-fns';
+import {
+  addHours,
+  format,
+  isAfter,
+  isSameDay,
+  isToday,
+  isTomorrow,
+  parse,
+} from 'date-fns';
 
 // react-native
-import {TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
+import {TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 // mui
 import {Stack} from '@react-native-material/core';
@@ -14,13 +22,13 @@ import Typography from '../../../../components/typography';
 import ReadMore from '../../../../components/readMore';
 import Button from '../../../../components/button';
 // sections
-import ChangeDeliveryDateDialog from './changeDeliveryDateDialog';
+import TimeScheduleDialog from './timeScheduleDialog';
 // routes
 import {SCREEN_ROUTES} from '../../../../routes/paths';
 // redux
 import {dispatch, useSelector} from '../../../../redux/store';
 import {CITYCUISINE_SELECTOR, getChef} from '../../../../redux/slices/city';
-import {FOOD_SELECTOR, updateFoodCart} from '../../../../redux/slices/food';
+import {FOOD_SELECTOR, setScheduleTime} from '../../../../redux/slices/food';
 // theme
 import {PRIMARY, SECONDARY} from '../../../../theme';
 
@@ -44,22 +52,24 @@ const styles = StyleSheet.create({
 
 // ----------------------------------------------------------------------
 
-export default function ChefHeader({selectedCategory, setSelectedCategory}) {
+export default function ChefHeader({
+  selectedDate,
+  setSelectedDate,
+  selectedTime,
+  setSelectedTime,
+}) {
   const navigation = useNavigation();
   const {chef: chefData, chefs} = useSelector(CITYCUISINE_SELECTOR);
   const chefId = chefData?.chef?.id;
   const {chef} = chefData ?? {};
   const {checkout, foods} = useSelector(FOOD_SELECTOR);
-  const {cart, scheduleDate} = checkout;
-  const [tempCategory, setTempCategory] = useState();
+  const {cart, scheduleDate, scheduleTime} = checkout;
   const [nextChefId, setNextChefId] = useState();
   const [prevChefId, setPrevChefId] = useState();
-  const [changeDeliveryDateDialogIsOpen, setChangeDeliveryDateDialogIsOpen] =
-    useState(false);
-  const categories = Object.keys(foods)
-    .sort((a, b) => new Date(a) - new Date(b))
-    .filter(key => isAfter(parse(key, 'MM/dd/yy', new Date()), new Date()))
-    .map(key => ({date: key}));
+  const [formattedDate, setFormattedDate] = useState();
+  const [categories, setCategories] = useState();
+  const [slots, setSlots] = useState();
+  const [isOpenScheduleDialog, setIsOpenScheduleDialog] = useState(false);
 
   useEffect(() => {
     if (chefId && chefs) {
@@ -73,29 +83,64 @@ export default function ChefHeader({selectedCategory, setSelectedCategory}) {
   }, [chefId, chefs]);
 
   useEffect(() => {
-    if (categories?.length > 0) {
-      if (cart[0]?.user_id === chef?.id) {
-        setSelectedCategory(scheduleDate);
-      } else {
-        setSelectedCategory(categories[0]?.date);
-      }
+    const availableDates = Object.keys(foods)?.filter(item => {
+      const temp = parse(item, 'MM/dd/yy', new Date());
+      return isSameDay(temp, new Date()) || isAfter(temp, new Date());
+    });
+    const initialSlots = foods?.[availableDates[0]]?.slots;
+    const currentTimePlusFiveHours = addHours(
+      new Date(),
+      chef?.time_to_cook ?? 0,
+    );
+    const filteredArray = initialSlots?.filter(
+      time => parse(time, 'hh:mm a', new Date()) > currentTimePlusFiveHours,
+    );
+    setSlots(
+      filteredArray?.length === 0
+        ? foods?.[availableDates[1]]?.slots
+        : filteredArray,
+    );
+    const temp =
+      filteredArray?.length === 0
+        ? availableDates.slice(1, availableDates.length - 1)
+        : availableDates;
+    setCategories(temp);
+
+    if (cart[0]?.user_id === chef?.id) {
+      setSelectedDate(scheduleDate);
+      setScheduleTime(scheduleTime);
+    } else {
+      setSelectedDate(
+        filteredArray?.length === 0 ? availableDates[1] : availableDates[0],
+      );
+      setSelectedTime(
+        filteredArray?.length === 0
+          ? foods?.[availableDates[1]]?.slots?.[0]
+          : filteredArray?.[0],
+      );
     }
   }, []);
 
-  const changeDeliveryDate = () => {
-    setSelectedCategory(tempCategory);
-    dispatch(updateFoodCart({actionType: 'clear'}));
-    setChangeDeliveryDateDialogIsOpen(false);
-  };
-
-  const handleClickCategory = data => {
-    if (selectedCategory !== data && cart?.length > 0) {
-      setChangeDeliveryDateDialogIsOpen(true);
-      setTempCategory(data);
-    } else {
-      setSelectedCategory(data);
+  useEffect(() => {
+    if (selectedDate) {
+      const formattedSelectedDate = parse(selectedDate, 'MM/dd/yy', new Date());
+      const selectedDateIsToday = isToday(new Date(formattedSelectedDate));
+      const selectedDateIsTomorrow = isTomorrow(
+        new Date(formattedSelectedDate),
+      );
+      const tempFormattedDate = format(
+        new Date(formattedSelectedDate),
+        'MMMM d',
+      );
+      setFormattedDate(
+        selectedDateIsToday
+          ? 'Today'
+          : selectedDateIsTomorrow
+          ? 'Tomorrow'
+          : tempFormattedDate,
+      );
     }
-  };
+  }, [selectedDate]);
 
   const handleClick = id => {
     dispatch(getChef(id));
@@ -103,10 +148,15 @@ export default function ChefHeader({selectedCategory, setSelectedCategory}) {
 
   return (
     <>
-      <ChangeDeliveryDateDialog
-        onSubmit={changeDeliveryDate}
-        visible={changeDeliveryDateDialogIsOpen}
-        onDismiss={() => setChangeDeliveryDateDialogIsOpen(false)}
+      <TimeScheduleDialog
+        slots={slots}
+        categories={categories}
+        setSelectedDate={setSelectedDate}
+        selectedDate={selectedDate}
+        selectedTime={selectedTime}
+        setSelectedTime={setSelectedTime}
+        visible={isOpenScheduleDialog}
+        onDismiss={() => setIsOpenScheduleDialog(false)}
       />
       <Stack style={styles.wrapper}>
         <TouchableOpacity
@@ -177,22 +227,16 @@ export default function ChefHeader({selectedCategory, setSelectedCategory}) {
         <Typography variant="h6" fontWeight="bold">
           Available dates
         </Typography>
-        <ScrollView horizontal={true}>
-          <Stack direction="row" gap={10} style={styles.datesWrapper}>
-            {categories?.map(item => (
-              <Button
-                key={item?.date + item?.id}
-                color={
-                  item?.date === selectedCategory
-                    ? SECONDARY.main
-                    : SECONDARY.lighter
-                }
-                onPress={() => handleClickCategory(item?.date)}>
-                {item?.date}
-              </Button>
-            ))}
-          </Stack>
-        </ScrollView>
+        <Stack gap={30}>
+          <Button>
+            {formattedDate} at {selectedTime}
+          </Button>
+          <Button
+            color={SECONDARY.main}
+            onPress={() => setIsOpenScheduleDialog(true)}>
+            Select a new time
+          </Button>
+        </Stack>
       </Stack>
     </>
   );

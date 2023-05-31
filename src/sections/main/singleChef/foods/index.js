@@ -20,19 +20,20 @@ import {FOOD_SELECTOR} from '../../../../redux/slices/food';
 export default function Foods({
   selectedData,
   setSelectedData = () => {},
-  selectedCategory,
+  selectedDate,
   setNewCartDialogIsOpen = () => {},
 }) {
   const {foods} = useSelector(FOOD_SELECTOR);
 
   return (
     <Stack gap={30}>
-      {foods?.[selectedCategory]?.map(item => (
+      {foods?.[selectedDate]?.foods?.map(item => (
         <View key={item?.id}>
           <FoodCard
             foodData={item}
+            selectedDate={selectedDate}
             selectedData={selectedData}
-            selectedCategory={selectedCategory}
+            selectedCategory={selectedDate}
             setSelectedData={setSelectedData}
             setNewCartDialogIsOpen={setNewCartDialogIsOpen}
           />

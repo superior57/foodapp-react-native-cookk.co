@@ -223,12 +223,19 @@ export function createOrders(data) {
   };
 }
 
-export function getFoodsByChef(cityId, cuisineId, chefId) {
+export function getFoodsByChef(cityId, cuisineId, chefId, selectedDate) {
   return async dispatch => {
     dispatch(startLoading());
     try {
+      const date = selectedDate && parse(selectedDate, 'MM/dd/yy', new Date());
+      const formattedDate = selectedDate && format(date, 'MM/dd/yyyy');
       const response = await axios.get(
         `/api/${API_VERSION}/cities/${cityId}/cuisines/${cuisineId}/chefs/${chefId}`,
+        {
+          params: {
+            selected_date: formattedDate,
+          },
+        },
       );
       dispatch(slice.actions.getFoodsSuccess(response.data.data));
     } catch (error) {

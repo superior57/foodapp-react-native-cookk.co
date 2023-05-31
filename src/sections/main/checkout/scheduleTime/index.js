@@ -11,7 +11,6 @@ import Typography from '../../../../components/typography';
 import Button from '../../../../components/button';
 // sections
 import PanelWrapper from '../panelWrapper';
-import TimeScheduleDialog from './timeScheduleDialog';
 // routes
 // redux
 import {useSelector} from '../../../../redux/store';
@@ -35,7 +34,6 @@ export default function ScheduleTime({isPickup}) {
   const selectedDay = checkout?.orderDetail?.items[0]?.selected_day;
   const scheduleTime = checkout?.orderDetail?.schedule_time;
   const [selectedDate, setSelectedDate] = useState();
-  const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
   useEffect(() => {
     if (selectedDay) {
@@ -47,10 +45,6 @@ export default function ScheduleTime({isPickup}) {
 
   return (
     <>
-      <TimeScheduleDialog
-        visible={dialogIsOpen}
-        onDismiss={() => setDialogIsOpen(false)}
-      />
       <PanelWrapper
         icon="calendar"
         title={`${isPickup ? 'Pick up' : 'Delivery'} schedule`}
@@ -58,7 +52,6 @@ export default function ScheduleTime({isPickup}) {
         <Stack style={styles.content} gap={20}>
           <Typography>{scheduleTime ?? ''}</Typography>
           <Button
-            onPress={() => setDialogIsOpen(true)}
             variant="outlined"
             color={SECONDARY.main}
             paddingHorizontal={20}>

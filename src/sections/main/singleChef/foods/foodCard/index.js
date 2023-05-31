@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 // react-native
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Card} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native';
 // mui
 import {Stack} from '@react-native-material/core';
 // layouts
@@ -15,7 +14,6 @@ import CountBox from '../../../../../components/countBox';
 // sections
 import CartDetailDialog from './cartDetailDialog';
 // routes
-import {AUTH_ROUTES} from '../../../../../routes/paths';
 // redux
 import {dispatch, useSelector} from '../../../../../redux/store';
 import {
@@ -24,7 +22,6 @@ import {
   updateFoodCart,
 } from '../../../../../redux/slices/food';
 // hooks
-import useAuth from '../../../../../hooks/useAuth';
 // theme
 
 // ----------------------------------------------------------------------
@@ -53,12 +50,13 @@ export default function FoodCard({
   setNewCartDialogIsOpen = () => {},
   setSelectedData = () => {},
   selectedData,
+  selectedDate,
   selectedCategory,
 }) {
   const {title, image_url, quantity, min_order, current_price, measurement} =
     foodData;
   const [isOpenCartDialog, setIsOpenCartDialog] = useState(false);
-  const {checkout} = useSelector(FOOD_SELECTOR);
+  const {checkout, foods} = useSelector(FOOD_SELECTOR);
   const {cart} = checkout;
 
   const addCart = async data => {
@@ -89,12 +87,13 @@ export default function FoodCard({
         visible={isOpenCartDialog}
         onDismiss={() => setIsOpenCartDialog(false)}
         data={selectedData}
+        foods={foods?.[selectedDate]?.foods}
         setSelectedData={setSelectedData}
-        onSubmit={() => {
+        onSubmit={data => {
           if (!cart?.find(item => item?.user_id === selectedData?.user_id)) {
             dispatch(setScheduleDate(selectedCategory));
           }
-          addCart(selectedData);
+          addCart(data);
           setIsOpenCartDialog(false);
         }}
       />
