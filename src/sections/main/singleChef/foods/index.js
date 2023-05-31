@@ -21,6 +21,7 @@ export default function Foods({
   selectedData,
   setSelectedData = () => {},
   selectedDate,
+  selectedTime,
   setNewCartDialogIsOpen = () => {},
 }) {
   const {foods} = useSelector(FOOD_SELECTOR);
@@ -31,9 +32,9 @@ export default function Foods({
         <View key={item?.id}>
           <FoodCard
             foodData={item}
-            selectedDate={selectedDate}
             selectedData={selectedData}
-            selectedCategory={selectedDate}
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
             setSelectedData={setSelectedData}
             setNewCartDialogIsOpen={setNewCartDialogIsOpen}
           />

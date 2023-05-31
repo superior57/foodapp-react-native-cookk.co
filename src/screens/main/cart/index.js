@@ -47,14 +47,15 @@ const styles = StyleSheet.create({
 
 export default function Cart() {
   const {checkout} = useSelector(FOOD_SELECTOR);
-  const {cart} = checkout;
+  const {cart, scheduleTime} = checkout;
+  console.log('scheduleTime: ', scheduleTime);
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
 
   const onSubmit = async () => {
     setIsLoading(true);
     dispatch(clearOrderDetail());
-    await dispatch(createOrders(cart));
+    await dispatch(createOrders(cart, scheduleTime));
     setIsLoading(false);
     navigation.navigate(SCREEN_ROUTES.checkout);
   };

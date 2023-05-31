@@ -19,6 +19,7 @@ import {dispatch, useSelector} from '../../../../../redux/store';
 import {
   FOOD_SELECTOR,
   setScheduleDate,
+  setScheduleTime,
   updateFoodCart,
 } from '../../../../../redux/slices/food';
 // hooks
@@ -51,7 +52,7 @@ export default function FoodCard({
   setSelectedData = () => {},
   selectedData,
   selectedDate,
-  selectedCategory,
+  selectedTime,
 }) {
   const {title, image_url, quantity, min_order, current_price, measurement} =
     foodData;
@@ -76,7 +77,7 @@ export default function FoodCard({
     data.count = cart.find(item => item?.id === data.id)?.min_order
       ? data.min_order
       : 1;
-    data.selected_day = selectedCategory;
+    data.selected_day = selectedDate;
     setIsOpenCartDialog(true);
     setSelectedData(data);
   };
@@ -90,9 +91,6 @@ export default function FoodCard({
         foods={foods?.[selectedDate]?.foods}
         setSelectedData={setSelectedData}
         onSubmit={data => {
-          if (!cart?.find(item => item?.user_id === selectedData?.user_id)) {
-            dispatch(setScheduleDate(selectedCategory));
-          }
           addCart(data);
           setIsOpenCartDialog(false);
         }}
@@ -120,7 +118,7 @@ export default function FoodCard({
               data={foodData}
               setIsOpenNewCartDlg={setNewCartDialogIsOpen}
               setSelectedItemData={setSelectedData}
-              selectedCategory={selectedCategory}
+              selectedCategory={selectedDate}
             />
           </Stack>
         </Stack>

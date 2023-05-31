@@ -102,9 +102,12 @@ export default function OrderCard({isPickup}) {
   const handleClickOrder = async () => {
     try {
       setIsLoading(true);
-      if (scheduleTime) {
-        await dispatch(updateScheduleTime(orderId, scheduleTime));
-      }
+      await dispatch(
+        updateScheduleTime(
+          orderId,
+          checkout?.orderDetail?.items?.[0]?.selected_time,
+        ),
+      );
       await changeAddress(isPickup, address?.id, orderId);
       await dispatch(addTips({orderId: orderId, tips: tips}));
       const response = await dispatch(placeOrder(orderId));

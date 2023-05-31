@@ -108,16 +108,17 @@ export default function ChefHeader({
 
     if (cart[0]?.user_id === chef?.id) {
       setSelectedDate(scheduleDate);
-      setScheduleTime(scheduleTime);
+      setSelectedTime(scheduleTime);
     } else {
       setSelectedDate(
         filteredArray?.length === 0 ? availableDates[1] : availableDates[0],
       );
-      setSelectedTime(
+      const tempScheduleTime =
         filteredArray?.length === 0
           ? foods?.[availableDates[1]]?.slots?.[0]
-          : filteredArray?.[0],
-      );
+          : filteredArray?.[0];
+      setSelectedTime(tempScheduleTime);
+      dispatch(setScheduleTime(tempScheduleTime));
     }
   }, []);
 

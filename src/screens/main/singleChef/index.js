@@ -80,6 +80,7 @@ export default function SingleChef() {
               setSelectedData={setSelectedData}
               setNewCartDialogIsOpen={setNewCartDialogIsOpen}
               selectedDate={selectedDate}
+              selectedTime={selectedTime}
             />
           </Stack>
         </Container>
