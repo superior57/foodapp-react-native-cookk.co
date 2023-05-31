@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
 export default function Cart() {
   const {checkout} = useSelector(FOOD_SELECTOR);
   const {cart, scheduleTime} = checkout;
-  console.log('scheduleTime: ', scheduleTime);
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
 

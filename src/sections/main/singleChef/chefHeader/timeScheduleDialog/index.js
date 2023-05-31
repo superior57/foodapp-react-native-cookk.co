@@ -112,7 +112,12 @@ export default function TimeScheduleDialog({
     <>
       <ChangeDeliveryDateDialog
         visible={changeDeliveryDateDialogIsOpen}
-        onDismiss={() => setChangeDeliveryDateDialogIsOpen(false)}
+        onDismiss={async () => {
+          await dispatch(
+            getFoodsByChef(cityId, cuisineId, chefId, selectedDate),
+          );
+          setChangeDeliveryDateDialogIsOpen(false);
+        }}
         onSubmit={setCategory}
       />
       <Dialog {...other}>
