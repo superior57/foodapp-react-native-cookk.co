@@ -80,7 +80,7 @@ export default function HomeHero() {
             sx={{borderRadius: 100}}
             width={250}
             onPress={() => dispatch(openDialog('choose_city_dialog'))}>
-            <Typography fontWeight="bold" color="white">
+            <Typography variant="subtitle1" fontWeight="bold" color="white">
               Find Home Chefs
             </Typography>
           </Button>

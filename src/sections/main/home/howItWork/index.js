@@ -3,16 +3,20 @@ import React from 'react';
 // react-native
 import {StyleSheet, Image} from 'react-native';
 // mui
+import {Stack} from '@react-native-material/core';
 // layouts
 // screens
 // components
 import Container from '../../../../components/container';
+import Button from '../../../../components/button';
 import Typography from '../../../../components/typography';
 // sections
 // routes
+// redux
+import {dispatch} from '../../../../redux/store';
+import {openDialog} from '../../../../redux/slices/dialog';
 // theme
 import {SECONDARY} from '../../../../theme';
-import {Stack} from '@react-native-material/core';
 
 // ----------------------------------------------------------------------
 
@@ -83,6 +87,16 @@ export default function HowItWork() {
           <Typography variant={'h5'} textAlign="center" fontWeight={600}>
             Sit back and relax - we'll deliver it to your door
           </Typography>
+        </Stack>
+        <Stack style={{alignItems: 'center'}} mt={30} mb={30}>
+          <Button
+            sx={{borderRadius: 100}}
+            width={250}
+            onPress={() => dispatch(openDialog('choose_city_dialog'))}>
+            <Typography variant="subtitle1" fontWeight="bold" color="white">
+              Find Home Chefs
+            </Typography>
+          </Button>
         </Stack>
       </Stack>
     </Container>

@@ -172,7 +172,7 @@ export default function CartDetailDialog({
                 </Stack>
               </Stack>
               {similiarFoods?.length > 0 && (
-                <Stack>
+                <Stack gap={10}>
                   <Typography
                     variant="subtitle1"
                     fontWeight="bold"

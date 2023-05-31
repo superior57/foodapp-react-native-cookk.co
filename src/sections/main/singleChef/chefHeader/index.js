@@ -181,7 +181,7 @@ export default function ChefHeader({
         )}
         <Stack style={styles.content} gap={20} justify="center">
           <Avatar
-            size={100}
+            size={150}
             image={chef?.image_url}
             firstName={chef?.first_name}
             lastName={chef?.last_name}
@@ -227,7 +227,7 @@ export default function ChefHeader({
         <Typography variant="h6" fontWeight="bold">
           Available dates
         </Typography>
-        <Stack gap={30}>
+        <Stack gap={20}>
           <Button>
             {formattedDate} at {selectedTime}
           </Button>
