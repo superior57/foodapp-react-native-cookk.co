@@ -28,7 +28,7 @@ import {
 } from '../../../../redux/slices/food';
 import {placeOrder} from '../../../../redux/service/payment';
 // theme
-import {PRIMARY} from '../../../../theme';
+import {PRIMARY, SECONDARY} from '../../../../theme';
 // hook
 import useAuth from '../../../../hooks/useAuth';
 
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 
 // ----------------------------------------------------------------------
 
-export default function OrderCard() {
+export default function OrderCard({isPickup}) {
   const {changeAddress} = useAuth();
   const navigation = useNavigation();
   const [disabled, setDisabled] = useState(true);
@@ -78,7 +78,6 @@ export default function OrderCard() {
   const [promocode, setPromocode] = useState();
   const address = orderDetail?.available_addresses?.[0];
   const {
-    isPickup,
     delivery_fee,
     sub_total,
     service_fee,
@@ -156,38 +155,46 @@ export default function OrderCard() {
             <Typography>Delivery Fee:</Typography>
             <Typography fontWeight="bold">${delivery_fee}</Typography>
           </Stack>
-          <Divider />
-          <Stack direction="row" justify="between">
-            <Typography>Tip:</Typography>
-            <Typography fontWeight="bold"> ${tips}</Typography>
-          </Stack>
+          {!isPickup && (
+            <>
+              <Divider />
+              <Stack direction="row" justify="between">
+                <Typography>Tip:</Typography>
+                <Typography fontWeight="bold"> ${tips}</Typography>
+              </Stack>
+            </>
+          )}
           <Divider />
           <Stack direction="row" justify="between">
             <Typography>Total:</Typography>
             <Typography fontWeight="bold"> ${order_total + tips}</Typography>
           </Stack>
         </Stack>
-        <Stack gap={10}>
-          <Typography variant="subtitle1" fontWeight="bold">
-            Tips
-          </Typography>
-          <View style={styles.tips}>
-            <Typography sx={styles.first}>$</Typography>
-            <TextInput
-              keyboardType="numeric"
-              onChangeText={e => {
-                if (e > 0) {
-                  setTips(parseFloat(e));
-                } else {
-                  setTips(0);
-                }
-              }}
-              style={styles.tipsInput}
-              color={PRIMARY.tips}
-              defaultValue="0"
-            />
-          </View>
-        </Stack>
+        {!isPickup && (
+          <>
+            <Stack gap={10}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Tip your delivery person
+              </Typography>
+              <View style={styles.tips}>
+                <Typography sx={styles.first}>$</Typography>
+                <TextInput
+                  keyboardType="numeric"
+                  onChangeText={e => {
+                    if (e > 0) {
+                      setTips(parseFloat(e));
+                    } else {
+                      setTips(0);
+                    }
+                  }}
+                  style={styles.tipsInput}
+                  color={PRIMARY.tips}
+                  defaultValue="0"
+                />
+              </View>
+            </Stack>
+          </>
+        )}
         <Stack gap={10}>
           <Typography variant="subtitle1" fontWeight="bold">
             Enter your promocode here
@@ -200,9 +207,9 @@ export default function OrderCard() {
             />
             <Button
               width={80}
+              color={SECONDARY.main}
               isLoading={loading}
               paddingVertical={16}
-              variant="outlined"
               onPress={sendPromocode}>
               Add
             </Button>

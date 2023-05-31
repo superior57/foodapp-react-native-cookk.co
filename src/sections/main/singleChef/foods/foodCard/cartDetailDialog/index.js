@@ -100,7 +100,7 @@ export default function CartDetailDialog({
         cart?.find(item => item?.id === data?.id) ? 1 : data?.min_order ?? 1,
       );
     }
-  }, [other.visible, data.id]);
+  }, [other.visible, data?.id]);
 
   const submit = () => {
     if (isAuthenticated) {

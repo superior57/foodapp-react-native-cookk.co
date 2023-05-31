@@ -62,7 +62,7 @@ export default function Checkout() {
           <Notes isPickup={isPickup} />
           <Payment />
           <CartList />
-          <OrderCard />
+          <OrderCard isPickup={isPickup} />
         </Stack>
       </Container>
     </Layout>
