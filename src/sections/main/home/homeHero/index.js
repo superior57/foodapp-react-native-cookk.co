@@ -79,8 +79,10 @@ export default function HomeHero() {
           <Button
             sx={{borderRadius: 100}}
             width={250}
-            onPress={() => dispatch(openDialog('choose_cuisine_dialog'))}>
-            Find home chefs in Austin
+            onPress={() => dispatch(openDialog('choose_city_dialog'))}>
+            <Typography fontWeight="bold" color="white">
+              Find Home Chefs
+            </Typography>
           </Button>
           <Stack direction="row" style={styles.footer}>
             <Image

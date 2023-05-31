@@ -110,12 +110,15 @@ export function getCities() {
 
 // ----------------------------------------------------------------------
 
-export function getCuisines() {
+export function getCuisines(cityId) {
   return async dispatch => {
     dispatch(startLoading());
     try {
-      const response = await axios.get(`/api/${API_VERSION}/find_local_chefs`);
+      const response = await axios.get(
+        `/api/${API_VERSION}/cities/${cityId}/cuisines`,
+      );
       dispatch(slice.actions.getCuisinesSuccess(response.data.cuisines));
+      dispatch(slice.actions.getCuisine(response.data.cuisines[0].id));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

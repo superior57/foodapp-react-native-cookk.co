@@ -41,7 +41,7 @@ export default function HeroHeader() {
     <Stack style={styles.wrapper}>
       <Container>
         <TouchableOpacity
-          onPress={() => dispatch(openDialog('choose_cuisine_dialog'))}>
+          onPress={() => dispatch(openDialog('choose_city_dialog'))}>
           <Typography variant="subtitle1" fontWeight="bold">
             {cuisine?.name}
           </Typography>
