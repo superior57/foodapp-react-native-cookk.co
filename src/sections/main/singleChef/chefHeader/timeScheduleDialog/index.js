@@ -112,6 +112,10 @@ export default function TimeScheduleDialog({
     }
   }, [tempDate, other.visible]);
 
+  useEffect(() => {
+    setTempDate(selectedDate);
+  }, [other.visible]);
+
   return (
     <>
       <ChangeDeliveryDateDialog
