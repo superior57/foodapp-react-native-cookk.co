@@ -23,8 +23,9 @@ import Typography from '../../../../components/typography';
 // theme
 import {ERROR, SECONDARY} from '../../../../theme';
 // redux
-import {useSelector} from '../../../../redux/store';
+import {dispatch, useSelector} from '../../../../redux/store';
 import {CITYCUISINE_SELECTOR} from '../../../../redux/slices/city';
+import {openDialog} from '../../../../redux/slices/dialog';
 
 // ----------------------------------------------------------------------
 
@@ -158,12 +159,17 @@ export default function HeroHeader({setChefsArray}) {
         </Stack>
         <Typography color={ERROR.main}>{warnningMsg}</Typography>
         <Stack direction="row" wrap="wrap" gap={20} style={styles.buttonGroup}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => dispatch(openDialog('choose_city_dialog'))}>
             <Typography color={SECONDARY.main} fontWeight="bold">
               Select a different city
             </Typography>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setSearchKey('');
+              searchChefs('');
+            }}>
             <Typography color={SECONDARY.main} fontWeight="bold">
               All Chefs
             </Typography>
