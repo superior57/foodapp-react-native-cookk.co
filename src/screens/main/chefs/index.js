@@ -20,10 +20,15 @@ import {CITYCUISINE_SELECTOR, getChefs} from '../../../redux/slices/city';
 // ----------------------------------------------------------------------
 
 export default function Chefs() {
-  const {city, cuisine} = useSelector(CITYCUISINE_SELECTOR);
+  const {city, cuisine, chefs} = useSelector(CITYCUISINE_SELECTOR);
   const cityId = city?.id;
   const cuisineId = cuisine?.id;
   const [isLoading, setIsLoading] = useState(false);
+  const [chefArray, setChefsArray] = useState();
+
+  useEffect(() => {
+    setChefsArray(chefs);
+  }, [chefs]);
 
   useEffect(() => {
     async function fetch() {
@@ -41,8 +46,8 @@ export default function Chefs() {
     <LoadingScreen />
   ) : (
     <Layout variant="main">
-      <HeroHeader />
-      <ChooseChef />
+      <HeroHeader chefArray={chefArray} setChefsArray={setChefsArray} />
+      <ChooseChef chefs={chefArray} />
     </Layout>
   );
 }
