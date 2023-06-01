@@ -72,25 +72,29 @@ export default function TimeScheduleDialog({
   };
 
   const onSubmit = async () => {
-    setLoading(true);
     if (selectedDate !== tempDate && cart.length > 0) {
       setChangeDeliveryDateDialogIsOpen(true);
     } else {
+      setLoading(true);
       setSelectedDate(tempDate);
       setSelectedTime(tempTime);
       dispatch(setScheduleTime(tempTime));
+      await dispatch(getFoodsByChef(cityId, cuisineId, chefId, tempDate));
+      other.onDismiss();
+      setLoading(false);
     }
-    await dispatch(getFoodsByChef(cityId, cuisineId, chefId, tempDate));
-    setLoading(false);
-    other.onDismiss();
   };
 
-  const setCategory = () => {
+  const setCategory = async () => {
+    setLoading(true);
     setSelectedDate(tempDate);
     setSelectedTime(tempTime);
     dispatch(setScheduleTime(tempTime));
     dispatch(updateFoodCart({actionType: 'clear'}));
     setChangeDeliveryDateDialogIsOpen(false);
+    await dispatch(getFoodsByChef(cityId, cuisineId, chefId, tempDate));
+    setLoading(false);
+    other.onDismiss();
   };
 
   useEffect(() => {
@@ -113,9 +117,7 @@ export default function TimeScheduleDialog({
       <ChangeDeliveryDateDialog
         visible={changeDeliveryDateDialogIsOpen}
         onDismiss={async () => {
-          await dispatch(
-            getFoodsByChef(cityId, cuisineId, chefId, selectedDate),
-          );
+          other.onDismiss();
           setChangeDeliveryDateDialogIsOpen(false);
         }}
         onSubmit={setCategory}
