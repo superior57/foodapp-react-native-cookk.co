@@ -134,25 +134,30 @@ export default function ChooseChef({chefs}) {
             <View key={item?.chef?.id} style={{position: 'relative'}}>
               <Stack style={styles.chef}>
                 <Stack direction="row" gap={30} style={styles.header}>
-                  {/* <Stack direction="row">
-                  <Typography variant="body1">Orders: </Typography>
-                  <Typography variant={'subtitle1'} fontWeight="bold">
-                    {item?.chef?.orders}
-                  </Typography>
-                </Stack> */}
                   {item?.chef?.time_to_cook && (
-                    <Typography variant="subtitle1">
-                      {item?.chef?.time_to_cook}hrs
-                    </Typography>
-                  )}
-                  {item?.chef?.can_sell && item?.chef?.delivery_fee && (
                     <Stack direction="row">
-                      <Typography variant="body1">Delivery fee: </Typography>
-                      <Typography variant={'subtitle1'} fontWeight="bold">
-                        {item?.chef?.delivery_fee}
+                      <Typography variant="body1">Ready in: </Typography>
+                      <Typography variant="subtitle1" fontWeight="bold">
+                        {item?.chef?.time_to_cook}hrs
                       </Typography>
                     </Stack>
                   )}
+                  {item?.chef?.delivery_available &&
+                    (item?.chef?.delivery_fee >= 1 ? (
+                      <Stack direction="row">
+                        <Typography variant="body1">Delivery: </Typography>
+                        <Typography variant={'subtitle1'} fontWeight="bold">
+                          {item?.chef?.delivery_fee}
+                        </Typography>
+                      </Stack>
+                    ) : (
+                      <Typography
+                        Typography
+                        variant={'subtitle1'}
+                        fontWeight="bold">
+                        Pick up Only
+                      </Typography>
+                    ))}
                   <Stack direction="row" style={styles.rating}>
                     <Icon name="star" size={20} color={PRIMARY.main} />
                     <Typography variant="subtitle1" fontWeight="bold">

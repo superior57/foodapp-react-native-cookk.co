@@ -1,7 +1,7 @@
 import React from 'react';
 
 // react-native
-import {View} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 // mui
 // layouts
 import {Stack} from '@react-native-material/core';
@@ -11,35 +11,69 @@ import {Stack} from '@react-native-material/core';
 import FoodCard from './foodCard';
 // routes
 // redux
-import {useSelector} from '../../../../redux/store';
-import {FOOD_SELECTOR} from '../../../../redux/slices/food';
+import Typography from '../../../../components/typography';
 // theme
 
 // ----------------------------------------------------------------------
 
+const styles = StyleSheet.create({
+  errorMsg: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    paddingTop: 30,
+    paddingHorizontal: 50,
+  },
+
+  errorImage: {
+    height: 120,
+  },
+});
+
+// ----------------------------------------------------------------------
+
 export default function Foods({
+  foodsArray,
   selectedData,
-  setSelectedData = () => {},
   selectedDate,
   selectedTime,
+  setSelectedData = () => {},
   setNewCartDialogIsOpen = () => {},
 }) {
-  const {foods} = useSelector(FOOD_SELECTOR);
-
   return (
     <Stack gap={30}>
-      {foods?.[selectedDate]?.foods?.map(item => (
-        <View key={item?.id}>
-          <FoodCard
-            foodData={item}
-            selectedData={selectedData}
-            selectedDate={selectedDate}
-            selectedTime={selectedTime}
-            setSelectedData={setSelectedData}
-            setNewCartDialogIsOpen={setNewCartDialogIsOpen}
+      {foodsArray?.length === 0 ? (
+        <Stack justify="center" style={styles.errorMsg} gap={20}>
+          <Typography variant="h5" fontWeight="bold">
+            We are sorry
+          </Typography>
+          <Stack gap={5}>
+            <Typography textAlign="center" variant="subtitle2">
+              We couldn't find any matching results
+            </Typography>
+            <Typography textAlign="center" variant="subtitle2">
+              for your search
+            </Typography>
+          </Stack>
+          <Image
+            style={styles.errorImage}
+            resizeMode="contain"
+            source={require('../../../../assets/images/chefs/oops.png')}
           />
-        </View>
-      ))}
+        </Stack>
+      ) : (
+        foodsArray?.map(item => (
+          <View key={item?.id}>
+            <FoodCard
+              foodData={item}
+              selectedData={selectedData}
+              selectedDate={selectedDate}
+              selectedTime={selectedTime}
+              setSelectedData={setSelectedData}
+              setNewCartDialogIsOpen={setNewCartDialogIsOpen}
+            />
+          </View>
+        ))
+      )}
     </Stack>
   );
 }

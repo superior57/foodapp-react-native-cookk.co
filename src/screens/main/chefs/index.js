@@ -33,7 +33,7 @@ export default function Chefs() {
   useEffect(() => {
     async function fetch() {
       setIsLoading(true);
-      await dispatch(getChefs(cityId, cuisineId));
+      await dispatch(getChefs(cityId, 7));
       setIsLoading(false);
     }
 

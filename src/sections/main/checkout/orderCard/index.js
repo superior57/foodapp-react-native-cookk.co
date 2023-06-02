@@ -77,15 +77,9 @@ export default function OrderCard({isPickup}) {
   const {toast} = useToast();
   const [promocode, setPromocode] = useState();
   const address = orderDetail?.available_addresses?.[0];
-  const {
-    delivery_fee,
-    sub_total,
-    service_fee,
-    items,
-    order_total,
-    scheduleTime,
-  } = orderDetail ?? {};
-  const [tips, setTips] = useState(orderDetail?.tips ?? 0);
+  const {delivery_fee, sub_total, service_fee, items, order_total} =
+    orderDetail ?? {};
+  const [tips, setTips] = useState(orderDetail?.tips ?? '');
 
   const sendPromocode = async () => {
     setLoading(true);
@@ -154,10 +148,12 @@ export default function OrderCard({isPickup}) {
             <Typography fontWeight="bold">${service_fee}</Typography>
           </Stack>
           <Divider />
-          <Stack direction="row" justify="between">
-            <Typography>Delivery Fee:</Typography>
-            <Typography fontWeight="bold">${delivery_fee}</Typography>
-          </Stack>
+          {delivery_fee && (
+            <Stack direction="row" justify="between">
+              <Typography>Delivery Fee:</Typography>
+              <Typography fontWeight="bold">${delivery_fee}</Typography>
+            </Stack>
+          )}
           {!isPickup && (
             <>
               <Divider />
@@ -170,7 +166,10 @@ export default function OrderCard({isPickup}) {
           <Divider />
           <Stack direction="row" justify="between">
             <Typography>Total:</Typography>
-            <Typography fontWeight="bold"> ${order_total + tips}</Typography>
+            <Typography fontWeight="bold">
+              {' '}
+              ${order_total + parseFloat(tips === '' ? 0 : tips)}
+            </Typography>
           </Stack>
         </Stack>
         {!isPickup && (
@@ -226,7 +225,7 @@ export default function OrderCard({isPickup}) {
         <Stack direction="row" gap={5}>
           <CheckBox
             value={!disabled}
-            onValueChange={e => setDisabled(!disabled)}
+            onValueChange={() => setDisabled(!disabled)}
           />
           <Typography sx={{width: 270}}>
             I’ve read and agree to the website terms and conditions

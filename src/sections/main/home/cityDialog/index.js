@@ -112,7 +112,10 @@ export default function CityDialog({isOpen}) {
               ) : (
                 cities?.map((item, _i) => (
                   <TouchableOpacity key={_i} onPress={() => onSubmit(item.id)}>
-                    <Typography variant="subtitle1">{item.name}</Typography>
+                    <Typography variant="subtitle1">
+                      {item?.name}
+                      {item?.state && `, ${item?.state}`}
+                    </Typography>
                   </TouchableOpacity>
                 ))
               )}

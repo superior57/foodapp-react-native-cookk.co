@@ -15,7 +15,11 @@ import Foods from '../../../sections/main/singleChef/foods';
 import NewCartDialog from '../../../sections/main/singleChef/chefHeader/newCartDialog';
 // routes
 // redux
-import {getFoodsByChef, updateFoodCart} from '../../../redux/slices/food';
+import {
+  FOOD_SELECTOR,
+  getFoodsByChef,
+  updateFoodCart,
+} from '../../../redux/slices/food';
 import {dispatch, useSelector} from '../../../redux/store';
 import {CITYCUISINE_SELECTOR} from '../../../redux/slices/city';
 // theme
@@ -28,8 +32,11 @@ export default function SingleChef() {
   const [selectedData, setSelectedData] = useState();
   const [selectedDate, setSelectedDate] = useState();
   const [selectedTime, setSelectedTime] = useState();
+  const [foodsArray, setFoodsArray] = useState();
   const {city, cuisine, chef} = useSelector(CITYCUISINE_SELECTOR);
   const [isLoading, setIsLoading] = useState(false);
+  const {checkout, foods} = useSelector(FOOD_SELECTOR);
+  const {cart, scheduleDate} = checkout;
   const cityId = city?.id;
   const cuisineId = cuisine?.id;
   const chefId = chef?.chef?.id;
@@ -37,7 +44,14 @@ export default function SingleChef() {
   useEffect(() => {
     async function fetch() {
       setIsLoading(true);
-      await dispatch(getFoodsByChef(cityId, cuisineId, chefId));
+      await dispatch(
+        getFoodsByChef(
+          cityId,
+          cuisineId,
+          chefId,
+          cart[0]?.user_id == chef?.chef?.id ? scheduleDate : '',
+        ),
+      );
       setIsLoading(false);
     }
 
@@ -45,6 +59,10 @@ export default function SingleChef() {
       fetch();
     }
   }, [cityId, cuisineId, chefId]);
+
+  useEffect(() => {
+    setFoodsArray(foods?.[selectedDate]?.foods);
+  }, [foods, selectedDate]);
 
   const newCart = () => {
     dispatch(updateFoodCart({actionType: 'clear'}));
@@ -70,12 +88,15 @@ export default function SingleChef() {
         <Container>
           <Stack gap={30}>
             <ChefHeader
+              foodsArray={foodsArray}
+              setFoodsArray={setFoodsArray}
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
               selectedTime={selectedTime}
               setSelectedTime={setSelectedTime}
             />
             <Foods
+              foodsArray={foodsArray}
               selectedData={selectedData}
               setSelectedData={setSelectedData}
               setNewCartDialogIsOpen={setNewCartDialogIsOpen}

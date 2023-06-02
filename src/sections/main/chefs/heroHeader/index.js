@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import {Divider} from 'react-native-paper';
 // mui
@@ -90,17 +91,12 @@ export default function HeroHeader({setChefsArray}) {
       setWarnningMsg();
       const filteredArray = chefs.filter(
         item =>
-          Object.values(item.chef).some(
-            val =>
-              typeof val === 'string' &&
-              val.toLowerCase().includes(key.toLowerCase()),
+          item.chef.birth_place.toLowerCase().includes(key.toLowerCase()) ||
+          item.foods.find(food =>
+            food.title.toLowerCase().includes(key.toLowerCase()),
           ) ||
           item.foods.find(food =>
-            Object.values(food).some(
-              val =>
-                typeof val === 'string' &&
-                val.toLowerCase().includes(key.toLowerCase()),
-            ),
+            food.cuisine.name.toLowerCase().includes(key.toLowerCase()),
           ),
       );
       setChefsArray(filteredArray);
@@ -112,6 +108,16 @@ export default function HeroHeader({setChefsArray}) {
       }
       setChefsArray(chefs);
     }
+  };
+
+  const filterChefsByHalal = () => {
+    const filteredArray = chefs.filter(item => item.chef.halal);
+    setChefsArray(filteredArray);
+  };
+
+  const filterChefsByCatering = () => {
+    const filteredArray = chefs.filter(item => item.chef.catering);
+    setChefsArray(filteredArray);
   };
 
   useEffect(() => {
@@ -157,24 +163,42 @@ export default function HeroHeader({setChefsArray}) {
             </Button>
           </View>
         </Stack>
-        <Typography color={ERROR.main}>{warnningMsg}</Typography>
-        <Stack direction="row" wrap="wrap" gap={20} style={styles.buttonGroup}>
-          <TouchableOpacity
-            onPress={() => dispatch(openDialog('choose_city_dialog'))}>
-            <Typography color={SECONDARY.main} fontWeight="bold">
-              Select a different city
-            </Typography>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setSearchKey('');
-              searchChefs('');
-            }}>
-            <Typography color={SECONDARY.main} fontWeight="bold">
-              All Chefs
-            </Typography>
-          </TouchableOpacity>
-        </Stack>
+        {warnningMsg && (
+          <Typography color={ERROR.main}>{warnningMsg}</Typography>
+        )}
+        <ScrollView horizontal={true}>
+          <Stack
+            direction="row"
+            wrap="nowrap"
+            gap={20}
+            style={styles.buttonGroup}>
+            <TouchableOpacity
+              onPress={() => dispatch(openDialog('choose_city_dialog'))}>
+              <Typography color={SECONDARY.main} fontWeight="bold">
+                Select a different city
+              </Typography>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setSearchKey('');
+                searchChefs('');
+              }}>
+              <Typography color={SECONDARY.main} fontWeight="bold">
+                All Chefs
+              </Typography>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={filterChefsByHalal}>
+              <Typography color={SECONDARY.main} fontWeight="bold">
+                Halal
+              </Typography>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={filterChefsByCatering}>
+              <Typography color={SECONDARY.main} fontWeight="bold">
+                Catering
+              </Typography>
+            </TouchableOpacity>
+          </Stack>
+        </ScrollView>
         <Divider />
         <Stack style={styles.banner} justify="center">
           <Image
@@ -182,7 +206,7 @@ export default function HeroHeader({setChefsArray}) {
             source={require('../../../../assets/images/chefs/Texture.png')}
           />
           <Typography variant="subtitle1" color="white">
-            Get free delivery on orders over $50
+            Get free delivery on orders over $100
           </Typography>
         </Stack>
       </Container>
