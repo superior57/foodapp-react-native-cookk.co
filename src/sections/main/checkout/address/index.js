@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 // react-native
 import {StyleSheet, Image} from 'react-native';
 import {Card} from 'react-native-paper';
+import {useToast} from 'react-native-styled-toast';
 // mui
 import {Stack} from '@react-native-material/core';
 // layouts
@@ -63,12 +64,20 @@ export default function Address() {
   const deliveryAddress = orderDetail?.available_addresses?.[0];
   const [isLoading, setIsLoading] = useState(false);
   const [addressDialogIsOpen, setAddressDialogIsOpen] = useState(false);
+  const {toast} = useToast();
 
   const handleChange = async is_pickup => {
-    setIsLoading(true);
-    await dispatch(updateIsPickup(is_pickup, orderId));
-    await dispatch(getOrderDetail(orderId));
-    setIsLoading(false);
+    if (!orderDetail?.chef?.delivery_available && !is_pickup) {
+      toast({
+        message: "A user can't place an order for delivery",
+        intent: 'ERROR',
+      });
+    } else {
+      setIsLoading(true);
+      await dispatch(updateIsPickup(is_pickup, orderId));
+      await dispatch(getOrderDetail(orderId));
+      setIsLoading(false);
+    }
   };
 
   return (
