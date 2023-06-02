@@ -59,7 +59,7 @@ export default function SingleChef() {
     if (cityId != null && cuisineId != null && chefId != null) {
       fetch();
     }
-  }, [cityId, cuisineId, chefId, scheduleDate]);
+  }, [cityId, cuisineId, chefId, chef?.chef?.id]);
 
   useEffect(() => {
     setFoodsArray(foods?.[selectedDate]?.foods);
