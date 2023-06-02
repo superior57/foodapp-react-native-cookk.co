@@ -22,6 +22,7 @@ import {closeDialog} from '../../../../redux/slices/dialog';
 import {
   CITYCUISINE_SELECTOR,
   getCities,
+  getCitySuccess,
   getCuisines,
 } from '../../../../redux/slices/city';
 // layouts
@@ -88,6 +89,7 @@ export default function CityDialog({isOpen}) {
 
   const onSubmit = async cityId => {
     await dispatch(getCuisines(cityId));
+    dispatch(getCitySuccess(cities.find(item => item.id === cityId)));
     navigation.navigate(SCREEN_ROUTES.chefs);
     dispatch(closeDialog());
     close();

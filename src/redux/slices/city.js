@@ -87,7 +87,8 @@ export default slice.reducer;
 
 // Actions
 // Actions
-export const {startLoading, getCuisine, getChef} = slice.actions;
+export const {startLoading, getCuisine, getChef, getCitySuccess} =
+  slice.actions;
 
 // Selector
 export const CITYCUISINE_SELECTOR = state => state.cityCuisine;
