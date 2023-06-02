@@ -49,7 +49,6 @@ export default function FoodCard({
   setSelectedData = () => {},
   selectedData,
   selectedDate,
-  selectedTime,
 }) {
   const {title, image_url, quantity, min_order, current_price, measurement} =
     foodData;
@@ -92,7 +91,7 @@ export default function FoodCard({
           setIsOpenCartDialog(false);
         }}
       />
-      <Card>
+      <Card style={{overflow: 'hidden'}}>
         <TouchableOpacity onPress={handleClickItem}>
           <Image
             style={styles.foodImage}
