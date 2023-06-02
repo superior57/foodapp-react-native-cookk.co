@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Icon from 'react-native-vector-icons/Fontisto';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   addHours,
   format,
