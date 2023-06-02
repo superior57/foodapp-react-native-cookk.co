@@ -37,6 +37,8 @@ const styles = StyleSheet.create({
 
   foodImage: {
     height: 300,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     width: '100%',
   },
 });
@@ -91,7 +93,7 @@ export default function FoodCard({
           setIsOpenCartDialog(false);
         }}
       />
-      <Card style={{overflow: 'hidden'}}>
+      <Card>
         <TouchableOpacity onPress={handleClickItem}>
           <Image
             style={styles.foodImage}
