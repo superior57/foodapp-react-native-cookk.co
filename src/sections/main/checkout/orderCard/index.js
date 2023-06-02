@@ -159,7 +159,9 @@ export default function OrderCard({isPickup}) {
               <Divider />
               <Stack direction="row" justify="between">
                 <Typography>Tip:</Typography>
-                <Typography fontWeight="bold"> ${tips}</Typography>
+                <Typography fontWeight="bold">
+                  ${tips === '' ? 0 : tips}
+                </Typography>
               </Stack>
             </>
           )}
@@ -167,7 +169,6 @@ export default function OrderCard({isPickup}) {
           <Stack direction="row" justify="between">
             <Typography>Total:</Typography>
             <Typography fontWeight="bold">
-              {' '}
               ${order_total + parseFloat(tips === '' ? 0 : tips)}
             </Typography>
           </Stack>
@@ -191,7 +192,6 @@ export default function OrderCard({isPickup}) {
                   }}
                   style={styles.tipsInput}
                   color={PRIMARY.tips}
-                  defaultValue="0"
                 />
               </View>
             </Stack>
