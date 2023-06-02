@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
+  addDays,
   addHours,
   format,
   isAfter,
@@ -120,6 +121,11 @@ export default function ChefHeader({
     const filteredArray = initialSlots?.filter(
       time => parse(time, 'hh:mm a', new Date()) > currentTimePlusFiveHours,
     );
+    const tomorrowSlots = foods?.[availableDates[1]]?.slots.filter(
+      time =>
+        addDays(parse(time, 'hh:mm a', new Date()), 1) >
+        currentTimePlusFiveHours,
+    );
     setSlots(
       filteredArray?.length === 0
         ? foods?.[availableDates[1]]?.slots
@@ -139,9 +145,7 @@ export default function ChefHeader({
         filteredArray?.length === 0 ? availableDates[1] : availableDates[0],
       );
       const tempScheduleTime =
-        filteredArray?.length === 0
-          ? foods?.[availableDates[1]]?.slots?.[0]
-          : filteredArray?.[0];
+        filteredArray?.length === 0 ? tomorrowSlots?.[0] : filteredArray?.[0];
       setSelectedTime(tempScheduleTime);
       dispatch(setScheduleTime(tempScheduleTime));
     }
