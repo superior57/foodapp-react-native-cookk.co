@@ -1,7 +1,7 @@
 import React from 'react';
 
 // react-native
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image, ActivityIndicator} from 'react-native';
 // mui
 // layouts
 import {Stack} from '@react-native-material/core';
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function Foods({
+  searchIsLoading,
   foodsArray,
   selectedData,
   selectedDate,
@@ -41,7 +42,11 @@ export default function Foods({
 }) {
   return (
     <Stack gap={30}>
-      {foodsArray?.length === 0 ? (
+      {searchIsLoading ? (
+        <Stack style={{paddingVertical: 60}}>
+          <ActivityIndicator size={30} />
+        </Stack>
+      ) : foodsArray?.length === 0 ? (
         <Stack justify="center" style={styles.errorMsg} gap={20}>
           <Typography variant="h5" fontWeight="bold">
             We are sorry

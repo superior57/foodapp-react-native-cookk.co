@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 // mui
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
 
 // ----------------------------------------------------------------------
 
-export default function ChooseChef({chefs}) {
+export default function ChooseChef({chefs, searchIsLoading}) {
   const navigation = useNavigation();
   const {city} = useSelector(CITYCUISINE_SELECTOR);
 
@@ -111,7 +112,11 @@ export default function ChooseChef({chefs}) {
           Chefs in {city?.name}
           {city?.state && `, ${city?.state}`}
         </Typography>
-        {chefs?.length === 0 ? (
+        {searchIsLoading ? (
+          <Stack style={{paddingVertical: 60}}>
+            <ActivityIndicator size={30} />
+          </Stack>
+        ) : chefs?.length === 0 ? (
           <Stack justify="center" style={styles.errorMsg} gap={20}>
             <Typography variant="h5" fontWeight="bold">
               We are sorry

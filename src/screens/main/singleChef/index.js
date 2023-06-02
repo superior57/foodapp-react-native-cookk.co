@@ -29,6 +29,7 @@ import {CITYCUISINE_SELECTOR} from '../../../redux/slices/city';
 
 export default function SingleChef() {
   const [newCartDialogIsOpen, setNewCartDialogIsOpen] = useState(false);
+  const [searchIsLoading, setSearchIsLoading] = useState(false);
   const [selectedData, setSelectedData] = useState();
   const [selectedDate, setSelectedDate] = useState();
   const [selectedTime, setSelectedTime] = useState();
@@ -88,6 +89,7 @@ export default function SingleChef() {
         <Container>
           <Stack gap={30}>
             <ChefHeader
+              setSearchIsLoading={setSearchIsLoading}
               foodsArray={foodsArray}
               setFoodsArray={setFoodsArray}
               selectedDate={selectedDate}
@@ -96,6 +98,7 @@ export default function SingleChef() {
               setSelectedTime={setSelectedTime}
             />
             <Foods
+              searchIsLoading={searchIsLoading}
               foodsArray={foodsArray}
               selectedData={selectedData}
               setSelectedData={setSelectedData}

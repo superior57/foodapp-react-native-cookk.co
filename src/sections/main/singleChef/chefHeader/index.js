@@ -92,6 +92,7 @@ export default function ChefHeader({
   setSelectedDate,
   selectedTime,
   setSelectedTime,
+  setSearchIsLoading,
 }) {
   const navigation = useNavigation();
   const {chef: chefData} = useSelector(CITYCUISINE_SELECTOR);
@@ -184,6 +185,13 @@ export default function ChefHeader({
     }
   };
 
+  const searchLoading = () => {
+    setSearchIsLoading(true);
+    setTimeout(() => {
+      setSearchIsLoading(false);
+    }, 500);
+  };
+
   useEffect(() => {
     if (searchKey === '') {
       setStatus(false);
@@ -192,6 +200,7 @@ export default function ChefHeader({
 
   const onSubmit = () => {
     if (searchKey !== '') {
+      searchLoading();
       setStatus(!status);
       if (status) {
         setSearchKey('');
@@ -200,7 +209,7 @@ export default function ChefHeader({
         searchFoods(searchKey);
       }
     } else {
-      setFoodsArray(foodsArray?.[selectedDate]?.foods);
+      setFoodsArray(foods?.[selectedDate]?.foods);
     }
   };
 

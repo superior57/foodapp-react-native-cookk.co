@@ -24,6 +24,7 @@ export default function Chefs() {
   const cityId = city?.id;
   const cuisineId = cuisine?.id;
   const [isLoading, setIsLoading] = useState(false);
+  const [searchIsLoading, setSearchIsLoading] = useState(false);
   const [chefArray, setChefsArray] = useState();
 
   useEffect(() => {
@@ -46,8 +47,12 @@ export default function Chefs() {
     <LoadingScreen />
   ) : (
     <Layout variant="main">
-      <HeroHeader chefArray={chefArray} setChefsArray={setChefsArray} />
-      <ChooseChef chefs={chefArray} />
+      <HeroHeader
+        setSearchIsLoading={setSearchIsLoading}
+        chefArray={chefArray}
+        setChefsArray={setChefsArray}
+      />
+      <ChooseChef searchIsLoading={searchIsLoading} chefs={chefArray} />
     </Layout>
   );
 }

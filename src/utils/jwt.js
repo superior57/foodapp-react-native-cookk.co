@@ -3,6 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from './axios';
 import {dispatch} from '../redux/store';
 import {updateFoodCart} from '../redux/slices/food';
+import {useNavigation} from '@react-navigation/native';
+import {AUTH_ROUTES} from '../routes/paths';
 
 const isValidToken = async accessToken => {
   if (!accessToken) {
@@ -27,6 +29,8 @@ const handleTokenExpired = exp => {
     alert('Token expired');
     dispatch(updateFoodCart({actionType: 'clear'}));
     AsyncStorage.removeItem('accessToken');
+    const navigation = useNavigation();
+    navigation.navigate(AUTH_ROUTES.login);
   }, timeLeft);
 };
 

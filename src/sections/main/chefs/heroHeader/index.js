@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 
 // ----------------------------------------------------------------------
 
-export default function HeroHeader({setChefsArray}) {
+export default function HeroHeader({setChefsArray, setSearchIsLoading}) {
   const {chefs} = useSelector(CITYCUISINE_SELECTOR);
   const [warnningMsg, setWarnningMsg] = useState();
   const [searchKey, setSearchKey] = useState('');
@@ -110,12 +110,21 @@ export default function HeroHeader({setChefsArray}) {
     }
   };
 
+  const searchLoading = () => {
+    setSearchIsLoading(true);
+    setTimeout(() => {
+      setSearchIsLoading(false);
+    }, 500);
+  };
+
   const filterChefsByHalal = () => {
+    searchLoading();
     const filteredArray = chefs.filter(item => item.chef.halal);
     setChefsArray(filteredArray);
   };
 
   const filterChefsByCatering = () => {
+    searchLoading();
     const filteredArray = chefs.filter(item => item.chef.catering);
     setChefsArray(filteredArray);
   };
@@ -128,6 +137,7 @@ export default function HeroHeader({setChefsArray}) {
 
   const onSubmit = () => {
     if (searchKey !== '') {
+      searchLoading();
       setStatus(!status);
       if (status) {
         setSearchKey('');
@@ -180,6 +190,7 @@ export default function HeroHeader({setChefsArray}) {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
+                searchLoading();
                 setSearchKey('');
                 searchChefs('');
               }}>
