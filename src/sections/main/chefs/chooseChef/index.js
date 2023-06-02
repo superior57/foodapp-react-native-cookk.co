@@ -107,9 +107,10 @@ export default function ChooseChef({chefs}) {
   return (
     <Container style={styles.wrapper}>
       <Stack gap={30}>
-        <Typography
-          variant="subtitle1"
-          fontWeight="bold">{`${city?.name} Chefs`}</Typography>
+        <Typography variant="subtitle1" fontWeight="bold">
+          Chefs in {city?.name}
+          {city?.state && `, ${city?.state}`}
+        </Typography>
         {chefs?.length === 0 ? (
           <Stack justify="center" style={styles.errorMsg} gap={20}>
             <Typography variant="h5" fontWeight="bold">

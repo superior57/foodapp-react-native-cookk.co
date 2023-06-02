@@ -37,10 +37,10 @@ export default function Chefs() {
       setIsLoading(false);
     }
 
-    if (cuisineId) {
+    if (cuisineId && cityId) {
       fetch();
     }
-  }, [cuisineId]);
+  }, [cityId, cuisineId]);
 
   return isLoading ? (
     <LoadingScreen />
