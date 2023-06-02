@@ -101,8 +101,8 @@ export default function FoodCard({
         </TouchableOpacity>
         <Stack style={styles.content}>
           <Stack direction="row" style={styles.body} justify="between" gap={20}>
-            <Stack gap={5}>
-              <Typography variant="subtitle1" sx={{width: 150}}>
+            <Stack gap={5} style={{width: 150}}>
+              <Typography numberOfLines={1} variant="subtitle1">
                 {title}
               </Typography>
               <Typography
