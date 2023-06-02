@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 
 // react-native
-import {Image, StyleSheet} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {Divider} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 // mui
 import {Stack} from '@react-native-material/core';
 // layouts
@@ -20,6 +21,7 @@ import Payment from '../../../sections/main/checkout/payment';
 import CartList from '../../../sections/main/checkout/cartList';
 import OrderCard from '../../../sections/main/checkout/orderCard';
 // routes
+import {SCREEN_ROUTES} from '../../../routes/paths';
 // redux
 import {dispatch, useSelector} from '../../../redux/store';
 import {FOOD_SELECTOR, getOrderDetail} from '../../../redux/slices/food';
@@ -34,7 +36,6 @@ const styles = StyleSheet.create({
     backgroundColor: SECONDARY.main,
     height: 40,
     alignItems: 'center',
-    marginTop: 40,
   },
 
   bannerImage: {
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function Checkout() {
+  const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [isPickup, setIsPickup] = useState(true);
   const {checkout} = useSelector(FOOD_SELECTOR);
@@ -71,6 +73,12 @@ export default function Checkout() {
     <Layout variant="main">
       <Container>
         <Stack gap={20}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(SCREEN_ROUTES.singleChef);
+            }}>
+            <Typography>Go back to chef</Typography>
+          </TouchableOpacity>
           <Typography variant="h6" fontWeight="bold">
             Checkout
           </Typography>
