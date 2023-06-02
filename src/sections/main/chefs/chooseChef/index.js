@@ -143,21 +143,21 @@ export default function ChooseChef({chefs}) {
                     </Stack>
                   )}
                   {item?.chef?.delivery_available &&
-                    (item?.chef?.delivery_fee >= 1 ? (
-                      <Stack direction="row">
-                        <Typography variant="body1">Delivery: </Typography>
-                        <Typography variant={'subtitle1'} fontWeight="bold">
-                          {item?.chef?.delivery_fee}
-                        </Typography>
-                      </Stack>
-                    ) : (
-                      <Typography
-                        Typography
-                        variant={'subtitle1'}
-                        fontWeight="bold">
-                        Pick up Only
+                  item?.chef?.delivery_fee > 1 ? (
+                    <Stack direction="row">
+                      <Typography variant="body1">Delivery: </Typography>
+                      <Typography variant={'subtitle1'} fontWeight="bold">
+                        {item?.chef?.delivery_fee}
                       </Typography>
-                    ))}
+                    </Stack>
+                  ) : (
+                    <Typography
+                      Typography
+                      variant={'subtitle1'}
+                      fontWeight="bold">
+                      Pick up Only
+                    </Typography>
+                  )}
                   <Stack direction="row" style={styles.rating}>
                     <Icon name="star" size={20} color={PRIMARY.main} />
                     <Typography variant="subtitle1" fontWeight="bold">

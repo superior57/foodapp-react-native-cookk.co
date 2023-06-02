@@ -102,8 +102,8 @@ export default function ContactUsForm() {
         onSubmit={onSubmit}>
         {({handleChange, handleBlur, handleSubmit, values, errors}) => (
           <Stack style={styles.form}>
-            <Typography variant="h5" color={SECONDARY.main}>
-              Ask a question
+            <Typography variant="h6" color={SECONDARY.main}>
+              Unlock the earning potential of your kitchen with our support
             </Typography>
             <Stack>
               <TextInput
@@ -155,7 +155,7 @@ export default function ContactUsForm() {
                 width={180}
                 fontWeight={900}
                 borderRadius={100}>
-                Ask a question
+                Get started
               </Button>
               <IconButton
                 icon={

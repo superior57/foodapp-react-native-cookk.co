@@ -36,10 +36,10 @@ import TimeScheduleDialog from './timeScheduleDialog';
 import {SCREEN_ROUTES} from '../../../../routes/paths';
 // redux
 import {dispatch, useSelector} from '../../../../redux/store';
-import {CITYCUISINE_SELECTOR, getChef} from '../../../../redux/slices/city';
+import {CITYCUISINE_SELECTOR} from '../../../../redux/slices/city';
 import {FOOD_SELECTOR, setScheduleTime} from '../../../../redux/slices/food';
 // theme
-import {ERROR, PRIMARY, SECONDARY} from '../../../../theme';
+import {ERROR, SECONDARY} from '../../../../theme';
 
 // ----------------------------------------------------------------------
 
@@ -81,18 +81,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
-
-  banner: {
-    position: 'relative',
-    backgroundColor: SECONDARY.main,
-    height: 40,
-    alignItems: 'center',
-    marginTop: 20,
-  },
-
-  bannerImage: {
-    position: 'absolute',
-  },
 });
 
 // ----------------------------------------------------------------------
@@ -106,13 +94,10 @@ export default function ChefHeader({
   setSelectedTime,
 }) {
   const navigation = useNavigation();
-  const {chef: chefData, chefs} = useSelector(CITYCUISINE_SELECTOR);
-  const chefId = chefData?.chef?.id;
+  const {chef: chefData} = useSelector(CITYCUISINE_SELECTOR);
   const {chef} = chefData ?? {};
   const {checkout, foods} = useSelector(FOOD_SELECTOR);
   const {cart, scheduleDate, scheduleTime} = checkout;
-  const [nextChefId, setNextChefId] = useState();
-  const [prevChefId, setPrevChefId] = useState();
   const [formattedDate, setFormattedDate] = useState();
   const [categories, setCategories] = useState();
   const [slots, setSlots] = useState();
@@ -120,17 +105,6 @@ export default function ChefHeader({
   const [searchKey, setSearchKey] = useState('');
   const [warnningMsg, setWarnningMsg] = useState();
   const [status, setStatus] = useState(false);
-
-  useEffect(() => {
-    if (chefId && chefs) {
-      const availableChefs = chefs?.filter(item => item?.chef?.can_sell);
-      const currentIndex = availableChefs?.findIndex(
-        item => item.chef.id === chefId,
-      );
-      setPrevChefId(availableChefs?.[currentIndex - 1]?.chef?.id);
-      setNextChefId(availableChefs?.[currentIndex + 1]?.chef?.id);
-    }
-  }, [chefId, chefs]);
 
   useEffect(() => {
     const availableDates = Object.keys(foods)?.filter(item => {
@@ -192,10 +166,6 @@ export default function ChefHeader({
       );
     }
   }, [selectedDate]);
-
-  const handleClick = id => {
-    dispatch(getChef(id));
-  };
 
   const searchFoods = key => {
     if (key.length > 3) {
@@ -283,31 +253,7 @@ export default function ChefHeader({
               </TouchableOpacity>
             </Stack>
           </ScrollView>
-          <Divider />
-          <Stack style={styles.banner} justify="center">
-            <Image
-              style={styles.bannerImage}
-              source={require('../../../../assets/images/chefs/Texture.png')}
-            />
-            <Typography variant="subtitle1" color="white">
-              Get free delivery on orders over $100
-            </Typography>
-          </Stack>
         </Stack>
-        {(prevChefId || nextChefId) && (
-          <Stack direction="row" justify="between">
-            <TouchableOpacity onPress={() => handleClick(prevChefId)}>
-              <Typography color={PRIMARY.main}>
-                {prevChefId ? 'Previous Chef' : ' '}
-              </Typography>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleClick(nextChefId)}>
-              <Typography color={PRIMARY.main}>
-                {nextChefId ? 'Next Chef' : ' '}
-              </Typography>
-            </TouchableOpacity>
-          </Stack>
-        )}
         <Stack style={styles.content} gap={20} justify="center">
           <Avatar
             size={150}
@@ -321,36 +267,6 @@ export default function ChefHeader({
           <Typography variant={'subtitle1'} fontWeight={600}>
             by {chef?.first_name} {chef?.last_name}
           </Typography>
-          <Stack direction="row" justify="between" gap={60}>
-            <Stack gap={10}>
-              <Stack direction="row">
-                <Typography variant="body1">Rating: </Typography>
-                <Typography variant={'subtitle1'} fontWeight="bold">
-                  {chef?.rating}
-                </Typography>
-              </Stack>
-              <Stack direction="row">
-                <Typography variant="body1">Deliveries: </Typography>
-                <Typography variant={'subtitle1'} fontWeight="bold">
-                  {chef?.orders}
-                </Typography>
-              </Stack>
-            </Stack>
-            <Stack gap={10}>
-              <Stack direction="row">
-                <Typography variant="body1">Zip code: </Typography>
-                <Typography variant={'subtitle1'} fontWeight="bold">
-                  {chef?.primary_address?.zip}
-                </Typography>
-              </Stack>
-              <Stack direction="row">
-                <Typography variant="body1">Rating: </Typography>
-                <Typography variant={'subtitle1'} fontWeight="bold">
-                  ${chef?.delivery_fee ?? 4.99}
-                </Typography>
-              </Stack>
-            </Stack>
-          </Stack>
         </Stack>
         <ReadMore>{chef?.about_me}</ReadMore>
         <Typography variant="h6" fontWeight="bold">

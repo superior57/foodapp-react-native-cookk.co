@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
 
 // react-native
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {Card} from 'react-native-paper';
 // mui
 import {Stack} from '@react-native-material/core';
 // layouts
 // screens
 // components
-import Avatar from '../../../../../components/avatar';
 import Typography from '../../../../../components/typography';
 import CountBox from '../../../../../components/countBox';
 // sections
@@ -16,24 +15,17 @@ import CartDetailDialog from './cartDetailDialog';
 // routes
 // redux
 import {dispatch, useSelector} from '../../../../../redux/store';
-import {
-  FOOD_SELECTOR,
-  setScheduleDate,
-  setScheduleTime,
-  updateFoodCart,
-} from '../../../../../redux/slices/food';
+import {FOOD_SELECTOR, updateFoodCart} from '../../../../../redux/slices/food';
 // hooks
 // theme
+import {PRIMARY} from '../../../../../theme';
 
 // ----------------------------------------------------------------------
 
 const styles = StyleSheet.create({
-  wrapper: {
-    padding: 20,
-  },
-
   content: {
     alignItems: 'center',
+    padding: 20,
     width: '100%',
   },
 
@@ -41,6 +33,11 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 20,
     paddingTop: 20,
+  },
+
+  foodImage: {
+    height: 300,
+    width: '100%',
   },
 });
 
@@ -95,17 +92,24 @@ export default function FoodCard({
           setIsOpenCartDialog(false);
         }}
       />
-      <Card style={styles.wrapper}>
+      <Card>
+        <TouchableOpacity onPress={handleClickItem}>
+          <Image
+            style={styles.foodImage}
+            resizeMode="cover"
+            source={{uri: image_url}}
+          />
+        </TouchableOpacity>
         <Stack style={styles.content}>
-          <TouchableOpacity onPress={handleClickItem}>
-            <Avatar size={150} image={image_url} />
-          </TouchableOpacity>
           <Stack direction="row" style={styles.body} justify="between" gap={20}>
             <Stack gap={5}>
               <Typography variant="subtitle1" sx={{width: 150}}>
                 {title}
               </Typography>
-              <Typography variant="subtitle1" fontWeight="bold">
+              <Typography
+                variant="subtitle1"
+                color={PRIMARY.main}
+                fontWeight="bold">
                 {`$${current_price} / ${quantity} ${measurement || ''}`}
               </Typography>
               {min_order > 1 && (
