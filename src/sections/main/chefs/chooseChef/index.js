@@ -1,30 +1,27 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/AntDesign';
 
 // react-native
 import {
   View,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
   Image,
   ActivityIndicator,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {Card} from 'react-native-paper';
 // mui
 import {Stack} from '@react-native-material/core';
 // layouts
 // screens
 // components
 import Container from '../../../../components/container';
-import Avatar from '../../../../components/avatar';
 import Typography from '../../../../components/typography';
 // sections
-import FoodCard from './foodCard';
 // routes
 import {SCREEN_ROUTES} from '../../../../routes/paths';
 // theme
-import {GREY, PRIMARY} from '../../../../theme';
+import {GREY} from '../../../../theme';
 // redux
 import {dispatch, useSelector} from '../../../../redux/store';
 import {CITYCUISINE_SELECTOR, getChef} from '../../../../redux/slices/city';
@@ -36,39 +33,20 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
 
-  chef: {
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: GREY[400],
-  },
-
-  header: {
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    gap: 20,
-    borderBottomWidth: 1,
-    borderBottomRadius: 10,
-    borderBottomColor: GREY[400],
+  chefImage: {
+    width: '100%',
+    height: 200,
+    borderRadius: 15,
   },
 
   rating: {
-    alignItems: 'center',
-    gap: 10,
-  },
-
-  body: {
-    padding: 10,
-  },
-
-  foodSection: {
-    width: '100%',
+    backgroundColor: GREY[300],
     display: 'flex',
+    justifyContent: 'center',
     alignItems: 'center',
-  },
-
-  foods: {
-    paddingTop: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 20,
   },
 
   backdrop: {
@@ -108,8 +86,8 @@ export default function ChooseChef({chefs, searchIsLoading}) {
   return (
     <Container style={styles.wrapper}>
       <Stack gap={30}>
-        <Typography variant="subtitle1" fontWeight="bold">
-          Chefs in {city?.name}
+        <Typography variant="h5" color="black" fontWeight={900}>
+          {city?.name}
           {city?.state && `, ${city?.state}`}
         </Typography>
         {searchIsLoading ? (
@@ -138,84 +116,45 @@ export default function ChooseChef({chefs, searchIsLoading}) {
         ) : (
           chefs?.map(item => (
             <View key={item?.chef?.id} style={{position: 'relative'}}>
-              <Stack style={styles.chef}>
-                <Stack direction="row" gap={30} style={styles.header}>
-                  {item?.chef?.time_to_cook && (
-                    <Stack direction="row">
-                      <Typography variant="body1">Ready in: </Typography>
-                      <Typography variant="subtitle1" fontWeight="bold">
-                        {item?.chef?.time_to_cook}hrs
-                      </Typography>
-                    </Stack>
-                  )}
-                  {item?.chef?.delivery_available &&
-                  item?.chef?.delivery_fee > 1 ? (
-                    <Stack direction="row">
-                      <Typography variant="body1">Delivery: </Typography>
-                      <Typography variant={'subtitle1'} fontWeight="bold">
-                        {item?.chef?.delivery_fee}
-                      </Typography>
-                    </Stack>
-                  ) : (
+              <TouchableOpacity
+                onPress={() => {
+                  if (item?.chef?.can_sell) {
+                    chooseChef(item?.chef?.id);
+                  }
+                }}>
+                <Image
+                  style={styles.chefImage}
+                  resizeMode="cover"
+                  source={{uri: item?.chef?.image_url}}
+                />
+                <Stack pt={20} pl={10} pr={10} gap={10}>
+                  <Stack direction="row" justify="between">
                     <Typography
-                      Typography
-                      variant={'subtitle1'}
+                      variant="h6"
+                      color="black"
+                      numberOfLines={1}
                       fontWeight="bold">
-                      Pick up Only
+                      {item?.chef?.company_name}
                     </Typography>
-                  )}
-                  <Stack direction="row" style={styles.rating}>
-                    <Icon name="star" size={20} color={PRIMARY.main} />
-                    <Typography variant="subtitle1" fontWeight="bold">
+                    <Typography
+                      variant="subtitle1"
+                      fontWeight="bold"
+                      sx={styles.rating}>
                       {item?.chef?.rating}
                     </Typography>
                   </Stack>
+                  <Typography variant="body1">
+                    {item?.chef?.delivery_available &&
+                    item?.chef?.delivery_fee > 1
+                      ? `Delivery:  $${item?.chef?.delivery_fee ?? 4.99}`
+                      : 'Pick up Only'}
+                    {item?.chef?.time_to_cook &&
+                      ` * Schedule ${item?.chef?.time_to_cook} ${
+                        item?.chef?.time_to_cook == 1 ? 'hr' : 'hrs'
+                      } ahead`}
+                  </Typography>
                 </Stack>
-                <Stack style={styles.body}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      if (item?.chef?.can_sell) {
-                        chooseChef(item?.chef?.id);
-                      }
-                    }}>
-                    <Stack direction="row" gap={20}>
-                      <Avatar
-                        size={100}
-                        image={item?.chef?.image_url}
-                        firstName={item?.chef?.first_name}
-                        lastName={item?.chef?.last_name}
-                      />
-                      <Stack gap={10} justify="center">
-                        <Typography variant="subtitle1" fontWeight={600}>
-                          {item?.chef?.company_name}
-                        </Typography>
-                        <Typography variant="caption">
-                          by {item?.chef?.first_name} {item?.chef?.last_name}
-                        </Typography>
-                      </Stack>
-                    </Stack>
-                  </TouchableOpacity>
-                  <ScrollView horizontal={true}>
-                    <View style={styles.foodSection}>
-                      <Stack
-                        direction="row"
-                        justify="around"
-                        style={styles.foods}>
-                        {item?.foods?.map(food => (
-                          <FoodCard
-                            key={food?.id}
-                            title={food?.title}
-                            image={food?.image_url}
-                            price={food?.current_price}
-                            measurement={food?.measurement}
-                            quantity={food?.quantity}
-                          />
-                        ))}
-                      </Stack>
-                    </View>
-                  </ScrollView>
-                </Stack>
-              </Stack>
+              </TouchableOpacity>
               {!item?.chef?.can_sell && (
                 <View style={styles.backdrop}>
                   <Typography variant="h5" fontWeight="bold">

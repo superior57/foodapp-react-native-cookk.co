@@ -8,7 +8,6 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  ScrollView,
 } from 'react-native';
 import {Divider} from 'react-native-paper';
 // mui
@@ -62,7 +61,9 @@ const styles = StyleSheet.create({
   },
 
   buttonGroup: {
+    width: '100%',
     paddingVertical: 20,
+    justifyContent: 'space-between',
   },
 
   banner: {
@@ -75,6 +76,12 @@ const styles = StyleSheet.create({
 
   bannerImage: {
     position: 'absolute',
+  },
+
+  filterItem: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    height: 80,
   },
 });
 
@@ -137,9 +144,9 @@ export default function HeroHeader({setChefsArray, setSearchIsLoading}) {
 
   const onSubmit = () => {
     if (searchKey !== '') {
-      searchLoading();
       setStatus(!status);
       if (status) {
+        searchLoading();
         setSearchKey('');
         searchChefs('');
       } else {
@@ -155,7 +162,10 @@ export default function HeroHeader({setChefsArray, setSearchIsLoading}) {
       <Container>
         <Stack style={styles.inputGroup}>
           <TextInput
-            onChangeText={value => setSearchKey(value)}
+            onChangeText={value => {
+              setSearchKey(value);
+              setStatus(false);
+            }}
             value={searchKey}
             style={styles.input}
             placeholder="Search for a meal, cuisine ..."
@@ -176,40 +186,66 @@ export default function HeroHeader({setChefsArray, setSearchIsLoading}) {
         {warnningMsg && (
           <Typography color={ERROR.main}>{warnningMsg}</Typography>
         )}
-        <ScrollView horizontal={true}>
-          <Stack
-            direction="row"
-            wrap="nowrap"
-            gap={20}
-            style={styles.buttonGroup}>
-            <TouchableOpacity
-              onPress={() => dispatch(openDialog('choose_city_dialog'))}>
+        <Stack direction="row" style={styles.buttonGroup}>
+          <TouchableOpacity
+            onPress={() => dispatch(openDialog('choose_city_dialog'))}>
+            <Stack style={styles.filterItem} justify="center">
+              <Image
+                style={{width: 50}}
+                resizeMode="contain"
+                source={require('../../../../assets/images/chefs/another-city.png')}
+              />
               <Typography color={SECONDARY.main} fontWeight="bold">
-                Select a different city
+                Another City
               </Typography>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                searchLoading();
-                setSearchKey('');
-                searchChefs('');
-              }}>
+            </Stack>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              searchLoading();
+              setSearchKey('EurAsian');
+              searchChefs('eurasian');
+            }}>
+            <Stack style={styles.filterItem} gap={10}>
+              <Image
+                source={require('../../../../assets/images/chefs/eurasian.png')}
+              />
               <Typography color={SECONDARY.main} fontWeight="bold">
-                All Chefs
+                EurAsian
               </Typography>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={filterChefsByHalal}>
+            </Stack>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={filterChefsByHalal}>
+            <Stack style={styles.filterItem}>
+              <Image
+                source={require('../../../../assets/images/chefs/cakes.png')}
+              />
+              <Typography color={SECONDARY.main} fontWeight="bold">
+                Cakes
+              </Typography>
+            </Stack>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={filterChefsByHalal}>
+            <Stack style={styles.filterItem} gap={5}>
+              <Image
+                source={require('../../../../assets/images/chefs/halal.png')}
+              />
               <Typography color={SECONDARY.main} fontWeight="bold">
                 Halal
               </Typography>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={filterChefsByCatering}>
+            </Stack>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={filterChefsByCatering}>
+            <Stack style={styles.filterItem} gap={10}>
+              <Image
+                source={require('../../../../assets/images/chefs/catering.png')}
+              />
               <Typography color={SECONDARY.main} fontWeight="bold">
                 Catering
               </Typography>
-            </TouchableOpacity>
-          </Stack>
-        </ScrollView>
+            </Stack>
+          </TouchableOpacity>
+        </Stack>
         <Divider />
         <Stack style={styles.banner} justify="center">
           <Image
