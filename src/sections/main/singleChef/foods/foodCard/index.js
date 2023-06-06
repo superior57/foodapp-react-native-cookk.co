@@ -18,14 +18,13 @@ import {dispatch, useSelector} from '../../../../../redux/store';
 import {FOOD_SELECTOR, updateFoodCart} from '../../../../../redux/slices/food';
 // hooks
 // theme
-import {PRIMARY} from '../../../../../theme';
 
 // ----------------------------------------------------------------------
 
 const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
-    padding: 20,
+    paddingBottom: 20,
     width: '100%',
   },
 
@@ -103,14 +102,14 @@ export default function FoodCard({
         </TouchableOpacity>
         <Stack style={styles.content}>
           <Stack direction="row" style={styles.body} justify="between" gap={20}>
-            <Stack gap={5} style={{width: 150}}>
-              <Typography numberOfLines={1} variant="subtitle1">
+            <Stack gap={5} style={{width: 180}}>
+              <Typography
+                numberOfLines={1}
+                variant="subtitle1"
+                fontWeight="bold">
                 {title}
               </Typography>
-              <Typography
-                variant="subtitle1"
-                color={PRIMARY.main}
-                fontWeight="bold">
+              <Typography variant="subtitle1">
                 {`$${current_price} / ${quantity} ${measurement || ''}`}
               </Typography>
               {min_order > 1 && (

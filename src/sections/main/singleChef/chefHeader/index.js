@@ -17,13 +17,12 @@ import {
   StyleSheet,
   TextInput,
   View,
-  ScrollView,
   Image,
 } from 'react-native';
-import {Divider} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 // mui
 import {Stack} from '@react-native-material/core';
+import {Divider} from 'react-native-paper';
 // layouts
 // screens
 // components
@@ -51,6 +50,7 @@ const styles = StyleSheet.create({
   },
 
   content: {
+    marginTop: -80,
     width: '100%',
     alignItems: 'center',
   },
@@ -234,7 +234,10 @@ export default function ChefHeader({
           <Stack gap={10}>
             <Stack style={styles.inputGroup}>
               <TextInput
-                onChangeText={value => setSearchKey(value)}
+                onChangeText={value => {
+                  setSearchKey(value);
+                  setStatus(false);
+                }}
                 value={searchKey}
                 style={styles.input}
                 placeholder="Search for a meal, cuisine ..."
@@ -256,20 +259,25 @@ export default function ChefHeader({
               <Typography color={ERROR.main}>{warnningMsg}</Typography>
             )}
           </Stack>
-          <ScrollView horizontal={true}>
-            <Stack direction="row" wrap="nowrap" gap={20}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate(SCREEN_ROUTES.chefs)}>
-                <Typography color={SECONDARY.main} fontWeight="bold">
-                  Go back
-                </Typography>
-              </TouchableOpacity>
-            </Stack>
-          </ScrollView>
+          <Stack direction="row" wrap="nowrap" gap={20}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(SCREEN_ROUTES.chefs)}>
+              <Typography
+                variant="body1"
+                color={SECONDARY.main}
+                fontWeight="bold">
+                Go back
+              </Typography>
+            </TouchableOpacity>
+          </Stack>
         </Stack>
+        <Image
+          style={{width: '100%', height: 160}}
+          source={require('../../../../assets/images/foods/header.png')}
+        />
         <Stack style={styles.content} gap={20} justify="center">
           <Avatar
-            size={150}
+            size={100}
             image={chef?.image_url}
             firstName={chef?.first_name}
             lastName={chef?.last_name}

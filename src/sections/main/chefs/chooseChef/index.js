@@ -85,11 +85,11 @@ export default function ChooseChef({chefs, searchIsLoading}) {
 
   return (
     <Container style={styles.wrapper}>
-      <Stack gap={30}>
-        <Typography variant="h5" color="black" fontWeight={900}>
-          {city?.name}
-          {city?.state && `, ${city?.state}`}
-        </Typography>
+      <Typography variant="h5" color="black" fontWeight={900}>
+        {city?.name}
+        {city?.state && `, ${city?.state}`}
+      </Typography>
+      <Stack gap={60} pt={20}>
         {searchIsLoading ? (
           <Stack style={{paddingVertical: 60}}>
             <ActivityIndicator size={30} />

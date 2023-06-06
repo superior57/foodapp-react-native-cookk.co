@@ -215,7 +215,7 @@ export default function HeroHeader({setChefsArray, setSearchIsLoading}) {
               </Typography>
             </Stack>
           </TouchableOpacity>
-          <TouchableOpacity onPress={filterChefsByHalal}>
+          <TouchableOpacity>
             <Stack style={styles.filterItem}>
               <Image
                 source={require('../../../../assets/images/chefs/cakes.png')}

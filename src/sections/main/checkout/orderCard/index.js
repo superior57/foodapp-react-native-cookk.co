@@ -144,15 +144,17 @@ export default function OrderCard({isPickup}) {
           </Stack>
           <Divider />
           <Stack direction="row" justify="between">
-            <Typography>Service Fee:</Typography>
+            <Typography>Service ee:</Typography>
             <Typography fontWeight="bold">${service_fee}</Typography>
           </Stack>
-          <Divider />
-          {delivery_fee && (
-            <Stack direction="row" justify="between">
-              <Typography>Delivery Fee:</Typography>
-              <Typography fontWeight="bold">${delivery_fee}</Typography>
-            </Stack>
+          {!isPickup && (
+            <>
+              <Divider />
+              <Stack direction="row" justify="between">
+                <Typography>Delivery fee:</Typography>
+                <Typography fontWeight="bold">${delivery_fee ?? 0}</Typography>
+              </Stack>
+            </>
           )}
           {!isPickup && (
             <>

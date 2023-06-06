@@ -83,7 +83,7 @@ export default function Drawer() {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate(SCREEN_ROUTES.contactUs)}>
-        <Text style={styles.mainItem}>Become a chef</Text>
+        <Text style={styles.mainItem}>Become a Chef</Text>
       </TouchableOpacity>
       <View style={styles.cart}>
         <TouchableOpacity
