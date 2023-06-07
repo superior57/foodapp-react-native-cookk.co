@@ -34,6 +34,7 @@ export default function SingleChef() {
   const [selectedDate, setSelectedDate] = useState();
   const [selectedTime, setSelectedTime] = useState();
   const [foodsArray, setFoodsArray] = useState();
+  const [filteredFoodsArray, setFilteredFoodsArray] = useState([]);
   const {city, cuisine, chef} = useSelector(CITYCUISINE_SELECTOR);
   const [isLoading, setIsLoading] = useState(false);
   const {checkout, foods} = useSelector(FOOD_SELECTOR);
@@ -41,6 +42,21 @@ export default function SingleChef() {
   const cityId = city?.id;
   const cuisineId = cuisine?.id;
   const chefId = chef?.chef?.id;
+
+  useEffect(() => {
+    if (foodsArray) {
+      const sumArray = [];
+      foodsArray.map(item => {
+        const findFood = sumArray.find(
+          food => food.title.split('with')[0] === item.title.split('with')[0],
+        );
+        if (!findFood) {
+          sumArray.push(item);
+        }
+      });
+      setFilteredFoodsArray(sumArray);
+    }
+  }, [foodsArray]);
 
   useEffect(() => {
     async function fetch() {
@@ -99,7 +115,7 @@ export default function SingleChef() {
             />
             <Foods
               searchIsLoading={searchIsLoading}
-              foodsArray={foodsArray}
+              filteredFoodsArray={filteredFoodsArray}
               selectedData={selectedData}
               setSelectedData={setSelectedData}
               setNewCartDialogIsOpen={setNewCartDialogIsOpen}

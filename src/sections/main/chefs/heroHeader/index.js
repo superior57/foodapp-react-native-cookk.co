@@ -168,7 +168,7 @@ export default function HeroHeader({setChefsArray, setSearchIsLoading}) {
             }}
             value={searchKey}
             style={styles.input}
-            placeholder="Search for a meal, cuisine ..."
+            placeholder="Search for a meal, cuisine"
           />
           <View style={styles.searchIcon}>
             <Icon size={20} name="search" />

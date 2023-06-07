@@ -240,7 +240,7 @@ export default function ChefHeader({
                 }}
                 value={searchKey}
                 style={styles.input}
-                placeholder="Search for a meal, cuisine ..."
+                placeholder="Search for a meal"
               />
               <View style={styles.searchIcon}>
                 <Icon size={20} name="search" />

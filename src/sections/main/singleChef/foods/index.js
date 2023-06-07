@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 
 export default function Foods({
   searchIsLoading,
-  foodsArray,
+  filteredFoodsArray,
   selectedData,
   selectedDate,
   selectedTime,
@@ -46,7 +46,7 @@ export default function Foods({
         <Stack style={{paddingVertical: 60}}>
           <ActivityIndicator size={30} />
         </Stack>
-      ) : foodsArray?.length === 0 ? (
+      ) : filteredFoodsArray?.length === 0 ? (
         <Stack justify="center" style={styles.errorMsg} gap={20}>
           <Typography variant="h5" fontWeight="bold">
             We are sorry
@@ -66,7 +66,7 @@ export default function Foods({
           />
         </Stack>
       ) : (
-        foodsArray?.map(item => (
+        filteredFoodsArray?.map(item => (
           <View key={item?.id}>
             <FoodCard
               foodData={item}

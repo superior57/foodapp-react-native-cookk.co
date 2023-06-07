@@ -69,7 +69,7 @@ export default function Address() {
   const handleChange = async is_pickup => {
     if (!orderDetail?.chef?.delivery_available && !is_pickup) {
       toast({
-        message: "A user can't place an order for delivery",
+        message: 'Apologies, but delivery is currently unavailable',
         intent: 'ERROR',
       });
     } else {
